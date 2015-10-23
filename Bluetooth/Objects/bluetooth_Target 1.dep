@@ -1,0 +1,17 @@
+Dependencies for Project 'bluetooth', Target 'Target 1': (DO NOT MODIFY !)
+F (.\main.c)(0x562691E0)(-c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Desktop\SP_GIT\Bluetooth\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32L1XX_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (stm32l1xx.h)(0x56259DC7)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm3.h)(0x5509E4C4)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF9EB2)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509E4C4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509E4C4)
+I (C:\Keil_v5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include\system_stm32l1xx.h)(0x53206656)
+F (.\stm32l1xx.h)(0x56259DC7)()
+F (RTE\Device\STM32L152RB\startup_stm32l1xx_md.s)(0x53206656)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I "C:\Users\Jeffrey Cable\Desktop\SP_GIT\Bluetooth\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include--pd "__UVISION_VERSION SETA 516" --pd "_RTE_ SETA 1" --pd "STM32L1XX_MD SETA 1"--list .\listings\startup_stm32l1xx_md.lst --xref -o .\objects\startup_stm32l1xx_md.o --depend .\objects\startup_stm32l1xx_md.d)
+F (RTE\Device\STM32L152RB\system_stm32l1xx.c)(0x53206656)(-c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Desktop\SP_GIT\Bluetooth\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32L1XX_MD-o .\objects\system_stm32l1xx.o --omf_browse .\objects\system_stm32l1xx.crf --depend .\objects\system_stm32l1xx.d)
+I (C:\Keil_v5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include\stm32l1xx.h)(0x53206656)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm3.h)(0x5509E4C4)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF9EB2)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509E4C4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509E4C4)
+I (C:\Keil_v5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include\system_stm32l1xx.h)(0x53206656)
