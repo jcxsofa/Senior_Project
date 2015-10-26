@@ -1,0 +1,79 @@
+Configuration	New_Main_Board
+STM32CubeMX 	4.11.0
+Date	10/24/2015
+MCU	STM32F407VGTx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+ADC1	IN4	ADC1_IN4	PA4
+ADC1	IN5	ADC1_IN5	PA5
+ADC2	IN6	ADC2_IN6	PA6
+ADC2	IN7	ADC2_IN7	PA7
+ADC3	IN10	ADC3_IN10	PC0
+TIM1	Encoder Mode	TIM1_CH1	PE9
+TIM1	Encoder Mode	TIM1_CH2	PE11
+TIM2	Encoder Mode	TIM2_CH1	PA15
+TIM2	Encoder Mode	TIM2_CH2	PB3
+TIM3	Encoder Mode	TIM3_CH1	PC6
+TIM3	Encoder Mode	TIM3_CH2	PC7
+TIM4	Encoder Mode	TIM4_CH1	PD12
+TIM4	Encoder Mode	TIM4_CH2	PD13
+TIM5	Internal Clock	TIM5_VS_ClockSourceINT	VP_TIM5_VS_ClockSourceINT
+TIM5	PWM Generation CH1	TIM5_CH1	PA0-WKUP
+TIM5	PWM Generation CH2	TIM5_CH2	PA1
+TIM5	PWM Generation CH3	TIM5_CH3	PA2
+TIM5	PWM Generation CH4	TIM5_CH4	PA3
+USART1	Asynchronous	USART1_RX	PA10
+USART1	Asynchronous	USART1_TX	PA9
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+15	PC0	ADC3_IN10	
+23	PA0-WKUP	TIM5_CH1	
+24	PA1	TIM5_CH2	
+25	PA2	TIM5_CH3	
+26	PA3	TIM5_CH4	
+29	PA4	ADC1_IN4	
+30	PA5	ADC1_IN5	
+31	PA6	ADC2_IN6	
+32	PA7	ADC2_IN7	
+40	PE9	TIM1_CH1	
+42	PE11	TIM1_CH2	
+59	PD12	TIM4_CH1	
+60	PD13	TIM4_CH2	
+63	PC6	TIM3_CH1	
+64	PC7	TIM3_CH2	
+68	PA9	USART1_TX	
+69	PA10	USART1_RX	
+77	PA15	TIM2_CH1	
+89	PB3	TIM2_CH2	
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : New_Main_Board
+Project Folder : C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\New_Main_Board
+Toolchain / IDE : MDK-ARM V5
+Firmware Package Name and Version : STM32Cube FW_F4 V1.9.0
+
+
+Code Generation Settings : 
+STM32Cube Firmware Library Package : Copy all used libraries into the project folder
+Generate peripheral initialization as a pair of '.c/.h' files per IP : Yes
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : No
+
+
+Toolchains Settings : 
+Compiler Optimizations : Balanced Size/Speed
+
+
+
+
+
+
