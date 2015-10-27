@@ -431,6 +431,16 @@
               <FileType>1</FileType>
               <FilePath>.\tim_5.c</FilePath>
             </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tim_9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tim_9.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

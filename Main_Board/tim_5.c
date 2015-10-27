@@ -1,14 +1,14 @@
 #include "tim_5.h"
 
-#define ARV 250000 //auto reload value
-#define PSCVAL 96 // prescaler
+#define AR_5 4800 //auto reload value
+#define PSC_5 0 // prescaler
 
 
 void tim_5_gpio_init(void){
 	
 	/* CONFIGURE PWM PINS */
 	/*
-		PORT A PINS 0, 1, 2, AND THREE WILL BE CONFIGURED
+		PORT A PINS 0, 1, 2, AND 3 WILL BE CONFIGURED
 		AS PUSH PULL, ALTERNATE FUNCTION FOR TIMER 5
 		AND NO PULL UP PULL DOWN.
 	*/
@@ -80,8 +80,7 @@ void tim_5_gpio_init(void){
 	// PA3
 	GPIOA->PUPDR &= ~(3 << 3*2);
 	
-	/* CONFIGURE DIGITAL IO PINS */
-		
+	/* CONFIGURE DIGITAL IO PINS */	
 	/*
 		PORT E PINS 7, 8, 9 AND 10 WILL SERVE
 		AS THE LOW SIDE CONTROL FOR THE CORRESPONDING
@@ -126,7 +125,19 @@ void tim_5_gpio_init(void){
 	// PE10
 	GPIOE->OTYPER &= ~(1 << 10*1);
 	
+	/* SET AS NO PULL UP/PULL DOWN */
 	
+	// PE7
+	GPIOE->PUPDR &= ~(2 << 7*2);
+	
+	// PE8
+	GPIOE->PUPDR &= ~(2 << 8*2);
+	
+	// PE9
+	GPIOE->PUPDR &= ~(2 << 9*2);
+	
+	// PE10
+	GPIOE->PUPDR &= ~(2 << 10*2);
 	
 }
 
@@ -136,12 +147,13 @@ void TIM_5_init(void){
 	// ENABLE TIMER 5 CLOCK
 	RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
 	
-	// TIMER 5 PRESCALER FOR 1MHz TIMER
-	TIM5->PSC |= PSCVAL;
+	// TIMER 5 PRESCALER FOR 20KHz FREQ
+	TIM5->PSC &= ~TIM_PSC_PSC;
+	TIM5->PSC |= PSC_5;
 	
 	// AUTO RELOAD REGISTER
 	TIM5->ARR &= ~TIM_ARR_ARR;
-	TIM5->ARR |= ARV;
+	TIM5->ARR |= AR_5;
 	
 	// CONFIGURE PWM MODE TO MODE 1 CHANNEL 1
 	TIM5->CCMR1 &= ~(TIM_CCMR1_OC1M);
@@ -186,7 +198,7 @@ void TIM_5_init(void){
 	// PRELOAD CAPTURE COMPARE VALUE FOR CHANNEL 4
 	TIM5->CCR4 |= 0;
 	
-	//ENABLE TIMER
+	// ENABLE TIMER
 	TIM5->CR1 |= TIM_CR1_CEN;
 	
 }	
