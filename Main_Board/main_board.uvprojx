@@ -441,6 +441,11 @@
               <FileType>1</FileType>
               <FilePath>.\tim_9.c</FilePath>
             </File>
+            <File>
+              <FileName>tim_12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tim_12.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

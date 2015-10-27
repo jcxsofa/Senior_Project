@@ -18,10 +18,10 @@ void tim_9_gpio_init(void){
 	/* SET AS PUSH PULL */
 	
 	// PE5
-	GPIOE->OTYPER &= (1 << 5*1);
+	GPIOE->OTYPER &= ~(1 << 5*1);
 	
 	// PE6
-	GPIOE->OTYPER &= (1 << 6*1);
+	GPIOE->OTYPER &= ~(1 << 6*1);
 	
 	/* SET AS ALTERNATE FUNCTION */
 	
@@ -53,7 +53,7 @@ void tim_9_gpio_init(void){
 	
 	/* CONFIGURE DIGITAL IO PINS */
 	/*
-		PORT E PINS 3 AND 4 WILL SERVER AS THE
+		PORT E PINS 3 AND 4 WILL SERVE AS THE
 		LOW SIDE H-BRIDGE CONTROLS FOR THE 
 		TIMER 9 PWM CHANNELS.
 		
@@ -94,7 +94,7 @@ void tim_9_gpio_init(void){
 void tim_9_config(void){
 	
 	// ENABLE TIMER 5 CLOCK
-	RCC->APB1ENR |= RCC_APB2ENR_TIM9EN;
+	RCC->APB2ENR |= RCC_APB2ENR_TIM9EN;
 	
 	// TIMER 9 PRESCALER FOR 20KHz FREQ
 	TIM9->PSC &= ~TIM_PSC_PSC;

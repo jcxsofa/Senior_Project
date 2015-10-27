@@ -28,8 +28,29 @@ Project File Date:  10/27/2015
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
 assembling startup_stm32f407xx.s...
-compiling gpio.c...
 compiling system_stm32f4xx.c...
+compiling tim_12.c...
+tim_12.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_12_H_
+tim_12.c(34): warning:  #61-D: integer operation result is out of range
+  	
+PIOB->MODER &= ~(3 << 15*2);
+tim_12.c(35): warning:  #61-D: integer operation result is out of range
+  	
+PIOB->MODER |= (2 << 15*2);
+tim_12.c(35): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+PIOB->MODER |= (2 << 15*2);
+tim_12.c(44): warning:  #61-D: integer operation result is out of range
+  	
+PIOB->AFR[1] &= ~(0xF << (15-8)*4);
+tim_12.c(53): warning:  #61-D: integer operation result is out of range
+  	
+PIOB->PUPDR &= ~(3 << 15*2);
+tim_12.c(109): warning:  #1-D: last line of file ends without a newline
+  }
+tim_12.c: 7 warnings, 0 errors
+compiling gpio.c...
 compiling tim_5.c...
 compiling main.c...
 compiling tim_9.c...
@@ -40,7 +61,7 @@ tim_9.c(133): warning:  #1-D: last line of file ends without a newline
 tim_9.c: 2 warnings, 0 errors
 linking...
 Program Size: Code=2708 RO-data=424 RW-data=408 ZI-data=2168  
-".\Objects\main_board.axf" - 0 Error(s), 2 Warning(s).
+".\Objects\main_board.axf" - 0 Error(s), 9 Warning(s).
 
 <h2>Software Packages used:</h2>
 
