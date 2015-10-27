@@ -3,7 +3,134 @@
 #define ARV 250000 //auto reload value
 #define PSCVAL 96 // prescaler
 
-	/* TIMER 5 Initialization */
+
+void tim_5_gpio_init(void){
+	
+	/* CONFIGURE PWM PINS */
+	/*
+		PORT A PINS 0, 1, 2, AND THREE WILL BE CONFIGURED
+		AS PUSH PULL, ALTERNATE FUNCTION FOR TIMER 5
+		AND NO PULL UP PULL DOWN.
+	*/
+	
+	// ENABLE GPIOA CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+	
+	/* SET AS PUSH PULL */
+	
+	// PA0
+	GPIOA->OTYPER &= ~(1 << 0*1);
+	
+	// PA1
+	GPIOA->OTYPER &= ~(1 << 1*1);
+	
+	// PA2
+	GPIOA->OTYPER &= ~(1 << 2*1);
+	
+	// PA3
+	GPIOA->OTYPER &= ~(1 << 3*1);
+	
+	/* SET AS ALTERNATE FUNCTION */
+	
+	// PA0
+	GPIOA->MODER &= ~(3 << 0*2);
+	GPIOA->MODER |= (2 << 0*2);
+	
+	// PA1
+	GPIOA->MODER &= ~(3 << 1*2);
+	GPIOA->MODER |= (2 << 1*2);
+	
+	// PA2
+	GPIOA->MODER &= ~(3 << 2*2);
+	GPIOA->MODER |= (2 << 2*2);
+	
+	// PA3
+	GPIOA->MODER &= ~(3 << 3*2);
+	GPIOA->MODER |= (2 << 3*2);
+	
+	/* SET AF AS TIM 5*/
+	
+	// PA0
+	GPIOA->AFR[0] &= ~(0xF << 0*4);
+	GPIOA->AFR[0] |= (2 << 0*4);
+	
+	// PA1
+	GPIOA->AFR[0] &= ~(0xF << 1*4);
+	GPIOA->AFR[0] |= (2 << 1*4);
+	
+	// PA2
+	GPIOA->AFR[0] &= ~(0xF << 2*4);
+	GPIOA->AFR[0] |= (2 << 2*4);
+	
+	// PA3
+	GPIOA->AFR[0] &= ~(0xF << 3*4);
+	GPIOA->AFR[0] |= (2 << 3*4);
+	
+	/* SET AS NO PULL-UP PULL-DOWN */
+	
+	// PA0
+	GPIOA->PUPDR &= ~(3 << 0*2);
+	
+	// PA1
+	GPIOA->PUPDR &= ~(3 << 1*2);
+	
+	// PA2
+	GPIOA->PUPDR &= ~(3 << 2*2);
+	
+	// PA3
+	GPIOA->PUPDR &= ~(3 << 3*2);
+	
+	/* CONFIGURE DIGITAL IO PINS */
+		
+	/*
+		PORT E PINS 7, 8, 9 AND 10 WILL SERVE
+		AS THE LOW SIDE CONTROL FOR THE CORRESPONDING
+		PWM PINS.
+		
+		THEY ARE CONFIGURED AS PUSH PULL, GENERAL PURPOSE
+		OUTPUT AND NO PULL UP/PULL DOWN.
+	*/
+	
+	// ENABLE GPIOE CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
+	
+	/* SET AS GENERAL PURPOSE OUTPUT */
+	
+	// PE7
+	GPIOE->MODER &= ~(2 << 7*2);
+	GPIOE->MODER |= (1 << 7*2);
+	
+	// PE8
+	GPIOE->MODER &= ~(2 << 8*2);
+	GPIOE->MODER |= (1 << 8*2);
+	
+	// PE9
+	GPIOE->MODER &= ~(2 << 9*2);
+	GPIOE->MODER |= (1 << 9*2);
+	
+	// PE10
+	GPIOE->MODER &= ~(2 << 10*2);
+	GPIOE->MODER |= (1 << 10*2);
+	
+	/* SET AS PUSH-PULL */
+	
+	// PE7
+	GPIOE->OTYPER &= ~(1 << 7*1);
+	
+	// PE8
+	GPIOE->OTYPER &= ~(1 << 8*1);
+	
+	// PE9
+	GPIOE->OTYPER &= ~(1 << 9*1);
+	
+	// PE10
+	GPIOE->OTYPER &= ~(1 << 10*1);
+	
+	
+	
+}
+
+	/* TIMER 5 CONFIGURATION */
 void TIM_5_init(void){
 	
 	// ENABLE TIMER 5 CLOCK
