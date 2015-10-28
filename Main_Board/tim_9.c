@@ -71,7 +71,7 @@ void tim_9_gpio_init(void){
 	
 	// PE4
 	GPIOE->MODER &= ~(2 << 4*2);
-	GPIOE->MODER |= (1<< 4*2);
+	GPIOE->MODER |= (1 << 4*2);
 	
 	/* SET AS PUSH-PULL */
 	

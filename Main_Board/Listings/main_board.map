@@ -153,7 +153,7 @@ Removing Unused input sections from the image.
     Removing tim_12.o(.revsh_text), (4 bytes).
     Removing tim_12.o(.rrx_text), (6 bytes).
     Removing tim_12.o(i.tim_12_config), (188 bytes).
-    Removing tim_12.o(i.tim_12_gpio_init), (164 bytes).
+    Removing tim_12.o(i.tim_12_gpio_init), (268 bytes).
     Removing system_stm32f4xx.o(.rev16_text), (4 bytes).
     Removing system_stm32f4xx.o(.revsh_text), (4 bytes).
     Removing system_stm32f4xx.o(.rrx_text), (6 bytes).
@@ -166,7 +166,7 @@ Removing Unused input sections from the image.
     Removing arm_fir_init_f32.o(.revsh_text), (4 bytes).
     Removing arm_fir_init_f32.o(.rrx_text), (6 bytes).
 
-32 unused section(s) (total 1760 bytes) removed from the image.
+32 unused section(s) (total 1864 bytes) removed from the image.
 
 ==============================================================================
 

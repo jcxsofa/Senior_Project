@@ -62,17 +62,44 @@ void tim_12_gpio_init(void){
 		OUTPUT AND NO PULL-UP/PULL-DOWN.
 	*/
 	
+	// ENABLE PORTD CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
 	
+	/* SET AS GENERAL PURPOSE OUTPUT */
+	
+	// PD8
+	GPIOD->MODER &= ~(2 << 8*2);
+	GPIOD->MODER |= (1 << 8*2);
+	
+	// PD9
+	GPIOD->MODER &= ~(2 << 9*2);
+	GPIOD->MODER |= (1 << 9*2);
+	
+	/* SET AS PUSH-PULL */
+	
+	// PD8
+	GPIOD->OTYPER &= ~(1 << 8*1);
+	
+	// PD9
+	GPIOD->OTYPER &= ~(1 << 9*1);
+	
+	/* SET AS NO PULL-UP/PULL-DOWN */
+	
+	// PD8
+	GPIOD->PUPDR &= ~(2 << 8*2);
+	
+	// PD9
+	GPIOD->PUPDR &= ~(2 << 9*2);
 	
 }
 
 
 void tim_12_config(void){
 	
-	// ENABLE TIMER 5 CLOCK
+	// ENABLE TIMER 12 CLOCK
 	RCC->APB1ENR |= RCC_APB1ENR_TIM12EN;
 	
-	// TIMER 9 PRESCALER FOR 20KHz FREQ
+	// TIMER 12 PRESCALER FOR 20KHz FREQ
 	TIM12->PSC &= ~TIM_PSC_PSC;
 	TIM12->PSC |= PSC_12;
 	
