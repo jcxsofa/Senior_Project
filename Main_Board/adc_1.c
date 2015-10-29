@@ -1,0 +1,22 @@
+#include "adc_1.h"
+
+void adc_1_gpio_init(void) {
+	
+	/* CONFIGURE INPUT PINS */
+	/*
+		PORT A PINS 4 AND 5 ARE USED FOR ADC 
+		CHANNELS 4 AND 5. THEY ARE CONFIGURED AS
+		ANALOG MODE, NO PULL-UP/PULL-DOWN.
+	*/
+	
+	// ENABLE PORT A CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+	
+	/* SET AS ANALOG */
+	
+	// PA4
+	GPIOA->MODER
+	
+	
+	
+}

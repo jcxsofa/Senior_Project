@@ -256,8 +256,8 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\gpio.c</PathWithFileName>
-      <FilenameWithoutPath>gpio.c</FilenameWithoutPath>
+      <PathWithFileName>.\tim_9.c</PathWithFileName>
+      <FilenameWithoutPath>tim_9.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -269,8 +269,8 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\tim_9.c</PathWithFileName>
-      <FilenameWithoutPath>tim_9.c</FilenameWithoutPath>
+      <PathWithFileName>.\tim_12.c</PathWithFileName>
+      <FilenameWithoutPath>tim_12.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -282,8 +282,8 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\tim_12.c</PathWithFileName>
-      <FilenameWithoutPath>tim_12.c</FilenameWithoutPath>
+      <PathWithFileName>.\adc_1.c</PathWithFileName>
+      <FilenameWithoutPath>adc_1.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
