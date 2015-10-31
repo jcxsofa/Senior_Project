@@ -4,7 +4,6 @@
 #include "arm_math.h"
 #include <stdlib.h>
 #include "tim_5.h"
-
 void sysclk_Configure(void);
 void io_Configure(void);
 void adc_Configure(void);
@@ -26,18 +25,6 @@ int main(void)
 		
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();	
-	
-	/* IO CONFIGURE */
-	io_Configure();
-	
-	/* DAC CONFIGURE */
-	dac_Configure();
-	
-	/* ADC CONFIGURE */
-	adc_Configure();
-	
-	/* TIMER 4 CONFIGURE */
-	timer4_Configure();
 	
 	arm_fir_init_f32(&filter, ntaps, (float32_t *)&fcoef[0], &pstate[0], blocksize);
 	
@@ -88,37 +75,6 @@ void TIM4_IRQHandler (void) {
 		TIM4->SR ^= TIM_SR_UIF;
 }
 
-
-//void ADC_IRQHandler (void){
-//	int x;
-//	// CHECK FOR END OF CONVERSION
-//	if ((ADC1->SR & ADC_SR_EOC) != 0){
-//		// CLEAR EOC BIT
-//		ADC1->SR &= ~ADC_SR_EOC;
-//		// RESET INTERRUPT ENABLE
-//		ADC1->CR1 |= ADC_CR1_EOCIE;
-//		// CLEAR EOC AGAIN?
-//		ADC1->SR &= ~ADC_SR_EOC;
-
-//		buffer[0] = ADC1->DR;
-//		
-//		arm_fir_f32(filter, buffer, buffer, 1);
-
-//		x = buffer[0];
-//		
-//		// COPY DATA TO DAC OUTPUT
-//		DAC->DHR12R1 &= 0xFFFFF000;
-//		DAC->DHR12R1 |= x;
-//		
-//		// BEGIN DAC CONVERSION
-//		DAC->SWTRIGR |= DAC_SWTRIGR_SWTRIG1;
-//		
-//	}
-//	// START CONVERSIONS AGAIN
-//	ADC1->CR2 |= ADC_CR2_SWSTART;
-//			
-//}
-
 void sysclk_Configure(void){
 	
 	// ENABLE HSI
@@ -133,70 +89,6 @@ void sysclk_Configure(void){
 	
 	// WAIT FOR HSI TO BE SELECTED
 	while ((RCC->CFGR & RCC_CFGR_SWS) == !RCC_CFGR_SWS_HSI);
-	
-}
-
-
-	/* I/O CONFIGURATION */
-void io_Configure(void) {
-	// ENABLE GPIO A CLOCK
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-	// ENABLE GPIO B CLOCK
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
-	// ENABLE GPIO C CLOCK
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
-	
-	// ENABLE TIMER 4 CLOCK
-	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
-	
-	// CONFIGURE PA4 AND PA5 AS ANALOG MODE
-	GPIOA->MODER |= GPIO_MODER_MODER4;
-	GPIOA->MODER |= GPIO_MODER_MODER5;
-	
-	// CONFIGURE PC0 AS ANALOG
-	GPIOC->MODER |= GPIO_MODER_MODER0;
-}
-
-
-	/* ADC CONFIGURATION */
-void adc_Configure(void){
-	// ENABLE ADC
-	RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
-	
-	// DISABLE CONVERSION
-	ADC1->CR2 &= ~ADC_CR2_ADON;
-	
-	// CONFIGURE REGULAR CHANNEL SEQUENCE LENGTH TO 1 CONVERSION
-	ADC1->SQR1 &= ~ADC_SQR1_L;
-	
-	// SELECT CHANNEL 10 AS FIRST AND ONLY CONVERSION
-	ADC1->SQR3 |= 0xA;
-	
-	// SELECT 16 CYCLES PER SAMPLE FOR CONVERSION
-	ADC1->SMPR1 |= 0x2;
-	
-////	// ENABLE ANALOG WATCHDOG
-////	ADC1->CR1 |- ADC_CR1_AWDEN;
-////	
-////	// ENABLE ANALOG WATCHDOG INTERRUPT
-////	ADC1->CR1 |= ADC_CR1_AWDIE;
-////	
-////	// SELECT CHANNEL 10 FOR WATCH DOG
-////	ADC1->CR1 |= 0xA;
-
-	// ENABLE END OF CONVERSION INTERRUPT
-	ADC1->CR1 |= ADC_CR1_EOCIE;
-	
-	// ENABLE CONTINUOUS CONVERSION
-	//ADC1->CR2 |= ADC_CR2_CONT;
-	
-//	// ENABLE ADC INTERRUPT AND SET PRIORITY
-//	NVIC_SetPriority(ADC_IRQn, 0);
-//	NVIC_EnableIRQ(ADC_IRQn);
-	
-	// ENABLE ADC
-	ADC1->CR2 |= ADC_CR2_ADON;
-	
 	
 }
 
@@ -215,30 +107,3 @@ void dac_Configure(void) {
 	DAC->CR |= DAC_CR_EN1;
 	
 }
-
-	/* TIMER 4 CONFIGURATION */
-void timer4_Configure(void){
-	
-	// ENABLE TIMER 4 CLOCK
-	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
-	
-	// TIMER 4 PRESCALER BASED OFF 16MHZ HSI
-	TIM4->PSC |= 0;
-	
-	// AUTO RELOAD REGISTER
-	TIM4->ARR &= ~TIM_ARR_ARR;
-	TIM4->ARR |= 533;
-	
-	// ENABLE AUTO RELAOD
-	TIM4->CR1 |= TIM_CR1_ARPE;
-	
-	// ENABLE UPDATE INTERRUPT
-	TIM4->DIER |= TIM_DIER_UIE;
-	
-	NVIC_SetPriority(TIM4_IRQn, 1);
-	NVIC_EnableIRQ(TIM4_IRQn);
-	
-	//ENABLE TIMER
-	TIM4->CR1 |= TIM_CR1_CEN;
-	
-}	

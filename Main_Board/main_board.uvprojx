@@ -414,7 +414,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>main</GroupName>
           <Files>
             <File>
               <FileName>main.c</FileName>
@@ -426,6 +426,11 @@
               <FileType>5</FileType>
               <FilePath>.\stm32f407xx.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>TIMs</GroupName>
+          <Files>
             <File>
               <FileName>tim_5.c</FileName>
               <FileType>1</FileType>
@@ -441,10 +446,25 @@
               <FileType>1</FileType>
               <FilePath>.\tim_12.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ADCs</GroupName>
+          <Files>
             <File>
               <FileName>adc_1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\adc_1.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc_2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\adc_2.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc_3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\adc_3.c</FilePath>
             </File>
           </Files>
         </Group>

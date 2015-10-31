@@ -1,0 +1,62 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# Explicit paths specified without -i or -o; assuming --only paths...
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   DSP/dsp_stuff.uvguix.Jeffrey Cable
+#	modified:   Main_Board/Listings/main_board.map
+#	modified:   Main_Board/Objects/adc_1.o
+#	modified:   Main_Board/Objects/adc_2.o
+#	modified:   Main_Board/Objects/adc_3.crf
+#	modified:   Main_Board/Objects/adc_3.o
+#	modified:   Main_Board/Objects/main.crf
+#	modified:   Main_Board/Objects/main.o
+#	modified:   Main_Board/Objects/main_board.axf
+#	modified:   Main_Board/Objects/main_board.build_log.htm
+#	modified:   Main_Board/Objects/main_board.htm
+#	modified:   Main_Board/Objects/main_board_Target 1.dep
+#	modified:   Main_Board/Objects/system_stm32f4xx.o
+#	modified:   Main_Board/Objects/tim_12.o
+#	modified:   Main_Board/Objects/tim_5.o
+#	modified:   Main_Board/Objects/tim_9.o
+#	modified:   Main_Board/main.c
+#	modified:   Main_Board/main_board.uvguix.Jeffrey Cable
+#	modified:   Main_Board/main_board.uvoptx
+#	modified:   Main_Board/main_board.uvprojx
+#
+# Untracked files:
+#	Main_Board/Objects/stm32f4xx_hal.crf
+#	Main_Board/Objects/stm32f4xx_hal.d
+#	Main_Board/Objects/stm32f4xx_hal.o
+#	Main_Board/Objects/stm32f4xx_hal_cortex.crf
+#	Main_Board/Objects/stm32f4xx_hal_cortex.d
+#	Main_Board/Objects/stm32f4xx_hal_cortex.o
+#	Main_Board/Objects/stm32f4xx_hal_gpio.crf
+#	Main_Board/Objects/stm32f4xx_hal_gpio.d
+#	Main_Board/Objects/stm32f4xx_hal_gpio.o
+#	Main_Board/Objects/stm32f4xx_hal_pwr.crf
+#	Main_Board/Objects/stm32f4xx_hal_pwr.d
+#	Main_Board/Objects/stm32f4xx_hal_pwr.o
+#	Main_Board/Objects/stm32f4xx_hal_pwr_ex.crf
+#	Main_Board/Objects/stm32f4xx_hal_pwr_ex.d
+#	Main_Board/Objects/stm32f4xx_hal_pwr_ex.o
+#	Main_Board/Objects/stm32f4xx_hal_rcc.crf
+#	Main_Board/Objects/stm32f4xx_hal_rcc.d
+#	Main_Board/Objects/stm32f4xx_hal_rcc.o
+#	Main_Board/Objects/stm32f4xx_hal_rcc_ex.crf
+#	Main_Board/Objects/stm32f4xx_hal_rcc_ex.d
+#	Main_Board/Objects/stm32f4xx_hal_rcc_ex.o
+#	Main_Board/Objects/tm_stm32f4_delay.crf
+#	Main_Board/Objects/tm_stm32f4_delay.d
+#	Main_Board/Objects/tm_stm32f4_gpio.crf
+#	Main_Board/Objects/tm_stm32f4_gpio.d
+#	Main_Board/Objects/tm_stm32f4_timer_properties.crf
+#	Main_Board/Objects/tm_stm32f4_timer_properties.d
+#	Main_Board/RTE/Device/STM32F407VGTx/RTE_Device.h.0000
+#	Main_Board/RTE/Device/STM32F407VGTx/stm32f4xx_hal_conf.h.0000
+#	Main_Board/stm32f4xx_rcc.h
+#
+
