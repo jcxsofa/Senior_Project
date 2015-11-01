@@ -3,6 +3,8 @@
 ".\objects\tim_5.o"
 ".\objects\tim_9.o"
 ".\objects\tim_12.o"
+".\objects\tim_10.o"
+".\objects\tim_13.o"
 ".\objects\adc_1.o"
 ".\objects\adc_2.o"
 ".\objects\adc_3.o"

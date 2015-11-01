@@ -17,7 +17,7 @@ Library Manager: ArmAr.exe V5.06 (build 20)
 Hex Converter:   FromElf.exe V5.06 (build 20)
 CPU DLL:         SARMCM3.DLL V5.16a
 Dialog DLL:      DCM.DLL V1.13.2.0
-Target DLL:      UL2CM3.DLL V1.155.12.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.17.0
 Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
@@ -27,12 +27,9 @@ Project File Date:  10/31/2015
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-compiling adc_2.c...
-compiling tim_5.c...
-compiling adc_3.c...
-compiling tim_9.c...
 compiling adc_1.c...
-assembling startup_stm32f407xx.s...
+compiling tim_9.c...
+compiling tim_5.c...
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -50,14 +47,31 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 5 warnings, 0 errors
-compiling main.c...
-main.c(109): warning:  #1-D: last line of file ends without a newline
+compiling tim_10.c...
+tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-9600;
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
   }
+tim_10.c: 2 warnings, 0 errors
+compiling main.c...
+main.c(117): warning:  #177-D: variable "test_input" was declared but never referenced
+  	int test_input[blocksize];
 main.c: 1 warning, 0 errors
+compiling tim_13.c...
+tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-320;
+tim_13.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_13.c: 2 warnings, 0 errors
+assembling startup_stm32f407xx.s...
+compiling adc_2.c...
+compiling adc_3.c...
 compiling system_stm32f4xx.c...
 linking...
-Program Size: Code=2292 RO-data=424 RW-data=408 ZI-data=2168  
-".\Objects\main_board.axf" - 0 Error(s), 6 Warning(s).
+Program Size: Code=1532 RO-data=424 RW-data=60 ZI-data=1668  
+".\Objects\main_board.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
