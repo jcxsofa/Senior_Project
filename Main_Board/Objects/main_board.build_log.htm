@@ -22,14 +22,32 @@ Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
 C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\main_board.uvprojx
-Project File Date:  10/31/2015
+Project File Date:  11/01/2015
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
 compiling adc_1.c...
-compiling tim_9.c...
+compiling tim_13.c...
+tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-320;
+tim_13.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_13.c: 2 warnings, 0 errors
 compiling tim_5.c...
+compiling tim_9.c...
+compiling tim_10.c...
+tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-9600;
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_10.c: 2 warnings, 0 errors
+compiling main.c...
+main.c(117): warning:  #177-D: variable "test_input" was declared but never referenced
+  	int test_input[blocksize];
+main.c: 1 warning, 0 errors
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -47,30 +65,12 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 5 warnings, 0 errors
-compiling tim_10.c...
-tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-9600;
-tim_10.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_10.c: 2 warnings, 0 errors
-compiling main.c...
-main.c(117): warning:  #177-D: variable "test_input" was declared but never referenced
-  	int test_input[blocksize];
-main.c: 1 warning, 0 errors
-compiling tim_13.c...
-tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-320;
-tim_13.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_13.c: 2 warnings, 0 errors
 assembling startup_stm32f407xx.s...
 compiling adc_2.c...
 compiling adc_3.c...
 compiling system_stm32f4xx.c...
 linking...
-Program Size: Code=1532 RO-data=424 RW-data=60 ZI-data=1668  
+Program Size: Code=1532 RO-data=424 RW-data=40 ZI-data=1664  
 ".\Objects\main_board.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -107,7 +107,7 @@ Package Vendor: Keil
       Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
       Source file:   MDK\Device\Source\ARM\system_stm32f4xx.c
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

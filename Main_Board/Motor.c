@@ -1,7 +1,4 @@
-#ifndef DSP_H
-#define DSP_H
-
-#include "stm32f407xx.h"
+#include "Motor.h"
 
 //#define ntaps 151
 #define blocksize 1
@@ -24,4 +21,28 @@ float32_t standard_coeffs [5 * numStages] = {
 //arm_biquad_cas_df1_32x64_ins_q31 filter;
 float32_t pState[2*numStages];
 
-#endif // ADC_1_H
+void Motor_init(
+	struct Motor *M,
+	float No_Load_Current,
+	float No_Load_Rpm,
+	float Stall_Current,
+	float Resistance) {
+		
+		// COPY INPUT ARGUMENTS TO STRUCT DATA
+		M->No_Load_Current = No_Load_Current;
+		M->No_Load_Rpm = No_Load_Rpm;
+		M->Stall_Current = Stall_Current;
+		M->Resistance = Resistance;
+		
+		// INTIALIZE SPEED DATA VALUES
+		M->BEMF_Speed = 0;
+		M->Encoder_Speed = 0;
+		M->Desired_Speed = 0;
+		
+		// INITIALIZED IIR FILTER FOR CURRENT SENSING
+		arm_biquad_cascade_df2T_init_f32(M->filter, numStages, standard_coeffs, M->pState); 
+	
+	}
+	
+	
+	
