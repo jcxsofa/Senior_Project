@@ -40,9 +40,24 @@ void Motor_init(
 		M->Desired_Speed = 0;
 		
 		// INITIALIZED IIR FILTER FOR CURRENT SENSING
-		arm_biquad_cascade_df2T_init_f32(M->filter, numStages, standard_coeffs, M->pState); 
+		arm_biquad_cascade_df2T_init_f32(&M->filter, numStages, standard_coeffs, M->pState); 
 	
 	}
 	
-	
+void Motor_PID_init(
+	struct Motor *M,
+	float iGain,
+	float pGain,
+	float dGain) {
+		
+		// PASS PARAMETERS TO STRUCT
+		M->iGain = iGain;
+		M->pGain = pGain;
+		M->dGain = dGain;
+		
+		
+		
+		
+		
+	}
 	
