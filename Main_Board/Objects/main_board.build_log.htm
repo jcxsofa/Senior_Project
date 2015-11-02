@@ -28,26 +28,8 @@ Project File Date:  11/01/2015
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
 compiling adc_1.c...
-compiling tim_13.c...
-tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-320;
-tim_13.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_13.c: 2 warnings, 0 errors
 compiling tim_5.c...
 compiling tim_9.c...
-compiling tim_10.c...
-tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-9600;
-tim_10.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_10.c: 2 warnings, 0 errors
-compiling main.c...
-main.c(117): warning:  #177-D: variable "test_input" was declared but never referenced
-  	int test_input[blocksize];
-main.c: 1 warning, 0 errors
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -65,13 +47,59 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 5 warnings, 0 errors
+compiling tim_10.c...
+tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-9600;
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_10.c: 2 warnings, 0 errors
+compiling tim_13.c...
+tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-320;
+tim_13.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_13.c: 2 warnings, 0 errors
+compiling main.c...
+main.c(117): warning:  #177-D: variable "test_input" was declared but never referenced
+  	int test_input[blocksize];
+main.c: 1 warning, 0 errors
 assembling startup_stm32f407xx.s...
 compiling adc_2.c...
 compiling adc_3.c...
+compiling Motor.c...
+Motor.h(59): warning:  #1-D: last line of file ends without a newline
+  #endif // MOTOR_H
+Motor.c(72): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		M->integral += (error*
+elta_t);
+Motor.c(75): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	derivative = (error - M->prev_error)/
+elta_t;
+Motor.c(77): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	pid_result = 
+Gain*error + iGain*M->integral + dGain*derivative;
+Motor.c(77): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	pid_result = 
+Gain*error + 
+Gain*M->integral + dGain*derivative;
+Motor.c(77): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	pid_result = 
+Gain*error + 
+Gain*M->integral + 
+Gain*derivative;
+Motor.c(67): warning:  #177-D: variable "new_ccr" was declared but never referenced
+  	int new_ccr;
+Motor.c: 7 warnings, 0 errors
 compiling system_stm32f4xx.c...
 linking...
-Program Size: Code=1532 RO-data=424 RW-data=40 ZI-data=1664  
-".\Objects\main_board.axf" - 0 Error(s), 10 Warning(s).
+.\Objects\main_board.axf: Error: L6200E: Symbol pState multiply defined (by motor.o and main.o).
+.\Objects\main_board.axf: Error: L6200E: Symbol standard_coeffs multiply defined (by motor.o and main.o).
+Not enough information to list image symbols.
+Not enough information to list the image map.
+Finished: 2 information, 0 warning and 2 error messages.
+".\Objects\main_board.axf" - 2 Error(s), 17 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -107,7 +135,8 @@ Package Vendor: Keil
       Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
       Source file:   MDK\Device\Source\ARM\system_stm32f4xx.c
-Build Time Elapsed:  00:00:01
+Target not created.
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

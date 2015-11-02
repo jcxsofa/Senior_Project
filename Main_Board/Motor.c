@@ -13,8 +13,8 @@
 #define numStages 2
 
 float32_t standard_coeffs [5 * numStages] = {
-	0.0001,   -0.0002,    0.0001,   -1.9599,    0.9605,
-    1.0000,   -1.9628,    1.0000,   -1.9826,    0.9839};
+	0.0001,	 -0.0002,		0.0001,	 -1.9599,		0.9605,
+		1.0000,	 -1.9628,		1.0000,	 -1.9826,		0.9839};
 //q31_t pCoeffs [5 * 2];
 //q63_t pState [4 * 2];
 //uint8_t postShift = 0;
@@ -39,25 +39,47 @@ void Motor_init(
 		M->Encoder_Speed = 0;
 		M->Desired_Speed = 0;
 		
+		// SET PID INITIAL VALUES
+		M->integral = 0;
+		M->prev_error = 0;
+		
 		// INITIALIZED IIR FILTER FOR CURRENT SENSING
 		arm_biquad_cascade_df2T_init_f32(&M->filter, numStages, standard_coeffs, M->pState); 
 	
 	}
 	
-void Motor_PID_init(
+void Motor_PWM_init(
 	struct Motor *M,
-	float iGain,
-	float pGain,
-	float dGain) {
-		
-		// PASS PARAMETERS TO STRUCT
-		M->iGain = iGain;
-		M->pGain = pGain;
-		M->dGain = dGain;
-		
-		
-		
-		
-		
+	TIM_TypeDef * TIMx,
+	char channel) {
+
+		// COPY DATA TO STRUCT
+		M->TIMx = TIMx;
+		M->channel = channel;
+
 	}
+	
+void Motor_Update_PID(struct Motor *M){
+
+	float error;
+	float derivative;
+	float pid_result;
+	int new_ccr;
+	
+	error = M->Desired_Speed - M->BEMF_Speed;
+	
+	if(abs(error) > epsilon){
+		M->integral += (error*delta_t);
+	}
+	
+	derivative = (error - M->prev_error)/delta_t;
+	
+	pid_result = pGain*error + iGain*M->integral + dGain*derivative;
+
+	if(pid_result > MAX) pid_result = MAX;
+	if(pid_result < MIN) pid_result = MIN;
+	
+	M->prev_error = error;
+	
+}		
 	
