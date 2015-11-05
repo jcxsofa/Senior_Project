@@ -6,13 +6,13 @@
 #include "arm_math.h"
 #include <stdlib.h>
 
-#define iGain .005
-#define pGain .1
-#define dGain .01
-#define epsilon .01
-#define delta_t .01 // 100ms
-#define MAX 4
-#define MIN -4
+#define iGain .005f
+#define pGain .1f
+#define dGain .01f
+#define epsilon .01f
+#define delta_t .01f // 100ms
+#define MAX 12
+#define MIN -12
 
 struct Motor {
 	
@@ -31,9 +31,9 @@ struct Motor {
 	float integral;
 	float prev_error;
 	
-	// ASSOCIATED TIMER AND CHANNEL
-	TIM_TypeDef * TIMx;
-	char channel;
+	// TIMER DATA
+	char wheel;
+	float duty_cycle;
 	
 	// Low Pass IIR Filter
 	arm_biquad_cascade_df2T_instance_f32 filter;
@@ -46,14 +46,15 @@ void Motor_init(
 	float No_Load_Current,
 	float No_Load_Rpm,
 	float Stall_Current,
-	float Resistance);
+	float Resistance,
+	char wheel);
 	
-void Motor_PWM_init(
+void Motor_Calc_Speed(
 	struct Motor *M,
-	TIM_TypeDef * TIMx,
-	// CHANNEL USED FOR FORWARD MOTION
-	char channel);
+	float filter_output);
 	
 void Motor_Update_PID(struct Motor *M);
+	
+void Motor_1_ISR(struct Motor *M);
 
 #endif // MOTOR_H

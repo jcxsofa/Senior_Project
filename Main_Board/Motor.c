@@ -26,13 +26,18 @@ void Motor_init(
 	float No_Load_Current,
 	float No_Load_Rpm,
 	float Stall_Current,
-	float Resistance) {
+	float Resistance,
+	char wheel) {
 		
 		// COPY INPUT ARGUMENTS TO STRUCT DATA
 		M->No_Load_Current = No_Load_Current;
 		M->No_Load_Rpm = No_Load_Rpm;
 		M->Stall_Current = Stall_Current;
 		M->Resistance = Resistance;
+		M->wheel = wheel;
+		
+		// SET INITIAL DUTYCYCLE
+		M->duty_cycle = 0;
 		
 		// INTIALIZE SPEED DATA VALUES
 		M->BEMF_Speed = 0;
@@ -48,15 +53,24 @@ void Motor_init(
 	
 	}
 	
-void Motor_PWM_init(
+void Motor_Calc_Speed(
 	struct Motor *M,
-	TIM_TypeDef * TIMx,
-	char channel) {
+	float filter_output){
+		
+		float current, speed;
 
-		// COPY DATA TO STRUCT
-		M->TIMx = TIMx;
-		M->channel = channel;
-
+		// CONVERT FILTER OUTPUT TO CURRENT
+		filter_output /= 0xFFF;
+		filter_output *= 3;
+		filter_output /= 50;
+		current = filter_output / 0.01;
+		
+		// DETERMINE SPEED
+		speed = ((M->duty_cycle)/(current * (M->Resistance))) * 10.75;
+		
+		// STORE INTO STRUCT
+		M->BEMF_Speed = speed;
+		
 	}
 	
 void Motor_Update_PID(struct Motor *M){
@@ -64,22 +78,146 @@ void Motor_Update_PID(struct Motor *M){
 	float error;
 	float derivative;
 	float pid_result;
-	int new_ccr;
 	
+	// CALCULATE NEW ERROR
 	error = M->Desired_Speed - M->BEMF_Speed;
 	
+	// IF ERROR IS SMALL DON'T DO INTEGRAL
 	if(abs(error) > epsilon){
 		M->integral += (error*delta_t);
 	}
 	
+	// CALCULATE DERIVATIVE TERM
 	derivative = (error - M->prev_error)/delta_t;
 	
-	pid_result = pGain*error + iGain*M->integral + dGain*derivative;
+	// CALCULATE PID RESULT
+	pid_result = pGain*error;// + iGain*M->integral + dGain*derivative;
 
 	if(pid_result > MAX) pid_result = MAX;
 	if(pid_result < MIN) pid_result = MIN;
 	
+	// ASSIGN NEW ERROR AS OLD ERROR
 	M->prev_error = error;
 	
-}		
+	// UPDATE DUTY CYCLE
+	M->duty_cycle =  pid_result / MAX;
 	
+}		
+
+void Motor_2_ISR(struct Motor *M) {
+	
+	int CCR, OR, AND, XOR;
+	float input[1];
+	float output[1];
+	float d_cyc;
+	float32_t sum = 0;	
+	
+		// SELECT ADC_1 CHANNEL 5 FOR MOTOR 1
+		ADC1->SQR3 |= 5;	
+
+		// BEGIN CONVERSIONS
+		ADC1->CR2 |= ADC_CR2_SWSTART;
+		
+		// WAIT FOR END OF CONVERSION
+		while ((ADC1->SR & ADC_SR_EOC) == 0)
+
+		// RESET INTERRUPT ENABLE
+		ADC1->CR1 |= ADC_CR1_EOCIE;
+		
+		// CLEAR EOC AGAIN?
+		ADC1->SR &= ~ADC_SR_EOC;
+		
+		// GET INPUT FROM ADC
+		input[0] = ADC1->DR;
+	
+	// DO IIR FILTERING
+	//arm_biquad_cascade_df2T_f32(&(M->filter), input, output, blocksize);
+	
+	// DO NO FILTERING
+	output[0] = input[0];
+	
+	// DETERMINE NEW SPEED
+	Motor_Calc_Speed(M, output[0]);
+	
+	// RUN PID LOOP
+	Motor_Update_PID(M);
+	
+	// UPDATE TIMERS
+	
+	d_cyc = M->duty_cycle;
+	
+	if ( d_cyc >= 0 ) {
+		CCR = TIM5->CCR3 &= TIM_CCR3_CCR3;
+		AND = CCR & (int)(d_cyc * 4800);
+		OR = CCR | (int)(d_cyc * 4800);
+		XOR = AND ^ OR;
+		TIM5->CCR3 ^= XOR;
+	}
+	
+	else {
+		CCR = TIM5->CCR4 &= TIM_CCR4_CCR4;
+		AND = CCR & (int)(d_cyc * -4800);
+		OR = CCR | (int)(d_cyc * -4800);
+		XOR = AND ^ OR;
+		TIM5->CCR4 ^= XOR;
+	}
+}
+
+void Motor_1_ISR(struct Motor *M) {
+
+	int CCR, OR, AND, XOR;
+	float input[1];
+	float output[1];
+	float d_cyc;
+	float32_t sum = 0;	
+	
+		// SELECT ADC_1 CHANNEL 4 FOR MOTOR 1
+		ADC1->SQR3 |= 4;	
+
+		// BEGIN CONVERSIONS
+		ADC1->CR2 |= ADC_CR2_SWSTART;
+		
+		// WAIT FOR END OF CONVERSION
+		while ((ADC1->SR & ADC_SR_EOC) == 0)
+
+		// RESET INTERRUPT ENABLE
+		ADC1->CR1 |= ADC_CR1_EOCIE;
+		
+		// CLEAR EOC AGAIN?
+		ADC1->SR &= ~ADC_SR_EOC;
+		
+		// GET INPUT FROM ADC
+		input[0] = ADC1->DR;
+	
+	// DO IIR FILTERING
+	//arm_biquad_cascade_df2T_f32(&(M->filter), input, output, blocksize);
+	
+	// DO NO FILTERING
+	output[0] = input[0];
+	
+	// DETERMINE NEW SPEED
+	Motor_Calc_Speed(M, output[0]);
+	
+	// RUN PID LOOP
+	Motor_Update_PID(M);
+	
+	// UPDATE TIMERS
+	
+	d_cyc = M->duty_cycle;
+	
+	if ( d_cyc >= 0 ) {
+		CCR = TIM5->CCR1 &= TIM_CCR1_CCR1;
+		AND = CCR & (int)(d_cyc * 4800);
+		OR = CCR | (int)(d_cyc * 4800);
+		XOR = AND ^ OR;
+		TIM5->CCR1 ^= XOR;
+	}
+	
+	else {
+		CCR = TIM5->CCR2 &= TIM_CCR2_CCR2;
+		AND = CCR & (int)(d_cyc * -4800);
+		OR = CCR | (int)(d_cyc * -4800);
+		XOR = AND ^ OR;
+		TIM5->CCR2 ^= XOR;
+	}
+}

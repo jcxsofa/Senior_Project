@@ -14,3 +14,5 @@
 .\objects\main.o: tim_13.h
 .\objects\main.o: adc_1.h
 .\objects\main.o: adc_2.h
+.\objects\main.o: Motor.h
+.\objects\main.o: tim_5.h

@@ -29,7 +29,6 @@ Project File Date:  11/01/2015
 Rebuild target 'Target 1'
 compiling adc_1.c...
 compiling tim_5.c...
-compiling tim_9.c...
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -47,6 +46,7 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 5 warnings, 0 errors
+compiling tim_9.c...
 compiling tim_10.c...
 tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
   	
@@ -62,44 +62,30 @@ tim_13.c(29): warning:  #1-D: last line of file ends without a newline
   }
 tim_13.c: 2 warnings, 0 errors
 compiling main.c...
-main.c(117): warning:  #177-D: variable "test_input" was declared but never referenced
-  	int test_input[blocksize];
-main.c: 1 warning, 0 errors
+Motor.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif // MOTOR_H
+main.c(223): warning:  #177-D: variable "value" was declared but never referenced
+  	int value = 0;
+main.c: 2 warnings, 0 errors
 assembling startup_stm32f407xx.s...
 compiling adc_2.c...
 compiling adc_3.c...
-compiling Motor.c...
-Motor.h(59): warning:  #1-D: last line of file ends without a newline
-  #endif // MOTOR_H
-Motor.c(72): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  		M->integral += (error*
-elta_t);
-Motor.c(75): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  	derivative = (error - M->prev_error)/
-elta_t;
-Motor.c(77): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  	pid_result = 
-Gain*error + iGain*M->integral + dGain*derivative;
-Motor.c(77): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  	pid_result = 
-Gain*error + 
-Gain*M->integral + dGain*derivative;
-Motor.c(77): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  	pid_result = 
-Gain*error + 
-Gain*M->integral + 
-Gain*derivative;
-Motor.c(67): warning:  #177-D: variable "new_ccr" was declared but never referenced
-  	int new_ccr;
-Motor.c: 7 warnings, 0 errors
 compiling system_stm32f4xx.c...
+compiling Motor.c...
+Motor.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif // MOTOR_H
+Motor.c(67): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		current = filter_output / 0.01;
+Motor.c(70): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		speed = ((M->duty_cycle)/(current * (M->Resistance))) * 10.75;
+Motor.c(82): warning:  #550-D: variable "derivative" was set but never used
+  	float derivative;
+Motor.c(116): warning:  #177-D: variable "sum" was declared but never referenced
+  	float32_t sum = 0;	
+Motor.c: 5 warnings, 0 errors
 linking...
-.\Objects\main_board.axf: Error: L6200E: Symbol pState multiply defined (by motor.o and main.o).
-.\Objects\main_board.axf: Error: L6200E: Symbol standard_coeffs multiply defined (by motor.o and main.o).
-Not enough information to list image symbols.
-Not enough information to list the image map.
-Finished: 2 information, 0 warning and 2 error messages.
-".\Objects\main_board.axf" - 2 Error(s), 17 Warning(s).
+Program Size: Code=8040 RO-data=696 RW-data=112 ZI-data=1704  
+".\Objects\main_board.axf" - 0 Error(s), 16 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -135,7 +121,6 @@ Package Vendor: Keil
       Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
       Source file:   MDK\Device\Source\ARM\system_stm32f4xx.c
-Target not created.
 Build Time Elapsed:  00:00:02
 </pre>
 </body>

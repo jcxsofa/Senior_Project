@@ -142,7 +142,7 @@ void tim_5_gpio_init(void){
 }
 
 	/* TIMER 5 CONFIGURATION */
-void TIM_5_init(void){
+void tim_5_config(void){
 	
 	// ENABLE TIMER 5 CLOCK
 	RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;

@@ -7,6 +7,7 @@
 #include "adc_1.h"
 #include "adc_2.h"
 #include "Motor.h"
+#include "tim_5.h"
 
 void sysclk_Configure(void);
 void io_Configure(void);
@@ -14,8 +15,23 @@ void adc_Configure(void);
 void dac_Configure(void);
 void timer4_Configure(void);
 
+#define BufferSize 32
+
+void uart_gpio_init(void);
+void USART_Init(USART_TypeDef * USARTx);
+void USART_Write(USART_TypeDef * USARTx, uint8_t * buffer, int nBytes);
+void USART_IRQHandler(USART_TypeDef * USARTx,
+											uint8_t * buffer,
+											uint8_t * pRx_counter);
+void USART1_IRQHandler(void);
+void decode(uint8_t * buffer);
+
 #define blocksize 1
 
+uint8_t USART1_Buffer_Rx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
+uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
+uint8_t Rx1_Counter = 7;
+int newspeed;
 struct Motor M1;
 
 int main(void)
@@ -24,14 +40,27 @@ int main(void)
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 	
-	Motor_init(&M1, .4, 120, 11.4, 1.6);
+	Motor_init(&M1, .4, 120, 11.4, 1.6, 1);
 	
 	adc_1_gpio_init();
 	adc_1_config();
 	
+	tim_5_gpio_init();
+	tim_5_config();
+	
+	uart_gpio_init();
+	
+	// INITIALIZE USART1
+	USART_Init(USART1);
+	
+	// SET PRIORITY AND ENABLE INTERRUPT
+	NVIC_SetPriority(USART1_IRQn, 1);
+	NVIC_EnableIRQ(USART1_IRQn);
+	
+	M1.Desired_Speed = 50;
+	
 //	adc_2_gpio_init();
 //	adc_2_config();
-	
 	
 	tim_13_config();
 	
@@ -77,6 +106,124 @@ void sysclk_Configure(void){
 	
 }
 
+void TIM8_UP_TIM13_IRQHandler (void) {
+	
+		Motor_1_ISR(&M1);
+	
+	//if (TIM4->SR && TIM_SR_UIF)
+	TIM13->SR ^= TIM_SR_UIF;
+
+}
+
+
+
+
+void uart_gpio_init(void) {
+	
+	// CONFIGURE GPIOA PINS 9 AND 10 AS ALTERNATE FUNCTION
+	GPIOA->MODER |= ((0x2 << 9*2) | (0x2 << 10*2));
+	
+	// CONFIGURE ALTERNATE FUNCTIONS AS USART1
+	GPIOA->AFR[1] |= ((0x7 << 1*4) | (0x7 << 2*4));
+	
+	// CONFIGURE PIN 10 AS OPEN DRAIN
+	GPIOA->OTYPER |= (1 << 10);
+	
+	// CONFIGURE OUTPUT SPEED TO 40MHz
+	GPIOA->OSPEEDR |= ((0x3 << 9*2) | (0x3 << 10*2));
+	
+	// CONFIGURE PINS 9 AND 10 AS NO PULLUP/PULLDOWN
+	GPIOA->PUPDR  &= 0xFFC3FFFF;
+	
+}
+
+void USART_Init(USART_TypeDef * USARTx) {
+	
+	// CONFIGURE HC-05 DEFAULTS
+	// 8 DATA BITS, 9600 BAUD, 1 STOP BIT, NO PARITY
+	
+	// CONFIGURE 8 BIT WORD LENGTH
+	USARTx->CR1 &= ~USART_CR1_M;
+	
+	// CONFIGURE OVERSAMPLING OF 16 TIMES BAUD RATE
+	USARTx->CR1 &= ~USART_CR1_OVER8;
+	
+	// CONFIGURE A SINGLE STOP BIT
+	USARTx->CR2 &= ~USART_CR2_STOP;
+	
+	// CONFIGURE 9600 BAUD RATE
+	USARTx->BRR = 0x683;
+	
+	// ENABLE TRANSMITTER AND RECIEVER
+	USARTx->CR1= (USART_CR1_RE | USART_CR1_TE);
+	
+	// ENABLE USART
+	USARTx->CR1 |= USART_CR1_UE;
+	
+	// ENABLE RECIEVED DATA READY INTERRUPT
+	USARTx->CR1 |= USART_CR1_RXNEIE;
+	
+}
+
+void USART_Write(USART_TypeDef * USARTx, uint8_t * buffer, int nBytes) {
+	int i;
+		
+	// TXE IS CLEARED BY A WRITE TO THE USART_DR REGISTER
+	// TXE IS SET BY HARDWARE WHEN THE CONTENT OF THE TDR
+	// REGISTER HAS BEEN TRANSFERRED INTO THE SHIFT REGISTER
+	
+	for(i=0; i < nBytes; i++) {
+		// WAIT UNTIL TXE (TX enpty) IS SET
+		// WRITING USART_DR AUTOMATICALLY CLEARS THE TXE FLAG
+		while(!(USARTx->SR & USART_SR_TXE));
+		USARTx->DR = (buffer[i] & 0x1FF);	
+	}
+	
+	// WAIT UNTIL TC BIT IS SET
+	while(!(USARTx->SR & USART_SR_TC));
+	USARTx->SR &= ~USART_SR_TC;
+}
+
+void USART_IRQHandler(USART_TypeDef * USARTx,
+											uint8_t * buffer,
+											uint8_t * pRx_counter) {
+	
+	if(USARTx->SR & USART_SR_RXNE) {
+		// going to try resetting counter to always begin at beginning of buffer
+		//(*pRx_counter) = 0;
+		
+		// READING USART_DR WILL ALSO CLEAR THE RXNE FLAG
+		buffer[*pRx_counter] = USARTx->DR;
+		(*pRx_counter)++;
+		if((*pRx_counter) >= BufferSize)
+			(*pRx_counter) = 0;
+	}
+}
+
+
+void decode(uint8_t * buffer) {
+	
+	char number[9];
+	int value = 0;
+	int i = 0;
+	
+	if (Rx1_Counter > 7) {
+		while (i<9) {
+			number[i] = buffer[i];
+		}
+		
+			M1.Desired_Speed = atoi(number);
+		
+	}
+		
+	Rx1_Counter = 0;
+	
+}
+
+void USART1_IRQHandler(void) {
+	USART_IRQHandler(USART1, USART1_Buffer_Rx, &Rx1_Counter);
+	decode(USART1_Buffer_Rx);
+}
 void dac_Configure(void) {
 	
 	// ENABLE DAC CLOCK
@@ -91,44 +238,4 @@ void dac_Configure(void) {
 	// ENABLE DAC CONVESION
 	DAC->CR |= DAC_CR_EN1;
 	
-}
-
-void TIM8_UP_TIM13_IRQHandler (void) {
-	
-	float32_t test_inputf[blocksize];
-	float32_t test_outputf[blocksize];
-	int x;
-	float32_t sum = 0;
-		
-		
-	for (x = 0; x < blocksize; x++) {
-
-		// BEGIN CONVERSIONS
-		ADC1->CR2 |= ADC_CR2_SWSTART;
-		
-		while ((ADC1->SR & ADC_SR_EOC) == 0)
-
-		// RESET INTERRUPT ENABLE
-		ADC1->CR1 |= ADC_CR1_EOCIE;
-		
-		// CLEAR EOC AGAIN?
-		ADC1->SR &= ~ADC_SR_EOC;
-		
-		test_inputf[x] = ADC1->DR;
-
-	}
-
-	arm_biquad_cascade_df2T_f32(&M1.filter, test_inputf, test_outputf, blocksize);
-	
-	for (x = 0; x < blocksize; x++) {
-		sum += test_outputf[x];
-	}
-	
-	sum /= blocksize;
-	
-	sum = (sum * 3) / 0xFFF;
-	
-	//if (TIM4->SR && TIM_SR_UIF)
-	TIM13->SR ^= TIM_SR_UIF;
-
 }
