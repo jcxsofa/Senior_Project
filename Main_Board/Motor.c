@@ -221,3 +221,56 @@ void Motor_1_ISR(struct Motor *M) {
 		TIM5->CCR2 ^= XOR;
 	}
 }
+
+void Motor_1_Change_Speed(struct Motor *M, float speed) {
+	
+	float old_speed = M->Desired_Speed;
+	int i = 0;
+	
+	if ((old_speed <= 0) && (speed > 0)) {
+		
+		/* PAUSE MOTOR TO PREVENT SHOOT THROUGH */
+		
+		// CLEAR ALL CCR VALUES
+		TIM5->CCR1 = 0;
+		TIM5->CCR2 = 0;
+		
+		// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+		GPIOE->ODR |= (1 << 7);
+		GPIOE->ODR |= (1 << 8);
+		
+		// DEAD TIME TO PREVENT SHOOT THROUGH
+		for (i=0; i<100000; i++);
+		
+		// SETUP LOWER GATES TO RUN FORWARDS
+		GPIOE->ODR &= ~(1 << 7);
+		
+		// UPDATE SPEED AND RUN ISR TO UPDATE CONTROLLER
+		M->Desired_Speed = speed;
+		Motor_1_ISR(M);	
+	}
+	
+	if ((old_speed >=0) && (speed < 0)) {
+		
+		/* PAUSE MOTOR TO PREVENT SHOOT THROUGH */
+		
+		// CLEAR ALL CCR VALUES
+		TIM5->CCR1 = 0;
+		TIM5->CCR2 = 0;
+		
+		// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+		GPIOE->ODR |= (1 << 7);
+		GPIOE->ODR |= (1 << 8);
+		
+		// DEAD TIME TO PREVENT SHOOT THROUGH
+		for (i=0; i<100000; i++);
+		
+		// SETUP LOWER GATES TO RUN BACKWARDS
+		GPIOE->ODR &= ~(1 << 8);
+		
+		// UPDATE SPEED AND RUN ISR TO UPDATE CONTROLLER
+		M->Desired_Speed = speed;
+		Motor_1_ISR(M);	
+		
+	}
+}

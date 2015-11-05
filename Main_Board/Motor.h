@@ -53,8 +53,24 @@ void Motor_Calc_Speed(
 	struct Motor *M,
 	float filter_output);
 	
+
+	
 void Motor_Update_PID(struct Motor *M);
 	
 void Motor_1_ISR(struct Motor *M);
+
+void Motor_2_ISR(struct Motor *M);
+	
+void Motor_3_ISR(struct Motor *M);
+	
+void Motor_4_ISR(struct Motor *M);
+	
+void Motor_1_Change_Speed(struct Motor *M, float speed);
+	
+void Motor_2_Change_Speed(struct Motor *M, float speed);
+	
+void Motor_3_Change_Speed(struct Motor *M, float speed);
+	
+void Motor_4_Change_Speed(struct Motor *M, float speed);
 
 #endif // MOTOR_H
