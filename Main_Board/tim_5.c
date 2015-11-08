@@ -152,7 +152,7 @@ void tim_5_config(void){
 	TIM5->PSC |= PSC_5;
 	
 	// AUTO RELOAD REGISTER
-	TIM5->ARR &= ~TIM_ARR_ARR;
+	TIM5->ARR &= 0;
 	TIM5->ARR |= AR_5;
 	
 	// CONFIGURE PWM MODE TO MODE 1 CHANNEL 1

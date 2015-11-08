@@ -7,7 +7,7 @@ void tim_13_config(void){
 	
 	// TIMER 12 PRESCALER FOR 20KHz FREQ
 	TIM13->PSC &= ~TIM_PSC_PSC;
-	TIM13->PSC |= 10;
+	TIM13->PSC |= 0;
 	
 	// AUTO RELOAD REGISTER
 	TIM13->ARR &= ~TIM_ARR_ARR;

@@ -3,11 +3,13 @@
 #include "stm32f407xx.h"
 #include "arm_math.h"
 #include <stdlib.h>
+#include <string.h>
 #include "tim_13.h"
 #include "adc_1.h"
 #include "adc_2.h"
 #include "Motor.h"
 #include "tim_5.h"
+#include "tim_1.h"
 
 void sysclk_Configure(void);
 void io_Configure(void);
@@ -16,7 +18,7 @@ void dac_Configure(void);
 void timer4_Configure(void);
 
 #define BufferSize 32
-
+void dac_Configure(void);
 void uart_gpio_init(void);
 void USART_Init(USART_TypeDef * USARTx);
 void USART_Write(USART_TypeDef * USARTx, uint8_t * buffer, int nBytes);
@@ -26,7 +28,7 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 void USART1_IRQHandler(void);
 void decode(uint8_t * buffer);
 
-#define blocksize 1
+//#define blocksize 1
 
 uint8_t USART1_Buffer_Rx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
 uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
@@ -37,16 +39,22 @@ struct Motor M1;
 int main(void)
 {
 		
+	int transmit;
+	
+	
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 	
-	Motor_init(&M1, .4, 120, 11.4, 1.6, 1);
+	Motor_init(&M1, .265, 151, 11.4, 1.379, 1);
 	
 	adc_1_gpio_init();
 	adc_1_config();
 	
 	tim_5_gpio_init();
 	tim_5_config();
+	
+	tim_1_gpio_init();
+	tim_1_config();
 	
 	uart_gpio_init();
 	
@@ -57,7 +65,9 @@ int main(void)
 	NVIC_SetPriority(USART1_IRQn, 1);
 	NVIC_EnableIRQ(USART1_IRQn);
 	
-	M1.Desired_Speed = 50;
+	M1.Desired_Speed = 120;
+	
+	//dac_Configure();
 	
 //	adc_2_gpio_init();
 //	adc_2_config();
@@ -66,6 +76,11 @@ int main(void)
 	
 	
 	while(1){
+		//Motor_1_ISR(&M1);
+		//transmit = M1.duty_cycle * 100;
+		//sprintf(USART1_Buffer_Tx, "%d", transmit);
+		//USART1_Buffer_Tx[4] = '\n';
+		//USART_Write(USART1, USART1_Buffer_Tx, 7);
 	}	
 }
 
@@ -229,11 +244,17 @@ void dac_Configure(void) {
 	// ENABLE DAC CLOCK
 	RCC->APB1ENR |= RCC_APB1ENR_DACEN;
 	
+	// ENABLE GPIOC CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+	
 	// ENABLE DAC TRIGGERING
 	DAC->CR= DAC_CR_TEN1;
 	
 	// SELECT SOFTWARE TRIGGER FOR DAC CONVERSION
 	DAC->CR |= DAC_CR_TSEL1;
+	
+	// CONFIGURE PC0 AS ANALOG
+	GPIOC->MODER |= GPIO_MODER_MODER0;
 	
 	// ENABLE DAC CONVESION
 	DAC->CR |= DAC_CR_EN1;

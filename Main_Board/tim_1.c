@@ -1,0 +1,100 @@
+#include "tim_1.h"
+
+void tim_1_gpio_init(void) {
+	
+	/*
+		TIMER ONE UTILIZES GPIO PORT E PINS
+		9 AND 11. THEY ARE CONFIGURED AS PUSH
+		PULL, ALTERNATE FUNCTION, NO PULL UP
+		OR PULL DOWN AND THE ALTERNATE FUNCTION
+		OF TIMER 1.
+	*/
+	
+	// ENABLE GPIOA CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
+	
+	/* SET AS PUSH PULL */
+	
+	// PE9
+	GPIOE->OTYPER &= ~(1 << 9*1);
+	
+	// PE11
+	GPIOE->OTYPER &= ~(1 << 11*1);
+
+	/* SET AS ALTERNATE FUNCTION */
+	
+	// PE9
+	GPIOE->MODER &= ~(3 << 9*2);
+	GPIOE->MODER |= (2 << 9*2);
+	
+	// PE11
+	GPIOE->MODER &= ~(3 << 11*2);
+	GPIOE->MODER |= (2 << 11*2);
+	
+	/* SET AF AS TIM 1*/
+	
+	// PE9
+	GPIOE->AFR[1] &= ~(0xF << (9-8)*4);
+	GPIOE->AFR[1] |= (2 << (9-8)*4);
+	
+	// PE11
+	GPIOE->AFR[1] &= ~(0xF << (11-8)*4);
+	GPIOE->AFR[1] |= (2 << (11-8)*4);
+	
+	/* SET AS NO PULL-UP PULL-DOWN */
+	
+	// PE9
+	GPIOE->PUPDR &= ~(3 << 9*2);
+	
+	// PE11
+	GPIOE->PUPDR &= ~(3 << 11*2);
+	
+}
+	
+
+
+void tim_1_config(void) {
+	
+	
+	// ENABLE TIMER 5 CLOCK
+	RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;	
+	
+	// SELECT CHANNEL 1 CAPTURE INPUT
+	TIM1->CCMR1 &= ~(3 << 0);
+	TIM1->CCMR1 |= ~(1 << 0);
+	
+	// SELECT CHANNEL 2 CAPTURE INPUT
+	TIM1->CCMR1 &= ~(3 << 8);
+	TIM1->CCMR1 |= ~(1 << 8);
+	
+	// SELECT CHANNEL 1 AS ACTIVE HIGH
+	TIM1->CCER &= ~(1 << 1);
+	
+	// SELECT CHANNEL 2 AS ACTIVE HIGH
+	TIM1->CCER &= ~(1 << 5);
+	
+	// SET SOMETING ELSE ON CHANNEL 1 ACTIVE HIGH
+	TIM1->CCER &= ~(1 << 3);
+	
+	// SAME FOR CHANNEL 2
+	TIM1->CCER &= ~(1 << 7);
+	
+	// SET NO INPUT FILTERING CHANNEL 1
+	TIM1->CCMR1 &= ~(0xF << 4);
+	
+	// SET NO INPUT FILTERING CHANNEL 2
+	TIM1->CCMR1 &= ~(0xF << 12);
+	
+	// SLAVE MODE SELECTION
+	TIM1->SMCR &= ~(7 << 0);
+	TIM1->SMCR |= (3 << 0);
+	
+	// CONFIGURE ARR
+	TIM1->ARR |= ~0;
+	
+	// ENABLE TIMER
+	TIM1->CR1 |= 1;
+	
+	
+}
+

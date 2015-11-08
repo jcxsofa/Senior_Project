@@ -27,23 +27,6 @@ Project File Date:  11/01/2015
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-compiling adc_1.c...
-compiling tim_5.c...
-compiling tim_10.c...
-tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-9600;
-tim_10.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_10.c: 2 warnings, 0 errors
-compiling tim_13.c...
-tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-320;
-tim_13.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_13.c: 2 warnings, 0 errors
-compiling tim_9.c...
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -61,37 +44,62 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 5 warnings, 0 errors
-compiling main.c...
-Motor.h(76): warning:  #1-D: last line of file ends without a newline
-  #endif // MOTOR_H
-main.c(207): warning:  #177-D: variable "value" was declared but never referenced
-  	int value = 0;
-main.c(241): warning:  #1-D: last line of file ends without a newline
+compiling tim_10.c...
+tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-9600;
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
   }
-main.c: 3 warnings, 0 errors
+tim_10.c: 2 warnings, 0 errors
+compiling tim_1.c...
+tim_1.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_1_H_
+tim_1.c: 1 warning, 0 errors
+compiling tim_5.c...
+compiling tim_13.c...
+tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-320;
+tim_13.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_13.c: 2 warnings, 0 errors
+compiling tim_9.c...
+compiling main.c...
+Motor.h(80): warning:  #1-D: last line of file ends without a newline
+  #endif // MOTOR_H
+tim_1.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_1_H_
+main.c(42): warning:  #177-D: variable "transmit" was declared but never referenced
+  	int transmit;
+main.c(222): warning:  #177-D: variable "value" was declared but never referenced
+  	int value = 0;
+main.c(262): warning:  #1-D: last line of file ends without a newline
+  }
+main.c: 5 warnings, 0 errors
 assembling startup_stm32f407xx.s...
+compiling adc_1.c...
 compiling adc_2.c...
 compiling adc_3.c...
 compiling system_stm32f4xx.c...
 compiling Motor.c...
-Motor.h(76): warning:  #1-D: last line of file ends without a newline
+Motor.h(80): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
-Motor.c(66): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  		current = filter_output / 0.01;
-Motor.c(69): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  		speed = ((M->duty_cycle)/(current * (M->Resistance))) * 10.75;
-Motor.c(79): warning:  #550-D: variable "derivative" was set but never used
+Motor.c(59): warning:  #550-D: variable "other" was set but never used
+  		float current, speed, other;
+Motor.c(85): warning:  #550-D: variable "derivative" was set but never used
   	float derivative;
-Motor.c(113): warning:  #177-D: variable "sum" was declared but never referenced
+Motor.c(128): warning:  #177-D: variable "sum" was declared but never referenced
   	float32_t sum = 0;	
-Motor.c(172): warning:  #177-D: variable "sum" was declared but never referenced
+Motor.c(186): warning:  #177-D: variable "d_cyc" was declared but never referenced
+  	float d_cyc;
+Motor.c(188): warning:  #177-D: variable "sum" was declared but never referenced
   	float32_t sum = 0;	
-Motor.c(270): warning:  #1-D: last line of file ends without a newline
+Motor.c(315): warning:  #1-D: last line of file ends without a newline
   }
 Motor.c: 7 warnings, 0 errors
 linking...
-Program Size: Code=8044 RO-data=696 RW-data=112 ZI-data=1704  
-".\Objects\main_board.axf" - 0 Error(s), 19 Warning(s).
+Program Size: Code=5492 RO-data=696 RW-data=1476 ZI-data=3292  
+".\Objects\main_board.axf" - 0 Error(s), 22 Warning(s).
 
 <h2>Software Packages used:</h2>
 

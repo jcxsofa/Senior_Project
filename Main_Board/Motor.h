@@ -6,13 +6,16 @@
 #include "arm_math.h"
 #include <stdlib.h>
 
-#define iGain .005f
-#define pGain .1f
-#define dGain .01f
+#define iGain 500.0f
+#define pGain .05f
+#define dGain .000000000005f
 #define epsilon .01f
-#define delta_t .01f // 100ms
-#define MAX 12
-#define MIN -12
+#define delta_t .000020f // update period
+#define MAX 12.0f
+#define MIN -12.0f
+
+#define ntaps 351
+#define blocksize 50
 
 struct Motor {
 	
@@ -35,10 +38,11 @@ struct Motor {
 	char wheel;
 	float duty_cycle;
 	
-	// Low Pass IIR Filter
-	arm_biquad_cascade_df2T_instance_f32 filter;
+	// Low Pass FIR Filter
+	arm_fir_instance_f32 filter;
 	// STATE BUFFER
-	float32_t pState[4];
+	float32_t pstate[ntaps + blocksize - 1];
+	
 };
 
 void Motor_init(
@@ -65,7 +69,7 @@ void Motor_3_ISR(struct Motor *M);
 	
 void Motor_4_ISR(struct Motor *M);
 	
-void Motor_1_Change_Speed(struct Motor *M, float speed);
+void Motor_1_Change_DCYC(struct Motor *M, float DCYC);
 	
 void Motor_2_Change_Speed(struct Motor *M, float speed);
 	
