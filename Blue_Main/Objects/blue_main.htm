@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\blue_main.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\blue_main.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Mon Nov 09 15:07:42 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Mon Nov 09 16:18:11 2015
 <BR><P>
 <H3>Maximum Stack Usage =         24 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-USART1_IRQHandler &rArr; decode &rArr; USART_Write
+USART2_IRQHandler &rArr; decode &rArr; USART_Write
 <P>
 <H3>
 Functions with no stack information
@@ -119,8 +119,8 @@ Function Pointers
  <LI><a href="#[38]">TIM8_UP_TIM13_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[40]">UART4_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[41]">UART5_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
- <LI><a href="#[31]">USART1_IRQHandler</a> from main.o(i.USART1_IRQHandler) referenced from startup_stm32f407xx.o(RESET)
- <LI><a href="#[32]">USART2_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
+ <LI><a href="#[31]">USART1_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
+ <LI><a href="#[32]">USART2_IRQHandler</a> from main.o(i.USART2_IRQHandler) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[33]">USART3_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[53]">USART6_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[7]">UsageFault_Handler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
@@ -563,7 +563,7 @@ Global Symbols
 <P><STRONG><a name="[41]"></a>UART5_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
+<P><STRONG><a name="[31]"></a>USART1_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[33]"></a>USART3_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
@@ -625,8 +625,8 @@ Global Symbols
 <P><STRONG><a name="[5d]"></a>SystemInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, system_stm32f4xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
-<P><STRONG><a name="[31]"></a>USART1_IRQHandler</STRONG> (Thumb, 20 bytes, Stack size 4 bytes, main.o(i.USART1_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART1_IRQHandler &rArr; decode &rArr; USART_Write
+<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 20 bytes, Stack size 4 bytes, main.o(i.USART2_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART2_IRQHandler &rArr; decode &rArr; USART_Write
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;decode
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_IRQHandler
@@ -636,7 +636,7 @@ Global Symbols
 <P><STRONG><a name="[75]"></a>USART_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, main.o(i.USART_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_IRQHandler
 </UL>
-<BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 </UL>
 
 <P><STRONG><a name="[7a]"></a>USART_Init</STRONG> (Thumb, 52 bytes, Stack size 0 bytes, main.o(i.USART_Init))
@@ -649,7 +649,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;decode
 </UL>
 
-<P><STRONG><a name="[78]"></a>clock_Configure</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, main.o(i.clock_Configure))
+<P><STRONG><a name="[78]"></a>clock_Configure</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, main.o(i.clock_Configure))
 <BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -658,10 +658,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 </UL>
 
-<P><STRONG><a name="[79]"></a>gpio_Configure</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, main.o(i.gpio_Configure))
+<P><STRONG><a name="[79]"></a>gpio_Configure</STRONG> (Thumb, 98 bytes, Stack size 0 bytes, main.o(i.gpio_Configure))
 <BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 

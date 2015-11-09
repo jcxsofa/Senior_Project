@@ -6,9 +6,9 @@ void gpio_Configure(void);
 void USART_Write(USART_TypeDef * USARTx, uint8_t * buffer, int nBytes);
 void decode(uint8_t * buffer);
 
-uint8_t USART1_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
-uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67, '\n',};
-uint8_t Rx1_Counter = 0;
+uint8_t USART2_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
+uint8_t USART2_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67, '\n',};
+uint8_t Rx2_Counter = 0;
 
 int main(void) {
 	int i;
@@ -19,11 +19,11 @@ int main(void) {
 	gpio_Configure();
 	
 	// INITIALIZE USART1
-	USART_Init(USART1);
+	USART_Init(USART2);
 	
 	// SET PRIORITY AND ENABLE INTERRUPT
-	NVIC_SetPriority(USART1_IRQn, 1);
-	NVIC_EnableIRQ(USART1_IRQn);
+	NVIC_SetPriority(USART2_IRQn, 1);
+	NVIC_EnableIRQ(USART2_IRQn);
 	
 	// TOGGLE PB6 ON
 	GPIOB->ODR ^= (1<<6);
@@ -54,40 +54,31 @@ void clock_Configure(void) {
 //	// WAIT FOR HSI TO BE SELECTED
 //	while((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI);
 	
-	// ENABLE GPIOA CLOCK
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-	
-	// ENABLE USART1 CLOCK
-	RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
-	
-	// FOR TESTING COMMUNICATION
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
-	
 	
 }
 
 void gpio_Configure(void) {
 	
-	// CONFIGURE GPIOA PINS 9 AND 10 AS ALTERNATE FUNCTION
-	GPIOA->MODER |= ((0x2 << 9*2) | (0x2 << 10*2));
+	// ENABLE GPIOD CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
 	
-	// CONFIGURE ALTERNATE FUNCTIONS AS USART1
-	GPIOA->AFR[1] |= ((0x7 << 1*4) | (0x7 << 2*4));
+	// ENABLE USART1 CLOCK
+	RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
 	
-	// CONFIGURE PIN 10 AS OPEN DRAIN
-	GPIOA->OTYPER |= (1 << 10);
+	// CONFIGURE GPIOD PINS 5 AND 6 AS ALTERNATE FUNCTION
+	GPIOD->MODER |= ((0x2 << 5*2) | (0x2 << 6*2));
+	
+	// CONFIGURE ALTERNATE FUNCTIONS AS USART2
+	GPIOD->AFR[0] |= ((0x7 << 5*4) | (0x7 << 6*4));
+	
+	// CONFIGURE PIN 6 AS OPEN DRAIN
+	GPIOD->OTYPER |= (1 << 6);
 	
 	// CONFIGURE OUTPUT SPEED TO 40MHz
-	GPIOA->OSPEEDR |= ((0x3 << 9*2) | (0x3 << 10*2));
+	GPIOD->OSPEEDR |= ((0x3 << 5*2) | (0x3 << 6*2));
 	
-	// CONFIGURE PINS 9 AND 10 AS NO PULLUP/PULLDOWN
-	GPIOA->PUPDR  &= 0xFFC3FFFF;
-	
-	
-	
-	
-	// CONFIGURE GPIOB PINS 9 AND 10 AS ALTERNATE FUNCTION
-	GPIOB->MODER |= ((0x1 << 6*2) | (0x1 << 7*2));
+	// CONFIGURE PINS 5 AND 6 AS NO PULLUP/PULLDOWN
+	GPIOA->PUPDR  &= ~((1 << 5) | (1 << 6));
 	
 }
 
@@ -159,18 +150,18 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 
 void decode(uint8_t * buffer) {
 	int i = 0;
-	if( Rx1_Counter == 7 ) {
+	if( Rx2_Counter == 7 ) {
 		for (i=0; i<=7; i++) {
-			USART1_Buffer_Tx[i] = buffer[i];
+			USART2_Buffer_Tx[i] = buffer[i];
 		}
-		USART_Write(USART1, USART1_Buffer_Tx, 7);
+		USART_Write(USART2, USART2_Buffer_Tx, 7);
 	}
 	
 }
 
-void USART1_IRQHandler(void) {
-	USART_IRQHandler(USART1, USART1_Buffer_Rx, &Rx1_Counter);
-	decode(USART1_Buffer_Rx);
+void USART2_IRQHandler(void) {
+	USART_IRQHandler(USART2, USART2_Buffer_Rx, &Rx2_Counter);
+	decode(USART2_Buffer_Rx);
 }
 
 
