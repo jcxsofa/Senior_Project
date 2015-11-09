@@ -19,20 +19,15 @@ void timer4_Configure(void);
 
 #define BufferSize 32
 void dac_Configure(void);
-void uart_gpio_init(void);
 void USART_Init(USART_TypeDef * USARTx);
+void gpio_Configure(void);
 void USART_Write(USART_TypeDef * USARTx, uint8_t * buffer, int nBytes);
-void USART_IRQHandler(USART_TypeDef * USARTx,
-											uint8_t * buffer,
-											uint8_t * pRx_counter);
-void USART1_IRQHandler(void);
 void decode(uint8_t * buffer);
 
-//#define blocksize 1
+uint8_t USART1_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
+uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67, '\n',};
+uint8_t Rx1_Counter = 0;
 
-uint8_t USART1_Buffer_Rx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
-uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
-uint8_t Rx1_Counter = 7;
 int newspeed;
 struct Motor M1;
 
@@ -56,7 +51,8 @@ int main(void)
 	tim_1_gpio_init();
 	tim_1_config();
 	
-	uart_gpio_init();
+	// INITIALIZE USART GPIO PINS
+	gpio_Configure();
 	
 	// INITIALIZE USART1
 	USART_Init(USART1);
@@ -65,14 +61,14 @@ int main(void)
 	NVIC_SetPriority(USART1_IRQn, 1);
 	NVIC_EnableIRQ(USART1_IRQn);
 	
-	M1.Desired_Speed = 120;
+	M1.Desired_Speed = 84;
 	
 	//dac_Configure();
 	
 //	adc_2_gpio_init();
 //	adc_2_config();
 	
-	tim_13_config();
+	//tim_13_config();
 	
 	
 	while(1){
@@ -80,7 +76,7 @@ int main(void)
 		//transmit = M1.duty_cycle * 100;
 		//sprintf(USART1_Buffer_Tx, "%d", transmit);
 		//USART1_Buffer_Tx[4] = '\n';
-		//USART_Write(USART1, USART1_Buffer_Tx, 7);
+		USART_Write(USART1, USART1_Buffer_Tx, 7);
 	}	
 }
 
@@ -133,7 +129,13 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 
 
 
-void uart_gpio_init(void) {
+void gpio_Configure(void) {
+	
+	// ENABLE GPIOA CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+	
+	// ENABLE USART1 CLOCK
+	RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 	
 	// CONFIGURE GPIOA PINS 9 AND 10 AS ALTERNATE FUNCTION
 	GPIOA->MODER |= ((0x2 << 9*2) | (0x2 << 10*2));
@@ -149,6 +151,12 @@ void uart_gpio_init(void) {
 	
 	// CONFIGURE PINS 9 AND 10 AS NO PULLUP/PULLDOWN
 	GPIOA->PUPDR  &= 0xFFC3FFFF;
+	
+	
+	
+	
+	// CONFIGURE GPIOB PINS 9 AND 10 AS ALTERNATE FUNCTION
+	GPIOB->MODER |= ((0x1 << 6*2) | (0x1 << 7*2));
 	
 }
 
@@ -209,7 +217,9 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 		
 		// READING USART_DR WILL ALSO CLEAR THE RXNE FLAG
 		buffer[*pRx_counter] = USARTx->DR;
-		(*pRx_counter)++;
+		if(buffer[*pRx_counter] == 'i') *pRx_counter = 0;
+		else	(*pRx_counter)++;
+		
 		if((*pRx_counter) >= BufferSize)
 			(*pRx_counter) = 0;
 	}
@@ -217,28 +227,22 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 
 
 void decode(uint8_t * buffer) {
-	
-	char number[9];
-	int value = 0;
 	int i = 0;
-	
-	if (Rx1_Counter > 7) {
-		while (i<9) {
-			number[i] = buffer[i];
+	if( Rx1_Counter == 7 ) {
+		for (i=0; i<=7; i++) {
+			USART1_Buffer_Tx[i] = buffer[i];
 		}
-		
-			M1.Desired_Speed = atoi(number);
-		
+		USART_Write(USART1, USART1_Buffer_Tx, 7);
 	}
-		
-	Rx1_Counter = 0;
 	
 }
 
 void USART1_IRQHandler(void) {
 	USART_IRQHandler(USART1, USART1_Buffer_Rx, &Rx1_Counter);
-	decode(USART1_Buffer_Rx);
+	//decode(USART1_Buffer_Rx);
+	//USART_Write(USART1, USART1_Buffer_Tx, 7);
 }
+
 void dac_Configure(void) {
 	
 	// ENABLE DAC CLOCK

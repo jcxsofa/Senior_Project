@@ -492,11 +492,12 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\objects\startup_stm32l1xx_md.d -o.\objects\startup_stm32l1xx_md.
-o -I"C:\Users\Jeffrey Cable\Desktop\SP_GIT\Bluetooth\RTE" -IC:\Keil_v5\ARM\PACK
-\ARM\CMSIS\4.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\D
-evice\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 5
-16" --predefine="_RTE_ SETA 1" --predefine="STM32L1XX_MD SETA 1" --list=.\listi
-ngs\startup_stm32l1xx_md.lst RTE\Device\STM32L152RB\startup_stm32l1xx_md.s
+o -I"C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Bluetooth\RTE" -IC:
+\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM3
+2L1xx_DFP\1.0.2\Device\Include --predefine="__EVAL SETA 1" --predefine="__UVISI
+ON_VERSION SETA 516" --predefine="_RTE_ SETA 1" --predefine="STM32L1XX_MD SETA 
+1" --list=.\listings\startup_stm32l1xx_md.lst RTE\Device\STM32L152RB\startup_st
+m32l1xx_md.s
 
 
 

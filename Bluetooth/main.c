@@ -6,9 +6,9 @@ void gpio_Configure(void);
 void USART_Write(USART_TypeDef * USARTx, uint8_t * buffer, int nBytes);
 void decode(uint8_t * buffer);
 
-uint8_t USART1_Buffer_Rx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
-uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
-uint8_t Rx1_Counter = 7;
+uint8_t USART1_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
+uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67, '\n',};
+uint8_t Rx1_Counter = 0;
 
 int main(void) {
 	int i;
@@ -31,10 +31,10 @@ int main(void) {
 	// CONTINUOUSLY SEND "WORKING"
 	while(1) {
 		
-//		for(i=0; i<10000000;) {
+//		for(i=0; i<1000000;) {
 //			i = i + 1;
 //		}
-//		USART_Write(USART1, USART1_Buffer_Rx, Rx1_Counter);
+		//USART_Write(USART1, USART1_Buffer_Tx, 8);
 	}
 	
 }
@@ -144,11 +144,13 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 	
 	if(USARTx->SR & USART_SR_RXNE) {
 		// going to try resetting counter to always begin at beginning of buffer
-		(*pRx_counter) = 0;
+		//(*pRx_counter) = 0;
 		
 		// READING USART_DR WILL ALSO CLEAR THE RXNE FLAG
 		buffer[*pRx_counter] = USARTx->DR;
-		(*pRx_counter)++;
+		if(buffer[*pRx_counter] == 'i') *pRx_counter = 0;
+		else	(*pRx_counter)++;
+		
 		if((*pRx_counter) >= BufferSize)
 			(*pRx_counter) = 0;
 	}
@@ -156,9 +158,13 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 
 
 void decode(uint8_t * buffer) {
-	
-	if( buffer[0] == 0x36) GPIOB->ODR ^= (1<<6);
-	if( buffer[0] == 0x37) GPIOB->ODR ^= (1<<7);
+	int i = 0;
+	if( Rx1_Counter == 7 ) {
+		for (i=0; i<=7; i++) {
+			USART1_Buffer_Tx[i] = buffer[i];
+		}
+		USART_Write(USART1, USART1_Buffer_Tx, 7);
+	}
 	
 }
 
