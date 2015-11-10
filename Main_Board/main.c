@@ -62,14 +62,13 @@ int main(void)
 	NVIC_SetPriority(USART1_IRQn, 1);
 	NVIC_EnableIRQ(USART1_IRQn);
 	
-	M1.Desired_Speed = 80;
-	
+	M1.Desired_Speed = 70;
 	//dac_Configure();
 	
 //	adc_2_gpio_init();
 //	adc_2_config();
 	
-	tim_13_config();
+	//tim_13_config();
 	
 	
 	while(1){
@@ -77,7 +76,7 @@ int main(void)
 		//transmit = M1.duty_cycle * 100;
 		//sprintf(USART1_Buffer_Tx, "%d", transmit);
 		//USART1_Buffer_Tx[4] = '\n';
-		USART_Write(USART1, USART1_Buffer_Tx, 7);
+		//USART_Write(USART1, USART1_Buffer_Tx, 7);
 	}	
 }
 

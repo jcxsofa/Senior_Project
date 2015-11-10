@@ -34,19 +34,6 @@ IM13->ARR |= 0-320;
 tim_13.c(29): warning:  #1-D: last line of file ends without a newline
   }
 tim_13.c: 2 warnings, 0 errors
-compiling tim_9.c...
-compiling tim_1.c...
-tim_1.h(9): warning:  #1-D: last line of file ends without a newline
-  #endif // TIM_1_H_
-tim_1.c: 1 warning, 0 errors
-compiling tim_10.c...
-tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-9600;
-tim_10.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_10.c: 2 warnings, 0 errors
-compiling tim_5.c...
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -64,39 +51,52 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 5 warnings, 0 errors
+compiling tim_10.c...
+tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-9600;
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_10.c: 2 warnings, 0 errors
+compiling tim_9.c...
+compiling tim_1.c...
+tim_1.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_1_H_
+tim_1.c: 1 warning, 0 errors
+compiling tim_5.c...
 compiling main.c...
-Motor.h(86): warning:  #1-D: last line of file ends without a newline
+Motor.h(87): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
 tim_1.h(9): warning:  #1-D: last line of file ends without a newline
   #endif // TIM_1_H_
 main.c(38): warning:  #177-D: variable "transmit" was declared but never referenced
   	int transmit;
-main.c(271): warning:  #1-D: last line of file ends without a newline
+main.c(270): warning:  #1-D: last line of file ends without a newline
   }
 main.c: 4 warnings, 0 errors
 assembling startup_stm32f407xx.s...
 compiling adc_1.c...
 compiling adc_2.c...
 compiling adc_3.c...
+compiling system_stm32f4xx.c...
 compiling Motor.c...
-Motor.h(86): warning:  #1-D: last line of file ends without a newline
+Motor.h(87): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
-Motor.c(54): warning:  #550-D: variable "other" was set but never used
+Motor.c(53): warning:  #550-D: variable "other" was set but never used
   		float current, speed, other;
-Motor.c(80): warning:  #550-D: variable "derivative" was set but never used
+Motor.c(79): warning:  #550-D: variable "derivative" was set but never used
   	float derivative;
-Motor.c(123): warning:  #177-D: variable "sum" was declared but never referenced
+Motor.c(122): warning:  #177-D: variable "sum" was declared but never referenced
   	float32_t sum = 0;	
-Motor.c(181): warning:  #177-D: variable "d_cyc" was declared but never referenced
+Motor.c(180): warning:  #177-D: variable "d_cyc" was declared but never referenced
   	float d_cyc;
-Motor.c(183): warning:  #177-D: variable "sum" was declared but never referenced
+Motor.c(182): warning:  #177-D: variable "sum" was declared but never referenced
   	float32_t sum = 0;	
-Motor.c(311): warning:  #1-D: last line of file ends without a newline
+Motor.c(310): warning:  #1-D: last line of file ends without a newline
   }
 Motor.c: 7 warnings, 0 errors
-compiling system_stm32f4xx.c...
 linking...
-Program Size: Code=10160 RO-data=424 RW-data=1560 ZI-data=3360  
+Program Size: Code=9896 RO-data=424 RW-data=520 ZI-data=2344  
 ".\Objects\main_board.axf" - 0 Error(s), 21 Warning(s).
 
 <h2>Software Packages used:</h2>

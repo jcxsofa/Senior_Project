@@ -14,9 +14,10 @@
 #define MAX 12.0f
 #define MIN -12.0f
 
-#define ntaps 351
+#define ARR 800
+#define ntaps 101
 #define blocksize 50
-#define numStages 5
+#define numStages 3
 
 struct Motor {
 	

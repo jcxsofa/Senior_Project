@@ -1,6 +1,6 @@
 #include "tim_5.h"
 
-#define AR_5 4800 //auto reload value
+#define AR_5 800 //auto reload value
 #define PSC_5 0 // prescaler
 
 
