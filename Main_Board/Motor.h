@@ -16,7 +16,7 @@
 
 #define ntaps 351
 #define blocksize 50
-#define numStages 2
+#define numStages 5
 
 struct Motor {
 	
@@ -40,14 +40,14 @@ struct Motor {
 	float duty_cycle;
 	
 	// LOW PASS IIR FILTER
-	arm_biquad_cascade_df2T_instance_f32 filter;
+	//arm_biquad_cascade_df2T_instance_f32 filter;
 	// Low Pass FIR Filter
-	//arm_fir_instance_f32 filter;
+	arm_fir_instance_f32 filter;
 	// STATE BUFFER
 	// IIR
 	float32_t pState[2*numStages];
 	// FIR
-	//float32_t pstate[ntaps + blocksize - 1];
+	float32_t pstate[ntaps + blocksize - 1];
 	
 };
 

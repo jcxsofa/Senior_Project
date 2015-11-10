@@ -7,8 +7,10 @@ float32_t fcoef[ntaps] = {0.001129, 0.001150, 0.001170, 0.001190, 0.001211, 0.00
 //int count = 0;
 
 float32_t standard_coeffs [5 * numStages] = {
-	0.0001,	 -0.0002,		0.0001,	 1.9599,		-0.9605,
-		1.0000,	 -1.9628,		1.0000,	 1.9826,		-0.9839};
+	0.0000,    0.0000,         0,   0.9826,         0,
+    1.0000,   -1.9734,    1.0000,   1.9725,    -0.9731,
+    1.0000,   -1.9895,    1.0000,   1.9891,    -0.9903
+};
 //float32_t pState[2*numStages];
 
 void Motor_init(
@@ -39,9 +41,9 @@ void Motor_init(
 		M->prev_error = 0;
 		
 		// INITIALIZED IIR FILTER FOR CURRENT SENSING
-		arm_biquad_cascade_df2T_init_f32(&M->filter, numStages, standard_coeffs, M->pState);
+		//arm_biquad_cascade_df2T_init_f32(&M->filter, numStages, standard_coeffs, M->pState);
 		// INITIALIZE FIR FILTER
-		//arm_fir_init_f32(&M->filter, ntaps, (float32_t *)&fcoef[0], &M->pstate[0], blocksize);		
+		arm_fir_init_f32(&M->filter, ntaps, (float32_t *)&fcoef[0], &M->pstate[0], blocksize);		
 	
 	}
 	
@@ -203,9 +205,9 @@ void Motor_1_ISR(struct Motor *M) {
 		
 		
 	// DO IIR FILTERING
-	arm_biquad_cascade_df2T_f32(&(M->filter), input, output, blocksize);
+	//arm_biquad_cascade_df2T_f32(&(M->filter), input, output, blocksize);
 	// DO FIR FILTERING
-	//arm_fir_f32(&M->filter, input, output, blocksize);
+	arm_fir_f32(&M->filter, input, output, blocksize);
 	// DO NO FILTERING
 	//output[0] = input[0];
 	

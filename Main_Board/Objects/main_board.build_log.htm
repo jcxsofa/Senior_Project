@@ -27,13 +27,6 @@ Project File Date:  11/07/2015
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-compiling tim_10.c...
-tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-9600;
-tim_10.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_10.c: 2 warnings, 0 errors
 compiling tim_13.c...
 tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
   	
@@ -42,11 +35,18 @@ tim_13.c(29): warning:  #1-D: last line of file ends without a newline
   }
 tim_13.c: 2 warnings, 0 errors
 compiling tim_9.c...
-compiling tim_5.c...
 compiling tim_1.c...
 tim_1.h(9): warning:  #1-D: last line of file ends without a newline
   #endif // TIM_1_H_
 tim_1.c: 1 warning, 0 errors
+compiling tim_10.c...
+tim_10.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-9600;
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_10.c: 2 warnings, 0 errors
+compiling tim_5.c...
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -57,6 +57,9 @@ PIOB->MODER |= (2 << 15*2);
 tim_12.c(35): warning:  #68-D: integer conversion resulted in a change of sign
   	
 PIOB->MODER |= (2 << 15*2);
+tim_12.c(44): warning:  #61-D: integer operation result is out of range
+  	
+PIOB->AFR[1] &= ~(0xF << (15-8)*4);
 tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
@@ -66,35 +69,35 @@ Motor.h(86): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
 tim_1.h(9): warning:  #1-D: last line of file ends without a newline
   #endif // TIM_1_H_
-main.c(37): warning:  #177-D: variable "transmit" was declared but never referenced
+main.c(38): warning:  #177-D: variable "transmit" was declared but never referenced
   	int transmit;
-main.c(266): warning:  #1-D: last line of file ends without a newline
+main.c(271): warning:  #1-D: last line of file ends without a newline
   }
 main.c: 4 warnings, 0 errors
-compiling adc_1.c...
 assembling startup_stm32f407xx.s...
+compiling adc_1.c...
 compiling adc_2.c...
 compiling adc_3.c...
-compiling system_stm32f4xx.c...
 compiling Motor.c...
 Motor.h(86): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
-Motor.c(52): warning:  #550-D: variable "other" was set but never used
+Motor.c(54): warning:  #550-D: variable "other" was set but never used
   		float current, speed, other;
-Motor.c(78): warning:  #550-D: variable "derivative" was set but never used
+Motor.c(80): warning:  #550-D: variable "derivative" was set but never used
   	float derivative;
-Motor.c(121): warning:  #177-D: variable "sum" was declared but never referenced
+Motor.c(123): warning:  #177-D: variable "sum" was declared but never referenced
   	float32_t sum = 0;	
-Motor.c(179): warning:  #177-D: variable "d_cyc" was declared but never referenced
+Motor.c(181): warning:  #177-D: variable "d_cyc" was declared but never referenced
   	float d_cyc;
-Motor.c(181): warning:  #177-D: variable "sum" was declared but never referenced
+Motor.c(183): warning:  #177-D: variable "sum" was declared but never referenced
   	float32_t sum = 0;	
-Motor.c(309): warning:  #1-D: last line of file ends without a newline
+Motor.c(311): warning:  #1-D: last line of file ends without a newline
   }
 Motor.c: 7 warnings, 0 errors
+compiling system_stm32f4xx.c...
 linking...
-Program Size: Code=3792 RO-data=424 RW-data=1484 ZI-data=1740  
-".\Objects\main_board.axf" - 0 Error(s), 20 Warning(s).
+Program Size: Code=10160 RO-data=424 RW-data=1560 ZI-data=3360  
+".\Objects\main_board.axf" - 0 Error(s), 21 Warning(s).
 
 <h2>Software Packages used:</h2>
 

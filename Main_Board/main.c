@@ -28,7 +28,8 @@ uint8_t USART1_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0
 uint8_t USART1_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67, '\n',};
 uint8_t Rx1_Counter = 0;
 
-int newspeed;
+double oldencoder = 0;
+double newencoder = 0;
 struct Motor M1;
 
 int main(void)
@@ -61,18 +62,18 @@ int main(void)
 	NVIC_SetPriority(USART1_IRQn, 1);
 	NVIC_EnableIRQ(USART1_IRQn);
 	
-	M1.Desired_Speed = 84;
+	M1.Desired_Speed = 80;
 	
 	//dac_Configure();
 	
 //	adc_2_gpio_init();
 //	adc_2_config();
 	
-	//tim_13_config();
+	tim_13_config();
 	
 	
 	while(1){
-		//Motor_1_ISR(&M1);
+		Motor_1_ISR(&M1);
 		//transmit = M1.duty_cycle * 100;
 		//sprintf(USART1_Buffer_Tx, "%d", transmit);
 		//USART1_Buffer_Tx[4] = '\n';
@@ -118,7 +119,11 @@ void sysclk_Configure(void){
 }
 
 void TIM8_UP_TIM13_IRQHandler (void) {
-	
+		
+		newencoder = TIM1->CNT;
+		M1.Encoder_Speed = ((newencoder - oldencoder) / 280.0f);// / (1.0f/50000.0f);
+		oldencoder = newencoder;
+		
 		Motor_1_ISR(&M1);
 	
 	//if (TIM4->SR && TIM_SR_UIF)
