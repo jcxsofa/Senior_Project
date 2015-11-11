@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\main_board.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\main_board.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Tue Nov 10 22:36:07 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Wed Nov 11 11:11:42 2015
 <BR><P>
 <H3>Maximum Stack Usage =        520 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -274,8 +274,8 @@ Global Symbols
 <P><STRONG><a name="[e8]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[75]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 512 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; Motor_ISR &rArr; arm_fir_f32
+<BR><BR>[Stack]<UL><LI>Max Depth = 52 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; Motor_init &rArr; arm_fir_init_f32 &rArr; __aeabi_memclr4
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -915,15 +915,14 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_ISR
 </UL>
 
-<P><STRONG><a name="[9d]"></a>Motor_ISR</STRONG> (Thumb, 294 bytes, Stack size 432 bytes, motor.o(i.Motor_ISR))
+<P><STRONG><a name="[9d]"></a>Motor_ISR</STRONG> (Thumb, 302 bytes, Stack size 432 bytes, motor.o(i.Motor_ISR))
 <BR><BR>[Stack]<UL><LI>Max Depth = 512<LI>Call Chain = Motor_ISR &rArr; arm_fir_f32
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_fir_f32
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Update_PID
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Calc_Speed
 </UL>
-<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM8_UP_TIM13_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM8_UP_TIM13_IRQHandler
 </UL>
 
 <P><STRONG><a name="[a0]"></a>Motor_Update_PID</STRONG> (Thumb, 310 bytes, Stack size 8 bytes, motor.o(i.Motor_Update_PID))
@@ -937,7 +936,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_ISR
 </UL>
 
-<P><STRONG><a name="[a5]"></a>Motor_init</STRONG> (Thumb, 132 bytes, Stack size 32 bytes, motor.o(i.Motor_init))
+<P><STRONG><a name="[a5]"></a>Motor_init</STRONG> (Thumb, 134 bytes, Stack size 32 bytes, motor.o(i.Motor_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = Motor_init &rArr; arm_fir_init_f32 &rArr; __aeabi_memclr4
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_fir_init_f32
@@ -958,7 +957,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[38]"></a>TIM8_UP_TIM13_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, main.o(i.TIM8_UP_TIM13_IRQHandler))
+<P><STRONG><a name="[38]"></a>TIM8_UP_TIM13_IRQHandler</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, main.o(i.TIM8_UP_TIM13_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 520<LI>Call Chain = TIM8_UP_TIM13_IRQHandler &rArr; Motor_ISR &rArr; arm_fir_f32
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_ISR
@@ -1038,8 +1037,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[25]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM1_UP_TIM10_IRQHandler
 </UL>
 
-<P><STRONG><a name="[76]"></a>main</STRONG> (Thumb, 226 bytes, Stack size 0 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 512<LI>Call Chain = main &rArr; Motor_ISR &rArr; arm_fir_f32
+<P><STRONG><a name="[76]"></a>main</STRONG> (Thumb, 202 bytes, Stack size 0 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = main &rArr; Motor_init &rArr; arm_fir_init_f32 &rArr; __aeabi_memclr4
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_gpio_init
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tim_9_gpio_init
@@ -1056,7 +1055,6 @@ Global Symbols
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc_1_config
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_init
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_ISR
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sysclk_Configure
 </UL>
 <BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main

@@ -15,7 +15,7 @@
 #define MIN -12.0f
 
 #define ARR 800
-#define ntaps 101
+#define ntaps 351
 #define blocksize 50
 #define numStages 3
 

@@ -196,18 +196,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>129</LineNumber>
+          <LineNumber>62</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227246</Address>
+          <Address>134226376</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\main.c</Filename>
+          <Filename>.\Motor.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\main_board\main.c\129</Expression>
+          <Expression>\\main_board\Motor.c\62</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

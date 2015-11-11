@@ -64,17 +64,17 @@ int main(void)
 	tim_10_config();
 	tim_13_config();
 	
-	M1.Desired_Speed = 20;
+	M1.Desired_Speed = 80;
 	M2.Desired_Speed = -30;
 	M3.Desired_Speed = 40;
 	M4.Desired_Speed = -50;
 		
 	
 	while(1){
-		Motor_ISR(&M1);
-		Motor_ISR(&M2);
-		Motor_ISR(&M3);
-		Motor_ISR(&M4);
+//		Motor_ISR(&M1);
+//		Motor_ISR(&M2);
+//		Motor_ISR(&M3);
+//		Motor_ISR(&M4);
 	}	
 }
 
@@ -121,8 +121,8 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 	if (TIM13->SR && TIM_SR_UIF) {
 		Motor_ISR(&M1);
 		Motor_ISR(&M2);
-		Motor_ISR(&M3);
-		Motor_ISR(&M4);
+//		Motor_ISR(&M3);
+//		Motor_ISR(&M4);
 	}
 	
 	// RESET INTERRUPT
