@@ -64,11 +64,6 @@ void Motor_Calc_Speed(
 	
 void Motor_Update_PID(struct Motor *M);
 	
-void Motor_1_ISR(struct Motor *M);
-void Motor_2_ISR(struct Motor *M);	
-void Motor_3_ISR(struct Motor *M);
-void Motor_4_ISR(struct Motor *M);
-	
 void Motor_ISR(struct Motor *M);
 	
 void Motor_1_Change_DCYC(struct Motor *M, float DCYC);

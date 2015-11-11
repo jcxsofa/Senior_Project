@@ -2,20 +2,26 @@
 
 void uart_gpio_init(void) {
 	
-	// CONFIGURE GPIOA PINS 9 AND 10 AS ALTERNATE FUNCTION
-	GPIOA->MODER |= ((0x2 << 9*2) | (0x2 << 10*2));
+		// ENABLE GPIOD CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
 	
-	// CONFIGURE ALTERNATE FUNCTIONS AS USART1
-	GPIOA->AFR[1] |= ((0x7 << 1*4) | (0x7 << 2*4));
+	// ENABLE USART1 CLOCK
+	RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
 	
-	// CONFIGURE PIN 10 AS OPEN DRAIN
-	GPIOA->OTYPER |= (1 << 10);
+	// CONFIGURE GPIOD PINS 5 AND 6 AS ALTERNATE FUNCTION
+	GPIOD->MODER |= ((0x2 << 5*2) | (0x2 << 6*2));
+	
+	// CONFIGURE ALTERNATE FUNCTIONS AS USART2
+	GPIOD->AFR[0] |= ((0x7 << 5*4) | (0x7 << 6*4));
+	
+	// CONFIGURE PIN 6 AS OPEN DRAIN
+	GPIOD->OTYPER |= (1 << 6);
 	
 	// CONFIGURE OUTPUT SPEED TO 40MHz
-	GPIOA->OSPEEDR |= ((0x3 << 9*2) | (0x3 << 10*2));
+	GPIOD->OSPEEDR |= ((0x3 << 5*2) | (0x3 << 6*2));
 	
-	// CONFIGURE PINS 9 AND 10 AS NO PULLUP/PULLDOWN
-	GPIOA->PUPDR  &= 0xFFC3FFFF;
+	// CONFIGURE PINS 5 AND 6 AS NO PULLUP/PULLDOWN
+	GPIOA->PUPDR  &= ~((1 << 5) | (1 << 6));
 	
 }
 
@@ -76,33 +82,10 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 		
 		// READING USART_DR WILL ALSO CLEAR THE RXNE FLAG
 		buffer[*pRx_counter] = USARTx->DR;
-		(*pRx_counter)++;
+		if(buffer[*pRx_counter] == 'i') *pRx_counter = 0;
+		else	(*pRx_counter)++;
+		
 		if((*pRx_counter) >= BufferSize)
 			(*pRx_counter) = 0;
 	}
-}
-
-
-void decode(uint8_t * buffer) {
-	
-	char number[9];
-	int value = 0;
-	int i = 0;
-	
-	if (Rx1_Counter > 7) {
-		while (i<9) {
-			number[i] = buffer[i];
-		}
-		
-		newspeed = atoi(number);
-		
-	}
-		
-	
-	
-}
-
-void USART1_IRQHandler(void) {
-	USART_IRQHandler(USART1, USART1_Buffer_Rx, &Rx1_Counter);
-	decode(USART1_Buffer_Rx);
 }

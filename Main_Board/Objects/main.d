@@ -16,4 +16,6 @@
 .\objects\main.o: adc_2.h
 .\objects\main.o: Motor.h
 .\objects\main.o: tim_5.h
-.\objects\main.o: tim_1.h
+.\objects\main.o: tim_9.h
+.\objects\main.o: tim_12.h
+.\objects\main.o: uart.h
