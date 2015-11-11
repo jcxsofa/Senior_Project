@@ -32,6 +32,9 @@ struct Motor {
 	float Encoder_Speed;
 	float Desired_Speed;
 	
+	// CURRENT DATA
+	float Current;
+	
 	// PID DATA
 	float integral;
 	float prev_error;
@@ -40,14 +43,9 @@ struct Motor {
 	char wheel;
 	float duty_cycle;
 	
-	// LOW PASS IIR FILTER
-	//arm_biquad_cascade_df2T_instance_f32 filter;
 	// Low Pass FIR Filter
 	arm_fir_instance_f32 filter;
 	// STATE BUFFER
-	// IIR
-	float32_t pState[2*numStages];
-	// FIR
 	float32_t pstate[ntaps + blocksize - 1];
 	
 };
@@ -64,24 +62,18 @@ void Motor_Calc_Speed(
 	struct Motor *M,
 	float filter_output);
 	
-
-	
 void Motor_Update_PID(struct Motor *M);
 	
 void Motor_1_ISR(struct Motor *M);
-
-void Motor_2_ISR(struct Motor *M);
-	
+void Motor_2_ISR(struct Motor *M);	
 void Motor_3_ISR(struct Motor *M);
-	
 void Motor_4_ISR(struct Motor *M);
 	
+void Motor_ISR(struct Motor *M);
+	
 void Motor_1_Change_DCYC(struct Motor *M, float DCYC);
-	
-void Motor_2_Change_Speed(struct Motor *M, float speed);
-	
-void Motor_3_Change_Speed(struct Motor *M, float speed);
-	
-void Motor_4_Change_Speed(struct Motor *M, float speed);
+void Motor_2_Change_DCYC(struct Motor *M, float DCYC);
+void Motor_3_Change_DCYC(struct Motor *M, float DCYC);	
+void Motor_4_Change_DCYC(struct Motor *M, float DCYC);
 
 #endif // MOTOR_H

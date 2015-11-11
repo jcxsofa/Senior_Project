@@ -1,4 +1,6 @@
 #include "stm32f407xx.h"
+#include <stdlib.h>
+#include <string.h>
 #define BufferSize 32
 void clock_Configure(void);
 void USART_Init(USART_TypeDef * USARTx);
@@ -12,6 +14,12 @@ uint8_t Rx2_Counter = 0;
 
 int main(void) {
 	int i;
+	char result[10];
+	char print[26];
+		float speed = -256.356765345;
+		int whole = 0;
+		int frac = 0;
+	
 	// INITIALIZE USART CLOCK AND HIGH SPEED SYSTEM CLOCK
 	clock_Configure();
 	
@@ -27,15 +35,31 @@ int main(void) {
 	
 	// TOGGLE PB6 ON
 	GPIOB->ODR ^= (1<<6);
+
+	
+		whole = speed;
+		frac = (speed - whole) * 10;
+		
+		sprintf(result, "% 3.3f\n\r", speed);
+		
+		strcpy(print, "Motor 1 Speed = ");
+		strcat(print, result);
+		
+		USART_Write(USART2, print, 26);
+	
 	
 	// CONTINUOUSLY SEND "WORKING"
 	while(1) {
 		
-//		for(i=0; i<1000000;) {
-//			i = i + 1;
-//		}
-		//USART_Write(USART1, USART1_Buffer_Tx, 8);
+		
+		
+		
+		
+		
+		
 	}
+	
+	
 	
 }
 

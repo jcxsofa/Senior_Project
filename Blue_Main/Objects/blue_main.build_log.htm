@@ -28,14 +28,21 @@ Project File Date:  11/09/2015
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
 assembling startup_stm32f407xx.s...
-compiling system_stm32f4xx.c...
 compiling main.c...
-main.c(14): warning:  #177-D: variable "i" was declared but never referenced
+main.c(43): warning:  #223-D: function "sprintf" declared implicitly
+  		sprintf(result, "% 3.3f\n\r", speed);
+main.c(48): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+  		USART_Write(
+SART2, print, 26);
+main.c(16): warning:  #177-D: variable "i" was declared but never referenced
   	int i;
-main.c: 1 warning, 0 errors
+main.c(21): warning:  #550-D: variable "frac" was set but never used
+  		int frac = 0;
+main.c: 4 warnings, 0 errors
+compiling system_stm32f4xx.c...
 linking...
-Program Size: Code=920 RO-data=424 RW-data=36 ZI-data=1668  
-".\Objects\blue_main.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=5564 RO-data=620 RW-data=36 ZI-data=1668  
+".\Objects\blue_main.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -66,7 +73,7 @@ Package Vendor: Keil
       Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
       Source file:   MDK\Device\Source\ARM\system_stm32f4xx.c
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

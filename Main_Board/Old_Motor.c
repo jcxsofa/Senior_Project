@@ -60,7 +60,7 @@ void Motor_Calc_Speed(
 		M->BEMF_Speed = speed;
 		M->Current = current;
 		
-}
+	}
 	
 void Motor_Update_PID(struct Motor *M){
 
@@ -120,6 +120,59 @@ void Motor_Update_PID(struct Motor *M){
 			break;
 	}
 }		
+
+
+void Motor_1_ISR(struct Motor *M) {
+
+	float input[blocksize];
+	float output[blocksize];
+	float average;
+	float d_cyc;
+	int i;
+	int channel = 4;
+	float32_t sum = 0;	
+	
+	
+	if(M->Desired_Speed < 0) channel = 5;
+	
+		// SELECT ADC_1 CHANNEl FOR MOTOR DIRECTION
+		ADC1->SQR3 |= channel;	
+
+		for(i=0; i<blocksize; i++){
+	
+			// BEGIN CONVERSIONS
+			ADC1->CR2 |= ADC_CR2_SWSTART;
+			
+			// WAIT FOR END OF CONVERSION
+			while ((ADC1->SR & ADC_SR_EOC) == 0)
+
+			// RESET INTERRUPT ENABLE
+			ADC1->CR1 |= ADC_CR1_EOCIE;
+			
+			// CLEAR EOC AGAIN?
+			ADC1->SR &= ~ADC_SR_EOC;
+			
+			// GET INPUT FROM ADC
+			input[i] = ADC1->DR;
+		}
+		
+	// DO FIR FILTERING
+	arm_fir_f32(&M->filter, input, output, blocksize);
+	
+	// CALCULATE AVERAGE OF FILTERED VALUES
+	average = 0;
+	for(i=0; i<blocksize; i++) {
+		average += output[i];
+	}
+	average /= blocksize;
+	
+	// DETERMINE NEW SPEED
+	Motor_Calc_Speed(M, average);
+	
+	// RUN PID LOOP
+	Motor_Update_PID(M);
+	
+}
 
 void Motor_1_Change_DCYC(struct Motor *M, float DCYC) {
 	
@@ -201,6 +254,57 @@ void Motor_1_Change_DCYC(struct Motor *M, float DCYC) {
 	
 	// UPDATE DUTY CYCLE
 		M->duty_cycle = DCYC;
+}
+
+void Motor_2_ISR(struct Motor *M) {
+	
+	float input[blocksize];
+	float output[blocksize];
+	float average;
+	float d_cyc;
+	int i;
+	int channel = 6;
+	float32_t sum = 0;	
+	
+	if(M->Desired_Speed < 0) channel = 7;
+	
+		// SELECT ADC_1 CHANNEl FOR MOTOR DIRECTION
+		ADC1->SQR3 |= channel;	
+
+		for(i=0; i<blocksize; i++){
+	
+			// BEGIN CONVERSIONS
+			ADC1->CR2 |= ADC_CR2_SWSTART;
+			
+			// WAIT FOR END OF CONVERSION
+			while ((ADC1->SR & ADC_SR_EOC) == 0)
+
+			// RESET INTERRUPT ENABLE
+			ADC1->CR1 |= ADC_CR1_EOCIE;
+			
+			// CLEAR EOC AGAIN?
+			ADC1->SR &= ~ADC_SR_EOC;
+			
+			// GET INPUT FROM ADC
+			input[i] = ADC1->DR;
+		}
+		
+	// DO FIR FILTERING
+	arm_fir_f32(&M->filter, input, output, blocksize);
+	
+	// CALCULATE AVERAGE OF FILTERED VALUES
+	average = 0;
+	for(i=0; i<blocksize; i++) {
+		average += output[i];
+	}
+	average /= blocksize;
+	
+	// DETERMINE NEW SPEED
+	Motor_Calc_Speed(M, average);
+	
+	// RUN PID LOOP
+	Motor_Update_PID(M);
+	
 }
 
 void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
@@ -449,6 +553,57 @@ void Motor_4_Change_DCYC(struct Motor *M, float DCYC) {
 		M->duty_cycle = DCYC;
 }
 
+void Motor_3_ISR(struct Motor *M) {
+	
+	float input[blocksize];
+	float output[blocksize];
+	float average;
+	float d_cyc;
+	int i;
+	int channel = 6;
+	float32_t sum = 0;	
+	
+	if(M->Desired_Speed < 0) channel = 7;
+	
+		// SELECT ADC_1 CHANNEl FOR MOTOR DIRECTION
+		ADC1->SQR3 |= channel;	
+
+		for(i=0; i<blocksize; i++){
+	
+			// BEGIN CONVERSIONS
+			ADC1->CR2 |= ADC_CR2_SWSTART;
+			
+			// WAIT FOR END OF CONVERSION
+			while ((ADC1->SR & ADC_SR_EOC) == 0)
+
+			// RESET INTERRUPT ENABLE
+			ADC1->CR1 |= ADC_CR1_EOCIE;
+			
+			// CLEAR EOC AGAIN?
+			ADC1->SR &= ~ADC_SR_EOC;
+			
+			// GET INPUT FROM ADC
+			input[i] = ADC1->DR;
+		}
+		
+	// DO FIR FILTERING
+	arm_fir_f32(&M->filter, input, output, blocksize);
+	
+	// CALCULATE AVERAGE OF FILTERED VALUES
+	average = 0;
+	for(i=0; i<blocksize; i++) {
+		average += output[i];
+	}
+	average /= blocksize;
+	
+	// DETERMINE NEW SPEED
+	Motor_Calc_Speed(M, average);
+	
+	// RUN PID LOOP
+	Motor_Update_PID(M);
+	
+}
+
 void Motor_ISR(struct Motor *M) {
 	
 	ADC_TypeDef * ADCx;
@@ -521,3 +676,11 @@ void Motor_ISR(struct Motor *M) {
 	Motor_Update_PID(M);
 	
 }
+
+
+
+
+
+
+
+

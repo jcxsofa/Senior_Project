@@ -484,16 +484,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>DSP</GroupName>
-          <Files>
-            <File>
-              <FileName>DSP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\DSP.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Motor</GroupName>
           <Files>
             <File>
