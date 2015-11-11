@@ -4,13 +4,14 @@
 #include "arm_math.h"
 #include <stdlib.h>
 #include <string.h>
-#include "tim_13.h"
+#include "Motor.h"
 #include "adc_1.h"
 #include "adc_2.h"
-#include "Motor.h"
 #include "tim_5.h"
 #include "tim_9.h"
+#include "tim_10.h"
 #include "tim_12.h"
+#include "tim_13.h"
 #include "uart.h"
 
 void sysclk_Configure(void);
@@ -26,20 +27,21 @@ void dac_Configure(void);
 
 double oldencoder = 0;
 double newencoder = 0;
-struct Motor M1;
+struct Motor M1, M2, M3, M4;
 
 int main(void)
 {
 		
 	int transmit;
-	char result[10];
-	char print[26];
 	
 	
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 	
 	Motor_init(&M1, .265, 151, 11.4, 1.379, 1);
+	Motor_init(&M2, .265, 151, 11.4, 1.379, 2);
+	Motor_init(&M3, .265, 151, 11.4, 1.379, 3);
+	Motor_init(&M4, .265, 151, 11.4, 1.379, 4);
 	
 	adc_1_gpio_init();
 	adc_1_config();
@@ -59,36 +61,20 @@ int main(void)
 	uart_gpio_init();
 	USART_Init(USART2);
 	
-	// SET PRIORITY AND ENABLE INTERRUPT
-	NVIC_SetPriority(USART1_IRQn, 1);
-	NVIC_EnableIRQ(USART1_IRQn);
-	
-	M1.Desired_Speed = -80;
-	//dac_Configure();
-	
-//	adc_2_gpio_init();
-//	adc_2_config();
-	
+	tim_10_config();
 	//tim_13_config();
 	
+	M1.Desired_Speed = 20;
+	M2.Desired_Speed = -30;
+	M3.Desired_Speed = 40;
+	M4.Desired_Speed = -50;
+		
 	
 	while(1){
 		Motor_ISR(&M1);
-		
-		sprintf(result, "% 3.3f  ", M1.BEMF_Speed);
-		
-		strcpy(print, "Motor 1 Speed = ");
-		strcat(print, result);
-		
-		USART_Write(USART2, print, 26);
-		
-		sprintf(result, "% 3.3f\n\r", M1.duty_cycle);
-		
-		strcpy(print, "Motor 1 Speed = ");
-		strcat(print, result);
-		
-		USART_Write(USART2, print, 26);
-	
+		Motor_ISR(&M2);
+		Motor_ISR(&M3);
+		Motor_ISR(&M4);
 	}	
 }
 
@@ -130,12 +116,26 @@ void sysclk_Configure(void){
 }
 
 void TIM8_UP_TIM13_IRQHandler (void) {
-		
-		Motor_ISR(&M1);
 	
-	//if (TIM4->SR && TIM_SR_UIF)
+	// SERVICE MOTOR CONTROL INTERRUPT
+	if (TIM13->SR && TIM_SR_UIF) {
+		Motor_ISR(&M1);
+		Motor_ISR(&M2);
+		Motor_ISR(&M3);
+		Motor_ISR(&M4);
+	}
+	
+	// SERVICE DATA UPDATE
+	if (TIM10->SR && TIM_SR_UIF) {
+		display_speed_current(&M1);
+		display_speed_current(&M2);
+		display_speed_current(&M3);
+		display_speed_current(&M4);
+	}
+	
+	// RESET BOTH INTERRUPTS
 	TIM13->SR ^= TIM_SR_UIF;
-
+	TIM10->SR ^= TIM_SR_UIF;
 }
 
 void decode(uint8_t * buffer) {

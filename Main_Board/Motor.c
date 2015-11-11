@@ -42,13 +42,12 @@ void Motor_Calc_Speed(
 	struct Motor *M,
 	float filter_output){
 		
-		float current, speed, other;
+		float current, speed;
 		float fudge = 2.0f;
 
 		// CONVERT FILTER OUTPUT TO CURRENT
 		filter_output /= 4095.0f;
 		filter_output *= 3.3f;
-		other = filter_output;
 		filter_output /= 50.0f;
 		filter_output /= 0.01f;
 		current = filter_output * fudge;
@@ -458,7 +457,6 @@ void Motor_ISR(struct Motor *M) {
 	float d_cyc;
 	int i;
 	int channel;
-	float32_t sum = 0;
 
 	switch (M->wheel)
 	{

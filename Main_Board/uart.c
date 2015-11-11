@@ -51,6 +51,10 @@ void USART_Init(USART_TypeDef * USARTx) {
 	// ENABLE RECIEVED DATA READY INTERRUPT
 	USARTx->CR1 |= USART_CR1_RXNEIE;
 	
+	// SET PRIORITY AND ENABLE INTERRUPT
+	NVIC_SetPriority(USART1_IRQn, 1);
+	NVIC_EnableIRQ(USART1_IRQn);
+	
 }
 
 void USART_Write(USART_TypeDef * USARTx, uint8_t * buffer, int nBytes) {
@@ -89,3 +93,22 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 			(*pRx_counter) = 0;
 	}
 }
+											
+void display_speed_current(struct Motor *M){
+	
+	char print[50];	
+	
+	sprintf(print, "Motor %1d Speed = % 3.3frpm\t", M->wheel, M->BEMF_Speed);
+	
+	USART_Write(USART2, print, 28);
+	
+	sprintf(print, "Motor %1d Current = % 3.3fA\n\r", M->wheel, M->Current);
+	
+	USART_Write(USART2, print, 28);
+	
+	
+	
+}
+
+
+

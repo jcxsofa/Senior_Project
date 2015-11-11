@@ -11,11 +11,12 @@
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\main.o: tim_13.h
+.\objects\main.o: Motor.h
 .\objects\main.o: adc_1.h
 .\objects\main.o: adc_2.h
-.\objects\main.o: Motor.h
 .\objects\main.o: tim_5.h
 .\objects\main.o: tim_9.h
+.\objects\main.o: tim_10.h
 .\objects\main.o: tim_12.h
+.\objects\main.o: tim_13.h
 .\objects\main.o: uart.h
