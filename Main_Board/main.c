@@ -62,7 +62,7 @@ int main(void)
 	USART_Init(USART2);
 	
 	tim_10_config();
-	//tim_13_config();
+	tim_13_config();
 	
 	M1.Desired_Speed = 20;
 	M2.Desired_Speed = -30;
@@ -125,18 +125,30 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 		Motor_ISR(&M4);
 	}
 	
+	// RESET INTERRUPT
+	TIM13->SR ^= TIM_SR_UIF;
+}
+
+void TIM1_UP_TIM10_IRQHandler (void) {
+	char clear[10];
 	// SERVICE DATA UPDATE
 	if (TIM10->SR && TIM_SR_UIF) {
+		
+		// CLEAR TERMINAL
+		strcpy(clear, "\033[2J\033[1;1H");
+		USART_Write(USART2, clear, 10);
+		
+		// DISPLAY STUFF
 		display_speed_current(&M1);
 		display_speed_current(&M2);
 		display_speed_current(&M3);
 		display_speed_current(&M4);
 	}
 	
-	// RESET BOTH INTERRUPTS
-	TIM13->SR ^= TIM_SR_UIF;
+	// RESET INTERRUPT
 	TIM10->SR ^= TIM_SR_UIF;
 }
+
 
 void decode(uint8_t * buffer) {
 	int i = 0;

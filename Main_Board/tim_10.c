@@ -7,7 +7,7 @@ void tim_10_config(void){
 	
 	// TIMER 12 PRESCALER FOR 20KHz FREQ
 	TIM10->PSC &= ~TIM_PSC_PSC;
-	TIM10->PSC |= 100;
+	TIM10->PSC |= 1000;
 	
 	// AUTO RELOAD REGISTER
 	TIM10->ARR &= ~TIM_ARR_ARR;
@@ -20,8 +20,8 @@ void tim_10_config(void){
 	TIM10->DIER |= TIM_DIER_UIE;
 	
 	// ENABLE INTERRUPT
-	NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 1);
-	NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
+	NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 2);
+	NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
 	
 	// ENABLE TIMER
 	TIM10->CR1 |= TIM_CR1_CEN;
