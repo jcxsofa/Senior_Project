@@ -3,7 +3,6 @@
 
 #include "stm32f407xx.h"
 
-void adc_1_gpio_init(void);
 void adc_1_config(void);
 
 #endif // ADC_1_H

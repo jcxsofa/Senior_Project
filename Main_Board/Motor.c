@@ -202,7 +202,7 @@ void Motor_1_Change_DCYC(struct Motor *M, float DCYC) {
 		M->duty_cycle = DCYC;
 }
 
-void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
+void Motor_3_Change_DCYC(struct Motor *M, float DCYC) {
 	
 	float old_dcyc = M->duty_cycle;
 	int CCR, OR, AND, XOR;
@@ -231,11 +231,11 @@ void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
 		GPIOE->ODR |= (1 << 10);
 		
 		// CALCULATE NEW CCR VALUE
-		CCR = TIM5->CCR3 &= TIM_CCR3_CCR3;
+		CCR = TIM5->CCR4 &= TIM_CCR4_CCR4;
 		AND = CCR & (int)(DCYC * ARR);
 		OR = CCR | (int)(DCYC * ARR);
 		XOR = AND ^ OR;
-		TIM5->CCR3 ^= XOR;
+		TIM5->CCR4 ^= XOR;
 	}
 	
 	else if (DCYC < 0.0f) {
@@ -258,15 +258,15 @@ void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
 		}
 		
 		// SETUP LOWER GATES TO RUN BACKWARDS
-		GPIOE->ODR &= ~(1 << 9);
-		GPIOE->ODR |= (1 << 10);
+		GPIOE->ODR &= ~(1 << 10);
+		GPIOE->ODR |= (1 << 9);
 		
 		// CALCULATE NEW CCR VALUE
-		CCR = TIM5->CCR4 &= TIM_CCR4_CCR4;
+		CCR = TIM5->CCR3 &= TIM_CCR3_CCR3;
 		AND = CCR & (int)(DCYC * -ARR);
 		OR = CCR | (int)(DCYC * -ARR);
 		XOR = AND ^ OR;
-		TIM5->CCR4 ^= XOR;		
+		TIM5->CCR3 ^= XOR;		
 	}
 	
 	else {
@@ -284,7 +284,7 @@ void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
 		M->duty_cycle = DCYC;
 }
 
-void Motor_3_Change_DCYC(struct Motor *M, float DCYC) {
+void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
 	
 	float old_dcyc = M->duty_cycle;
 	int CCR, OR, AND, XOR;
@@ -340,8 +340,8 @@ void Motor_3_Change_DCYC(struct Motor *M, float DCYC) {
 		}
 		
 		// SETUP LOWER GATES TO RUN BACKWARDS
-		GPIOE->ODR &= ~(1 << 3);
-		GPIOE->ODR |= (1 << 4);
+		GPIOE->ODR &= ~(1 << 4);
+		GPIOE->ODR |= (1 << 3);
 		
 		// CALCULATE NEW CCR VALUE
 		CCR = TIM9->CCR2 &= TIM_CCR2_CCR2;
@@ -383,16 +383,16 @@ void Motor_4_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM12->CCR2 = 0;
 			
 			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOD->ODR |= (1 << 8);
-			GPIOD->ODR |= (1 << 9);
+			GPIOA->ODR |= (1 << 8);
+			GPIOC->ODR |= (1 << 8);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
 		}
 		
 		// SETUP LOWER GATES TO RUN FORWARDS
-		GPIOD->ODR &= ~(1 << 8);
-		GPIOD->ODR |= (1 << 9);
+		GPIOA->ODR &= ~(1 << 8);
+		GPIOC->ODR |= (1 << 8);
 		
 		// CALCULATE NEW CCR VALUE
 		CCR = TIM12->CCR1 &= TIM_CCR1_CCR1;
@@ -414,16 +414,16 @@ void Motor_4_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM12->CCR2 = 0;
 			
 			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOD->ODR |= (1 << 8);
-			GPIOD->ODR |= (1 << 9);
+			GPIOA->ODR |= (1 << 8);
+			GPIOC->ODR |= (1 << 8);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
 		}
 		
 		// SETUP LOWER GATES TO RUN BACKWARDS
-		GPIOD->ODR &= ~(1 << 8);
-		GPIOD->ODR |= (1 << 9);
+		GPIOC->ODR &= ~(1 << 8);
+		GPIOA->ODR |= (1 << 8);
 		
 		// CALCULATE NEW CCR VALUE
 		CCR = TIM12->CCR2 &= TIM_CCR2_CCR2;
@@ -440,8 +440,8 @@ void Motor_4_Change_DCYC(struct Motor *M, float DCYC) {
 		TIM12->CCR2 = 0;
 		
 		// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-		GPIOD->ODR |= (1 << 8);
-		GPIOD->ODR |= (1 << 9);
+		GPIOA->ODR |= (1 << 8);
+		GPIOC->ODR |= (1 << 8);
 	}
 	
 	// UPDATE DUTY CYCLE
@@ -462,22 +462,22 @@ void Motor_ISR(struct Motor *M) {
 	{
 		case 1:
 			ADCx = ADC1;
-		channel = (M->Desired_Speed > 0) ? 4 : 5;
+		channel = (M->Desired_Speed > 0) ? 11 : 13;
 			break;
 		
 		case 2:
 			ADCx = ADC1;
-		channel = (M->Desired_Speed > 0) ? 6 : 7;
+		channel = (M->Desired_Speed > 0) ? 12 : 10;
 			break;
 		
 		case 3:
-			ADCx = ADC2;
-		channel = (M->Desired_Speed > 0) ? 8 : 9;
+			ADCx = ADC1;
+		channel = (M->Desired_Speed > 0) ? 5 : 7;
 			break;
 		
 		case 4:
-			ADCx = ADC2;
-		channel = (M->Desired_Speed > 0) ? 10 : 11;
+			ADCx = ADC1;
+		channel = (M->Desired_Speed > 0) ? 6 : 4;
 			break;
 	}
 	

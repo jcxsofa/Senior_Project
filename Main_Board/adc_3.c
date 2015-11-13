@@ -1,34 +1,10 @@
 #include "adc_3.h"
 
-void adc_3_gpio_init(void) {
-	
-	/* CONFIGURE INPUT PINS */
-	/*
-		PORT C PIN 2 IS USED BY ADC_3 TO DO A SINGLE
-		CONVERSION ON CHANNEL 12. IT IS CONFIGURED AS
-		ANALOG MODE, NO PULL-UP/PULL-DOWN.
-	*/
-	
-	// ENABLE PORT A CLOCK
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
-	
-	/* SET AS ANALOG */
-	
-	// PC2
-	GPIOC->MODER |= (3 << 2*2);
-	
-	/* SET AS NO PULL-UP/PULL-DOWN */
-	
-	// PC2
-	GPIOC->PUPDR &= ~(3 << 2*2);
-	
-}
 
 void adc_3_config(void) {
 	
 	/*
-		ADC_3 WILL CONVERT A SINGLE
-		SAMPLE ON ADC CHANNEL 10.
+		WRITE A NEW NOTE SOMETIME
 	*/
 		
 	// ENABLE ADC

@@ -102,9 +102,9 @@ void display_speed_current(struct Motor *M){
 	
 	USART_Write(USART2, print, 28);
 	
-	sprintf(print, "Motor %1d Current = % 3.3fA\n\r", M->wheel, M->Current);
+	sprintf(print, "Motor %1d Current = % 3.3fA\n\r", M->wheel, M->Encoder_Speed);
 	
-	USART_Write(USART2, print, 28);
+	USART_Write(USART2, print, 29);
 	
 	
 	

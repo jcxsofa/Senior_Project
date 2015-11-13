@@ -1,5 +1,5 @@
 Dependencies for Project 'main_board', Target 'Target 1': (DO NOT MODIFY !)
-F (.\main.c)(0x564364AC)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\main.c)(0x564544B4)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF90A2)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -11,9 +11,10 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\arm_math.h)(0x550C1B38)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x55AF90A2)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x55AF90A2)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x55AF90A2)
-I (Motor.h)(0x564368BC)
-I (adc_1.h)(0x56326A36)
-I (adc_2.h)(0x563501DE)
+I (Motor.h)(0x56454419)
+I (adc_gpio.h)(0x564403BA)
+I (adc_1.h)(0x564403BA)
+I (tim_1.h)(0x563E2585)
 I (tim_5.h)(0x563E27C9)
 I (tim_9.h)(0x56300398)
 I (tim_10.h)(0x5635500C)
@@ -21,7 +22,7 @@ I (tim_12.h)(0x563003A7)
 I (tim_13.h)(0x563557D5)
 I (uart.h)(0x5642A900)
 F (.\stm32f407xx.h)(0x560D83D4)()
-F (.\tim_5.c)(0x56423CF1)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_5.o --omf_browse .\objects\tim_5.crf --depend .\objects\tim_5.d)
+F (.\tim_5.c)(0x5644B8FE)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_5.o --omf_browse .\objects\tim_5.crf --depend .\objects\tim_5.d)
 I (tim_5.h)(0x563E27C9)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -30,7 +31,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\tim_9.c)(0x563003A4)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_9.o --omf_browse .\objects\tim_9.crf --depend .\objects\tim_9.d)
+F (.\tim_9.c)(0x56440064)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_9.o --omf_browse .\objects\tim_9.crf --depend .\objects\tim_9.d)
 I (tim_9.h)(0x56300398)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -39,7 +40,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\tim_12.c)(0x56300380)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_12.o --omf_browse .\objects\tim_12.crf --depend .\objects\tim_12.d)
+F (.\tim_12.c)(0x5644BB78)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_12.o --omf_browse .\objects\tim_12.crf --depend .\objects\tim_12.d)
 I (tim_12.h)(0x563003A7)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -48,7 +49,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\tim_10.c)(0x5642B7A4)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_10.o --omf_browse .\objects\tim_10.crf --depend .\objects\tim_10.d)
+F (.\tim_10.c)(0x56453E45)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_10.o --omf_browse .\objects\tim_10.crf --depend .\objects\tim_10.d)
 I (tim_10.h)(0x5635500C)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -57,7 +58,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\tim_13.c)(0x5642AC02)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_13.o --omf_browse .\objects\tim_13.crf --depend .\objects\tim_13.d)
+F (.\tim_13.c)(0x56452C98)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_13.o --omf_browse .\objects\tim_13.crf --depend .\objects\tim_13.d)
 I (tim_13.h)(0x563557D5)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -66,7 +67,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\tim_1.c)(0x5641514B)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_1.o --omf_browse .\objects\tim_1.crf --depend .\objects\tim_1.d)
+F (.\tim_1.c)(0x56453F35)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\tim_1.o --omf_browse .\objects\tim_1.crf --depend .\objects\tim_1.d)
 I (tim_1.h)(0x563E2585)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -75,8 +76,8 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\adc_1.c)(0x56428BDC)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\adc_1.o --omf_browse .\objects\adc_1.crf --depend .\objects\adc_1.d)
-I (adc_1.h)(0x56326A36)
+F (.\adc_1.c)(0x5644041E)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\adc_1.o --omf_browse .\objects\adc_1.crf --depend .\objects\adc_1.d)
+I (adc_1.h)(0x564403BA)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF90A2)
@@ -84,8 +85,8 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\adc_2.c)(0x56428BEC)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\adc_2.o --omf_browse .\objects\adc_2.crf --depend .\objects\adc_2.d)
-I (adc_2.h)(0x563501DE)
+F (.\adc_2.c)(0x56440448)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\adc_2.o --omf_browse .\objects\adc_2.crf --depend .\objects\adc_2.d)
+I (adc_2.h)(0x564403D5)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF90A2)
@@ -93,8 +94,8 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\adc_3.c)(0x56428BDA)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\adc_3.o --omf_browse .\objects\adc_3.crf --depend .\objects\adc_3.d)
-I (adc_3.h)(0x563501E8)
+F (.\adc_3.c)(0x5644046E)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\adc_3.o --omf_browse .\objects\adc_3.crf --depend .\objects\adc_3.d)
+I (adc_3.h)(0x564403D5)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF90A2)
@@ -102,8 +103,17 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
-F (.\Motor.c)(0x564368BC)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\motor.o --omf_browse .\objects\motor.crf --depend .\objects\motor.d)
-I (Motor.h)(0x564368BC)
+F (.\adc_gpio.c)(0x56440572)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\adc_gpio.o --omf_browse .\objects\adc_gpio.crf --depend .\objects\adc_gpio.d)
+I (adc_gpio.h)(0x564403BA)
+I (stm32f407xx.h)(0x560D83D4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF90A2)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmInstr.h)(0x5509D6B4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmFunc.h)(0x5509D6B4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
+I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
+F (.\Motor.c)(0x56454419)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\motor.o --omf_browse .\objects\motor.crf --depend .\objects\motor.d)
+I (Motor.h)(0x56454419)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AF90A2)
@@ -115,7 +125,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\arm_math.h)(0x550C1B38)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x55AF90A2)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x55AF90A2)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x55AF90A2)
-F (.\uart.c)(0x5642B746)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
+F (.\uart.c)(0x5644FADA)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I "C:\Users\Jeffrey Cable\Documents\GitHub\Senior_Project\Main_Board\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="516" -D_RTE_ -DSTM32F407xx-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
 I (uart.h)(0x5642A900)
 I (stm32f407xx.h)(0x560D83D4)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cm4.h)(0x5509D6B4)
@@ -126,7 +136,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\core_cmSimd.h)(0x5509D6B4)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x555FAB28)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x55AF90A2)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x55AF90A2)
-I (motor.h)(0x564368BC)
+I (motor.h)(0x56454419)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include\arm_math.h)(0x550C1B38)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x55AF90A2)
 F (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Lib\ARM\arm_cortexM4lf_math.lib)(0x5423F98C)()

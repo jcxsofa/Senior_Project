@@ -1,56 +1,9 @@
 #include "adc_1.h"
 
-void adc_1_gpio_init(void) {
-	
-	/* CONFIGURE INPUT PINS */
-	/*
-		PORT A PINS 4, 5, 6, and 7 ARE USED FOR ADC 
-		CHANNELS 4, 5, 6, and 7. THEY ARE CONFIGURED AS
-		ANALOG MODE, NO PULL-UP/PULL-DOWN.
-	*/
-	
-	// ENABLE PORT A CLOCK
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-	
-	/* SET AS ANALOG */
-	
-	// PA4
-	GPIOA->MODER |= (3 << 4*2);
-	
-	// PA5
-	GPIOA->MODER |= (3 << 5*2);
-	
-	// PA6
-	GPIOA->MODER |= (3 << 6*2);
-	
-	// PA7
-	GPIOA->MODER |= (3 << 7*2);
-	
-	/* SET AS NO PULL-UP/PULL-DOWN */
-	
-	// PA4
-	GPIOA->PUPDR &= ~(3 << 4*2);
-	
-	// PA5
-	GPIOA->PUPDR &= ~(3 << 5*2);
-	
-	// PA6
-	GPIOA->PUPDR &= ~(3 << 6*2);
-	
-	// PA7
-	GPIOA->PUPDR &= ~(3 << 7*2);
-	
-}
-
 void adc_1_config(void) {
 	
 	/*
-		ADC_1 WILL SAMPLE FROM FOUR SOURCES,
-		CHANNEL 4, 5, 6, and 7. THE ADC WILL NOT USE SCAN
-		MODE, CHANNELS MUST BE SELECTED MANUALLY
-		BY CONFIGURING WHICH CHANNEL THE ADC SAMPLES
-		FROM USING THE SQR3 REGISTER. CHANNEL 4 WILL
-		BE THE INITIAL CHANNEL SELECTED
+		ADD A NEW NOTE SOMETIME
 	*/
 		
 	// ENABLE ADC

@@ -1,6 +1,6 @@
 #include "tim_9.h"
 
-#define AR_9 4800 //auto reload value
+#define AR_9 800 //auto reload value
 #define PSC_9 0 // prescaler
 
 void tim_9_gpio_init(void){

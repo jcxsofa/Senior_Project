@@ -1,6 +1,6 @@
 #include "tim_12.h"
 
-#define AR_12 4800 //auto reload value
+#define AR_12 800 //auto reload value
 #define PSC_12 0 // prescaler
 
 
@@ -38,11 +38,11 @@ void tim_12_gpio_init(void){
 	
 	// PB14
 	GPIOB->AFR[1] &= ~(0xF << (14-8)*4);
-	GPIOB->AFR[1] |= (3 << (14-8)*4);
+	GPIOB->AFR[1] |= (9 << (14-8)*4);
 	
 	// PB15
 	GPIOB->AFR[1] &= ~(0xF << (15-8)*4);
-	GPIOB->AFR[1] |= (3 << (15-8)*4);
+	GPIOB->AFR[1] |= (9 << (15-8)*4);
 	
 	/* SET AS NO PULL-UP PULL-DOWN */
 	
@@ -54,7 +54,7 @@ void tim_12_gpio_init(void){
 	
 	/* CONFIGURE DIGITAL IO PINS */
 	/*
-		PORT D PINS 8 AND 9 WILL SERVE AS THE
+		PORT A PIN 8 AND PORT C PIN 8 WILL SERVE AS THE
 		LOW SIDE H-BRIDGE CONTROLS FOR THE
 		TIMER 12 PWM CHANNELS.
 	
@@ -62,34 +62,37 @@ void tim_12_gpio_init(void){
 		OUTPUT AND NO PULL-UP/PULL-DOWN.
 	*/
 	
-	// ENABLE PORTD CLOCK
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
+	// ENABLE PORTA CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+	
+	// ENABLE PORTC CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
 	
 	/* SET AS GENERAL PURPOSE OUTPUT */
 	
-	// PD8
-	GPIOD->MODER &= ~(2 << 8*2);
-	GPIOD->MODER |= (1 << 8*2);
+	// PA8
+	GPIOA->MODER &= ~(2 << 8*2);
+	GPIOA->MODER |= (1 << 8*2);
 	
-	// PD9
-	GPIOD->MODER &= ~(2 << 9*2);
-	GPIOD->MODER |= (1 << 9*2);
+	// PC8
+	GPIOC->MODER &= ~(2 << 8*2);
+	GPIOC->MODER |= (1 << 8*2);
 	
 	/* SET AS PUSH-PULL */
 	
-	// PD8
-	GPIOD->OTYPER &= ~(1 << 8*1);
+	// PA8
+	GPIOA->OTYPER &= ~(1 << 8*1);
 	
-	// PD9
-	GPIOD->OTYPER &= ~(1 << 9*1);
+	// PC8
+	GPIOC->OTYPER &= ~(1 << 8*1);
 	
 	/* SET AS NO PULL-UP/PULL-DOWN */
 	
-	// PD8
-	GPIOD->PUPDR &= ~(2 << 8*2);
+	// PA8
+	GPIOA->PUPDR &= ~(2 << 8*2);
 	
-	// PD9
-	GPIOD->PUPDR &= ~(2 << 9*2);
+	// PC8
+	GPIOC->PUPDR &= ~(2 << 8*2);
 	
 }
 
@@ -118,17 +121,17 @@ void tim_12_config(void){
 	// ENABLE AUTO RELOAD
 	TIM12->CR1 |= TIM_CR1_ARPE;
 	
-	// ENABLE CHANNEL 1 OUTPUT
-	TIM12->CCER |= TIM_CCER_CC1E;
-	
-	// ENABLE CHANNEL 2 OUTPUT
-	TIM12->CCER |= TIM_CCER_CC2E;
-	
 	// PRELOAD CAPTURE COMPARE VALUE FOR CHANNEL 1
 	TIM12->CCR1 |= 0;
 	
 	// PRELOAD CAPTURE COMPARE VALUE FOR CHANNEL 2
 	TIM12->CCR2 |= 0;
+	
+	// ENABLE CHANNEL 1 OUTPUT
+	TIM12->CCER |= TIM_CCER_CC1E;
+	
+	// ENABLE CHANNEL 2 OUTPUT
+	TIM12->CCER |= TIM_CCER_CC2E;
 	
 	// ENABLE TIMER
 	TIM12->CR1 |= TIM_CR1_CEN;

@@ -9,6 +9,7 @@
 ".\objects\adc_1.o"
 ".\objects\adc_2.o"
 ".\objects\adc_3.o"
+".\objects\adc_gpio.o"
 ".\objects\motor.o"
 ".\objects\uart.o"
 "C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Lib\ARM\arm_cortexM4lf_math.lib"
