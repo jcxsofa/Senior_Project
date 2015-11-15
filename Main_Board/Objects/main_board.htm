@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\main_board.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\main_board.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Thu Nov 12 21:02:31 2015
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Fri Nov 13 13:48:00 2015
 <BR><P>
-<H3>Maximum Stack Usage =       1668 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        520 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-__rt_entry_main &rArr; main &rArr; Motor_init &rArr; arm_fir_init_f32 &rArr; __aeabi_memclr4
+TIM8_UP_TIM13_IRQHandler &rArr; Motor_ISR &rArr; arm_fir_f32
 <P>
 <H3>
 Functions with no stack information
@@ -274,7 +274,7 @@ Global Symbols
 <P><STRONG><a name="[f8]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[75]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1668 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 52 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; Motor_init &rArr; arm_fir_init_f32 &rArr; __aeabi_memclr4
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -608,7 +608,6 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = arm_fir_f32
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_ISR
-<LI><a href="#[25]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM1_UP_TIM10_IRQHandler
 </UL>
 
 <P><STRONG><a name="[7c]"></a>arm_fir_init_f32</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, arm_fir_init_f32.o(.text))
@@ -617,7 +616,6 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_init
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[7e]"></a>__2sprintf</STRONG> (Thumb, 34 bytes, Stack size 32 bytes, noretval__2sprintf.o(.text))
@@ -920,9 +918,9 @@ Global Symbols
 <P><STRONG><a name="[9d]"></a>Motor_ISR</STRONG> (Thumb, 302 bytes, Stack size 432 bytes, motor.o(i.Motor_ISR))
 <BR><BR>[Stack]<UL><LI>Max Depth = 512<LI>Call Chain = Motor_ISR &rArr; arm_fir_f32
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Update_PID
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_fir_f32
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Update_PID
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Calc_Speed
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_fir_f32
 </UL>
 <BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM8_UP_TIM13_IRQHandler
 </UL>
@@ -949,12 +947,11 @@ Global Symbols
 <P><STRONG><a name="[5d]"></a>SystemInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, system_stm32f4xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
-<P><STRONG><a name="[25]"></a>TIM1_UP_TIM10_IRQHandler</STRONG> (Thumb, 138 bytes, Stack size 32 bytes, main.o(i.TIM1_UP_TIM10_IRQHandler))
+<P><STRONG><a name="[25]"></a>TIM1_UP_TIM10_IRQHandler</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, main.o(i.TIM1_UP_TIM10_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
 <LI>Call Chain = TIM1_UP_TIM10_IRQHandler &rArr; display_speed_current &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;display_speed_current
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_fir_f32
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Write
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
@@ -963,7 +960,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[38]"></a>TIM8_UP_TIM13_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, main.o(i.TIM8_UP_TIM13_IRQHandler))
+<P><STRONG><a name="[38]"></a>TIM8_UP_TIM13_IRQHandler</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, main.o(i.TIM8_UP_TIM13_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 520<LI>Call Chain = TIM8_UP_TIM13_IRQHandler &rArr; Motor_ISR &rArr; arm_fir_f32
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_ISR
@@ -1035,8 +1032,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[25]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM1_UP_TIM10_IRQHandler
 </UL>
 
-<P><STRONG><a name="[76]"></a>main</STRONG> (Thumb, 226 bytes, Stack size 1616 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1668<LI>Call Chain = main &rArr; Motor_init &rArr; arm_fir_init_f32 &rArr; __aeabi_memclr4
+<P><STRONG><a name="[76]"></a>main</STRONG> (Thumb, 130 bytes, Stack size 0 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = main &rArr; Motor_init &rArr; arm_fir_init_f32 &rArr; __aeabi_memclr4
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_gpio_init
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tim_9_gpio_init
@@ -1049,7 +1046,6 @@ Global Symbols
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tim_12_gpio_init
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tim_12_config
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tim_10_config
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_fir_init_f32
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc_gpio_init
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc_1_config
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
