@@ -17,7 +17,7 @@ Library Manager: ArmAr.exe V5.06 (build 20)
 Hex Converter:   FromElf.exe V5.06 (build 20)
 CPU DLL:         SARMCM3.DLL V5.16a
 Dialog DLL:      DCM.DLL V1.13.2.0
-Target DLL:      UL2CM3.DLL V1.155.12.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.17.0
 Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
@@ -28,22 +28,27 @@ Project File Date:  11/15/2015
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
 assembling startup_stm32l1xx_mdp.s...
-compiling system_stm32l1xx.c...
 compiling uart.c...
 uart.h(19): warning:  #1-D: last line of file ends without a newline
   #endif // UART_H_
 uart.c: 1 warning, 0 errors
+compiling system_stm32l1xx.c...
 compiling main.c...
 uart.h(19): warning:  #1-D: last line of file ends without a newline
   #endif // UART_H_
-main.c(34): warning:  #1-D: last line of file ends without a newline
-  }
-main.c: 2 warnings, 0 errors
+main.c(72): warning:  #223-D: function "sprintf" declared implicitly
+  		sprintf(print, "Distance is % 3.3fin\r\n", distance);
+main.c(74): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+  		USART_Write(
+SART1, print, 23);
+main.c(22): warning:  #177-D: variable "value" was declared but never referenced
+  	int value = 0;
+main.c(26): warning:  #177-D: variable "speed" was declared but never referenced
+  	float speed = 0;
+main.c: 5 warnings, 0 errors
 linking...
-.\Objects\ultrasonic.axf: Error: L6218E: Undefined symbol main (referred from __rtentry2.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 1 error messages.
-".\Objects\ultrasonic.axf" - 1 Error(s), 3 Warning(s).
+Program Size: Code=6092 RO-data=504 RW-data=0 ZI-data=1632  
+".\Objects\ultrasonic.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -73,7 +78,6 @@ Package Vendor: Keil
       Include file:  Device\Include\stm32l1xx.h
       Source file:   Device\Source\ARM\startup_stm32l1xx_mdp.s
       Source file:   Device\Source\system_stm32l1xx.c
-Target not created.
 Build Time Elapsed:  00:00:01
 </pre>
 </body>
