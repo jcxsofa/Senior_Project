@@ -94,20 +94,13 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 	}
 }
 											
-void display_speed_current(struct Motor *M){
+void display_stats(struct Motor *M){
 	
-	char print[50];	
+	char print[80];	
 	
-	sprintf(print, "Motor %1d Speed = % 3.3frpm\t", M->wheel, M->BEMF_Speed);
+	sprintf(print, "M%1d BEMF = % 3.3frpm\tENC = % 3.3frpm\tTARG = % 3.3frpm\tERR = % 3.3frpm\n\r", M->wheel, M->BEMF_Speed, M->Encoder_Speed, M->Error);
 	
-	USART_Write(USART2, print, 28);
-	
-	sprintf(print, "Motor %1d Current = % 3.3fA\n\r", M->wheel, M->Encoder_Speed);
-	
-	USART_Write(USART2, print, 29);
-	
-	
-	
+	USART_Write(USART2, print, 70);
 }
 
 

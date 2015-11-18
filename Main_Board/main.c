@@ -38,10 +38,10 @@ int main(void)
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 	
+	Motor_init(&M2, .265, 151, 11.4, 1.379, 2);
 	Motor_init(&M1, .265, 151, 11.4, 1.379, 1);
-//	Motor_init(&M2, .265, 151, 11.4, 1.379, 2);
-//	Motor_init(&M3, .265, 151, 11.4, 1.379, 3);
-//	Motor_init(&M4, .265, 151, 11.4, 1.379, 4);
+	Motor_init(&M3, .265, 151, 11.4, 1.379, 3);
+	Motor_init(&M4, .265, 151, 11.4, 1.379, 4);
 	
 	adc_gpio_init();
 	adc_1_config();
@@ -61,13 +61,13 @@ int main(void)
 	tim_5_gpio_init();
 	tim_5_config();
 	
-	tim_1_gpio_init();
-	tim_1_config();
+//	tim_1_gpio_init();
+//	tim_1_config();
 	
-	M1.Desired_Speed = 80;
-	M2.Desired_Speed = 60;
-	M3.Desired_Speed = 60;
-	M4.Desired_Speed = 60;
+	M1.Desired_Speed = 0;
+	M2.Desired_Speed = 0;
+	M3.Desired_Speed = 0;
+	M4.Desired_Speed = 0;
 		
 	
 	while(1){
@@ -120,9 +120,9 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 	// SERVICE MOTOR CONTROL INTERRUPT
 	if (TIM13->SR && TIM_SR_UIF) {
 		Motor_ISR(&M1);
-//		Motor_ISR(&M2);
-//		Motor_ISR(&M3);
-//		Motor_ISR(&M4);
+		Motor_ISR(&M2);
+		Motor_ISR(&M3);
+		Motor_ISR(&M4);
 	}
 	
 	// RESET INTERRUPT
@@ -144,13 +144,13 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 		test_val = (newencoder - oldencoder);
 		oldencoder = newencoder;
 		
-		M1.Encoder_Speed = test_val;
+		M1.Encoder_Speed = ((test_val/2.02)/280)*60;
 		
 		// DISPLAY STUFF
 		display_speed_current(&M1);
-//		display_speed_current(&M2);
-//		display_speed_current(&M3);
-//		display_speed_current(&M4);
+		display_speed_current(&M2);
+		display_speed_current(&M3);
+		display_speed_current(&M4);
 	}
 	
 	// RESET INTERRUPT
@@ -160,11 +160,38 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 
 void decode(uint8_t * buffer) {
 	int i = 0;
-	if( Rx2_Counter == 7 ) {
-		for (i=0; i<=7; i++) {
-			USART2_Buffer_Tx[i] = buffer[i];
+	char instruction[10];
+	char stop[10];
+	char move[10];
+	char back[10];
+	strcpy(stop, "stop");
+	strcpy(move, "move");
+	strcpy(back, "back");
+	if( Rx2_Counter == 4 ) {
+		
+		strncpy(instruction, buffer, 4);
+		i = strcmp(instruction, stop);
+		if( i == 0) {
+			M1.Desired_Speed = 0;
+			M2.Desired_Speed = 0;
+			M3.Desired_Speed = 0;
+			M4.Desired_Speed = 0;
 		}
-		USART_Write(USART2, USART2_Buffer_Tx, 7);
+		i = strcmp(instruction, move);
+		if( i == 0) {
+			M1.Desired_Speed = 84;
+			M2.Desired_Speed = 84;
+			M3.Desired_Speed = 84;
+			M4.Desired_Speed = 84;
+		}
+		
+		i = strcmp(instruction, back);
+		if( i == 0) {
+			M1.Desired_Speed = -84;
+			M2.Desired_Speed = -84;
+			M3.Desired_Speed = -84;
+			M4.Desired_Speed = -84;
+		}
 	}
 	
 }

@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #define iGain 500.0f
-#define pGain .05f
+#define pGain .04f
 #define dGain .000000000005f
 #define epsilon .01f
 #define delta_t .000020f // update period
