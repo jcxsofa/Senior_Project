@@ -1,0 +1,75 @@
+#include "tim_3.h"
+
+void tim_3_gpio_init(void) {
+	
+	/*
+		TIMER THREE UTILIZES GPIO PORT C PIN 6. 
+		IT ISCONFIGURED AS PUSH
+		PULL, ALTERNATE FUNCTION, NO PULL UP
+		OR PULL DOWN AND THE ALTERNATE FUNCTION
+		OF TIMER 3.
+	*/
+	
+	// ENABLE GPIOA CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+	
+	/* SET AS PUSH PULL */
+	
+	// PC6
+	GPIOC->OTYPER &= ~(1 << 6*1);
+
+	/* SET AS ALTERNATE FUNCTION */
+	
+	// PC6
+	GPIOC->MODER &= ~(3 << 6*2);
+	GPIOC->MODER |= (2 << 6*2);
+	
+	/* SET AF AS TIM 3*/
+	
+	// PC6
+	GPIOC->AFR[0] &= ~(0xF << 6*4);
+	GPIOC->AFR[0] |= (2 << 6*4);
+	
+	/* SET AS NO PULL-UP PULL-DOWN */
+	
+	// PC6
+	GPIOC->PUPDR &= ~(3 << 6*2);
+	
+}
+	
+
+
+void tim_3_config(void) {
+	
+	
+	// ENABLE TIMER 3 CLOCK
+	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;	
+	
+	// SELECT CHANNEL 1 CAPTURE INPUT (CC1S = 01)
+	TIM3->CCMR1 &= ~(3 << 0);
+	TIM3->CCMR1 |= ~(1 << 0);
+	
+	// SET NO INPUT FILTERING CHANNEL 1 (IC1F = 0000)
+	TIM3->CCMR1 &= ~(0xF << 4);
+	TIM3->CCMR1 |= (0xc << 4);
+	
+	// SELECT RISING EDGE POLARITY (CC1P AND CC1NP = 0)
+	TIM3->CCER |= (1 << 5);
+	TIM3->CCER |= (1 << 7);
+	
+	// SLAVE MODE SELECTION
+	TIM3->SMCR |= (7 << 0);
+	
+	// SELECT CHANNEL 1 AS TRIGGER
+	TIM3->SMCR &= ~(7 << 4);
+	TIM3->SMCR |= (5 << 4);
+	
+	// CONFIGURE ARR
+	TIM3->ARR = 0xFFFFFFFF;
+	
+	// ENABLE TIMER
+	TIM3->CR1 |= 1;
+	
+	
+}
+

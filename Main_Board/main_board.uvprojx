@@ -461,6 +461,21 @@
               <FileType>1</FileType>
               <FilePath>.\tim_1.c</FilePath>
             </File>
+            <File>
+              <FileName>tim_2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tim_2.c</FilePath>
+            </File>
+            <File>
+              <FileName>tim_3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tim_3.c</FilePath>
+            </File>
+            <File>
+              <FileName>tim_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tim_4.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

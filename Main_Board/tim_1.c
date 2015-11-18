@@ -42,27 +42,27 @@ void tim_1_gpio_init(void) {
 void tim_1_config(void) {
 	
 	
-	// ENABLE TIMER 5 CLOCK
+	// ENABLE TIMER 1 CLOCK
 	RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;	
 	
-	// SELECT CHANNEL 2 CAPTURE INPUT (CC1S = 01)
-	TIM1->CCMR1 &= ~(3 << 0);
-	TIM1->CCMR1 |= ~(1 << 0);
+	// SELECT CHANNEL 2 CAPTURE INPUT (CC2S = 01)
+	TIM1->CCMR1 &= ~(3 << 8);
+	TIM1->CCMR1 |= ~(1 << 8);
 	
-	// SET NO INPUT FILTERING CHANNEL 2 (IC1F = 0000)
-	TIM1->CCMR1 &= ~(0xF << 4);
-	TIM1->CCMR1 |= (0xc << 4);
+	// SET NO INPUT FILTERING CHANNEL 2 (IC2F = 0000)
+	TIM1->CCMR1 &= ~(0xF << 12);
+	TIM1->CCMR1 |= (0xc << 12);
 	
 	// SELECT RISING EDGE POLARITY (CC2P AND CC2NP = 0)
-	TIM1->CCER |= (1 << 1);
-	TIM1->CCER |= (1 << 3);
+	TIM1->CCER |= (1 << 5);
+	TIM1->CCER |= (1 << 7);
 	
 	// SLAVE MODE SELECTION
 	TIM1->SMCR |= (7 << 0);
 	
 	// SELECT CHANNEL 2 AS TRIGGER
 	TIM1->SMCR &= ~(7 << 4);
-	TIM1->SMCR |= (5 << 4);
+	TIM1->SMCR |= (6 << 4);
 	
 	// CONFIGURE ARR
 	TIM1->ARR = 0xFFFFFFFF;

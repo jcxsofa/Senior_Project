@@ -1,0 +1,75 @@
+#include "tim_4.h"
+
+void tim_4_gpio_init(void) {
+	
+	/*
+		TIMER FOUR UTILIZES GPIO PORT D PIN 12. 
+		IT ISCONFIGURED AS PUSH
+		PULL, ALTERNATE FUNCTION, NO PULL UP
+		OR PULL DOWN AND THE ALTERNATE FUNCTION
+		OF TIMER 4.
+	*/
+	
+	// ENABLE GPIOC CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+	
+	/* SET AS PUSH PULL */
+	
+	// PD12
+	GPIOD->OTYPER &= ~(1 << 12*1);
+
+	/* SET AS ALTERNATE FUNCTION */
+	
+	// PD12
+	GPIOD->MODER &= ~(3 << 12*2);
+	GPIOD->MODER |= (2 << 12*2);
+	
+	/* SET AF AS TIM 4*/
+	
+	// PD12
+	GPIOD->AFR[1] &= ~(0xF << (12-8)*4);
+	GPIOD->AFR[1] |= (2 << (12-8)*4);
+	
+	/* SET AS NO PULL-UP PULL-DOWN */
+	
+	// PD12
+	GPIOD->PUPDR &= ~(3 << 12*2);
+	
+}
+	
+
+
+void tim_4_config(void) {
+	
+	
+	// ENABLE TIMER 4 CLOCK
+	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;	
+	
+	// SELECT CHANNEL 1 CAPTURE INPUT (CC1S = 01)
+	TIM4->CCMR1 &= ~(3 << 0);
+	TIM4->CCMR1 |= ~(1 << 0);
+	
+	// SET NO INPUT FILTERING CHANNEL 1 (IC1F = 0000)
+	TIM4->CCMR1 &= ~(0xF << 4);
+	TIM4->CCMR1 |= (0xc << 4);
+	
+	// SELECT RISING EDGE POLARITY (CC1P AND CC1NP = 0)
+	TIM4->CCER |= (1 << 5);
+	TIM4->CCER |= (1 << 7);
+	
+	// SLAVE MODE SELECTION
+	TIM4->SMCR |= (7 << 0);
+	
+	// SELECT CHANNEL 1 AS TRIGGER
+	TIM4->SMCR &= ~(7 << 4);
+	TIM4->SMCR |= (5 << 4);
+	
+	// CONFIGURE ARR
+	TIM4->ARR = 0xFFFFFFFF;
+	
+	// ENABLE TIMER
+	TIM4->CR1 |= 1;
+	
+	
+}
+

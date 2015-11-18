@@ -96,11 +96,11 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 											
 void display_stats(struct Motor *M){
 	
-	char print[80];	
+	char print[90];	
 	
-	sprintf(print, "M%1d BEMF = % 3.3frpm\tENC = % 3.3frpm\tTARG = % 3.3frpm\tERR = % 3.3frpm\n\r", M->wheel, M->BEMF_Speed, M->Encoder_Speed, M->Error);
+	sprintf(print, "M%1d BEMF = % 3.3frpm   ENC = % 3.3frpm   TARG = % 3.3frpm   ERR = % 3.3f\n\r", M->wheel, M->BEMF_Speed, M->Encoder_Speed, M->Desired_Speed, M->Error);
 	
-	USART_Write(USART2, print, 70);
+	USART_Write(USART2, print, 77);
 }
 
 

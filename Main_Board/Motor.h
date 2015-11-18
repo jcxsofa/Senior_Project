@@ -29,11 +29,14 @@ struct Motor {
 	float No_Load_Rpm;
 	float Stall_Current;
 	float Resistance;
+	float kv;
 	
 	// SPEED DATA
 	float BEMF_Speed;
 	float Encoder_Speed;
 	float Desired_Speed;
+	float Error;
+	float OldEncoder;
 	
 	// CURRENT DATA
 	float Current;
@@ -59,6 +62,7 @@ void Motor_init(
 	float No_Load_Rpm,
 	float Stall_Current,
 	float Resistance,
+	float kv,
 	char wheel);
 	
 void Motor_Calc_Speed(

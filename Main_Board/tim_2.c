@@ -1,0 +1,75 @@
+#include "tim_2.h"
+
+void tim_2_gpio_init(void) {
+	
+	/*
+		TIMER TWO UTILIZES GPIO PORT B PIN 3. 
+		IT ISCONFIGURED AS PUSH
+		PULL, ALTERNATE FUNCTION, NO PULL UP
+		OR PULL DOWN AND THE ALTERNATE FUNCTION
+		OF TIMER 2.
+	*/
+	
+	// ENABLE GPIOB CLOCK
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+	
+	/* SET AS PUSH PULL */
+	
+	// PB3
+	GPIOB->OTYPER &= ~(1 << 3*1);
+
+	/* SET AS ALTERNATE FUNCTION */
+	
+	// PB3
+	GPIOB->MODER &= ~(3 << 3*2);
+	GPIOB->MODER |= (2 << 3*2);
+	
+	/* SET AF AS TIM 2*/
+	
+	// PB3
+	GPIOB->AFR[0] &= ~(0xF << 3*4);
+	GPIOB->AFR[0] |= (1 << 3*4);
+	
+	/* SET AS NO PULL-UP PULL-DOWN */
+	
+	// PB3
+	GPIOB->PUPDR &= ~(3 << 3*2);
+	
+}
+	
+
+
+void tim_2_config(void) {
+	
+	
+	// ENABLE TIMER 2 CLOCK
+	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;	
+	
+	// SELECT CHANNEL 2 CAPTURE INPUT (CC2S = 01)
+	TIM2->CCMR1 &= ~(3 << 8);
+	TIM2->CCMR1 |= ~(1 << 8);
+	
+	// SET NO INPUT FILTERING CHANNEL 2 (IC2F = 0000)
+	TIM2->CCMR1 &= ~(0xF << 12);
+	TIM2->CCMR1 |= (0xc << 12);
+	
+	// SELECT RISING EDGE POLARITY (CC2P AND CC2NP = 0)
+	TIM2->CCER |= (1 << 5);
+	TIM2->CCER |= (1 << 7);
+	
+	// SLAVE MODE SELECTION
+	TIM2->SMCR |= (7 << 0);
+	
+	// SELECT CHANNEL 2 AS TRIGGER
+	TIM2->SMCR &= ~(7 << 4);
+	TIM2->SMCR |= (6 << 4);
+	
+	// CONFIGURE ARR
+	TIM2->ARR = 0xFFFFFFFF;
+	
+	// ENABLE TIMER
+	TIM2->CR1 |= 1;
+	
+	
+}
+

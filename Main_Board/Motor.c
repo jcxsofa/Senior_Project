@@ -9,6 +9,7 @@ void Motor_init(
 	float No_Load_Rpm,
 	float Stall_Current,
 	float Resistance,
+	float kv,
 	char wheel) {
 		
 		// COPY INPUT ARGUMENTS TO STRUCT DATA
@@ -17,6 +18,7 @@ void Motor_init(
 		M->Stall_Current = Stall_Current;
 		M->Resistance = Resistance;
 		M->wheel = wheel;
+		M->kv = kv;
 		
 		// SET INITIAL DUTYCYCLE
 		M->duty_cycle = 0;
@@ -25,6 +27,8 @@ void Motor_init(
 		M->BEMF_Speed = 0;
 		M->Encoder_Speed = 0;
 		M->Desired_Speed = 0;
+		M->Error = 0;
+		M->OldEncoder = 0;
 		
 		// INTIALIZE CURRENT VALUE
 		M->Current = 0;
@@ -38,22 +42,23 @@ void Motor_init(
 	
 	}
 	
+	
 void Motor_Calc_Speed(
 	struct Motor *M,
 	float filter_output){
 		
 		float current, speed;
-		float fudge = 2.0f;
+		float calibration = 3.3f;
 
 		// CONVERT FILTER OUTPUT TO CURRENT
 		filter_output /= 4095.0f;
 		filter_output *= 3.3f;
 		filter_output /= 50.0f;
 		filter_output /= 0.01f;
-		current = filter_output * fudge;
+		current = filter_output * calibration;
 		
 		// CALCULATE SPEED
-		speed = ((M->duty_cycle * 12.0f)-(current * (M->Resistance))) * 12.995f;
+		speed = ((M->duty_cycle * 12.0f)-(current * (M->Resistance))) * M->kv;
 		
 		// STORE SPEED AND CURRENT INTO STRUCT
 		M->BEMF_Speed = speed;

@@ -15,6 +15,9 @@
 .\objects\main.o: adc_gpio.h
 .\objects\main.o: adc_1.h
 .\objects\main.o: tim_1.h
+.\objects\main.o: tim_2.h
+.\objects\main.o: tim_3.h
+.\objects\main.o: tim_4.h
 .\objects\main.o: tim_5.h
 .\objects\main.o: tim_9.h
 .\objects\main.o: tim_10.h
