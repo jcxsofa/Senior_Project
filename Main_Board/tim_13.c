@@ -20,7 +20,7 @@ void tim_13_config(void){
 	TIM13->DIER |= TIM_DIER_UIE;
 	
 	// ENABLE INTERRUPT
-	NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 1);
+	NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 2);
 	NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
 	
 	// ENABLE TIMER

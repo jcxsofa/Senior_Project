@@ -98,9 +98,9 @@ void display_stats(struct Motor *M){
 	
 	char print[90];	
 	
-	sprintf(print, "M%1d BEMF = % 3.3frpm   ENC = % 3.3frpm   TARG = % 3.3frpm   ERR = % 3.3f\n\r", M->wheel, M->BEMF_Speed, M->Encoder_Speed, M->Desired_Speed, M->Error);
+	sprintf(print, "M%1d BEMF = % 3.3frpm   ENC = % 3.3frpm   TARG = % 3.3frpm   ERR = % 3.3f\n\r", M->wheel, M->BEMF_Speed, M->Encoder_Speed, M->Current, M->Error);
 	
-	USART_Write(USART2, print, 77);
+	USART_Write(USART2, print, 78);
 }
 
 

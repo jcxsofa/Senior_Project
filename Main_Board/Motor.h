@@ -16,7 +16,7 @@
 
 
 #define ARR 800
-#define ntaps 351
+#define ntaps 500
 #define blocksize 50
 #define numStages 3
 
@@ -37,6 +37,7 @@ struct Motor {
 	float Desired_Speed;
 	float Error;
 	float OldEncoder;
+	float helpless;
 	
 	// CURRENT DATA
 	float Current;
@@ -63,7 +64,8 @@ void Motor_init(
 	float Stall_Current,
 	float Resistance,
 	float kv,
-	char wheel);
+	char wheel,
+	float help);
 	
 void Motor_Calc_Speed(
 	struct Motor *M,

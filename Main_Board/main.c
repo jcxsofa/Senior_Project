@@ -1,5 +1,6 @@
 #define ARM_MATH_CM4
 #include <stdint.h>
+#include <math.h>
 #include "stm32f407xx.h"
 #include "arm_math.h"
 #include <stdlib.h>
@@ -18,15 +19,16 @@
 #include "tim_13.h"
 #include "uart.h"
 
+#define BufferSize 4
+
 void sysclk_Configure(void);
 void decode(uint8_t * buffer);
 void calc_error(void);
 
 uint8_t USART2_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
-uint8_t USART2_Buffer_Tx[BufferSize] = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67, '\n',};
 uint8_t Rx2_Counter = 0;
 
-#define BufferSize 32
+
 void dac_Configure(void);
 
 struct Motor M1, M2, M3, M4;
@@ -39,10 +41,10 @@ int main(void)
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 	
-	Motor_init(&M1, .26, 151, 11.4, 1.656, 13.014, 1);
-	Motor_init(&M2, .25, 145, 11.4, 1.723, 12.44, 2);
-	Motor_init(&M3, .24, 144, 11.4, 1.879, 12.43, 3);
-	Motor_init(&M4, .3, 152, 11.4, 1.471, 13.12, 4);
+	Motor_init(&M1, .26, 151, 11.4, 1.656, 13.014, 1, 1);
+	Motor_init(&M2, .25, 145, 11.4, 1.923, 12.31, 2, 1);
+	Motor_init(&M3, .24, 144, 11.4, 1.79, 12.53, 3, 1);
+	Motor_init(&M4, .3, 152, 11.4, 1.231, 13.52, 4, 1);
 	
 	adc_gpio_init();
 	adc_1_config();
@@ -109,7 +111,7 @@ void sysclk_Configure(void){
 //	
 //	// SET PLL DIVISION FACTOR P
 //	RCC->PLLCFGR &= ~(3 << 16);
-	
+//	
 //	// ENABLE PLL CLOCK
 //	RCC->CR |= RCC_CR_PLLON;
 //	
@@ -119,6 +121,9 @@ void sysclk_Configure(void){
 //	// SELECT PLL AS SYSTEM CLOCK
 //	RCC->CFGR &= ~RCC_CFGR_SW;
 //	RCC->CFGR |= RCC_CFGR_SW_PLL;
+//	
+//	// WAIT FOR PLL CLOSK TO BE SELECTED
+//	while ((RCC->CFGR & RCC_CFGR_SWS) == !RCC_CFGR_SWS_PLL);
 	
 	// WAIT FOR HSI TO BE SELECTED
 	while ((RCC->CFGR & RCC_CFGR_SWS) == !RCC_CFGR_SWS_HSI);
@@ -141,7 +146,7 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 
 void TIM1_UP_TIM10_IRQHandler (void) {
 	char print[15];
-	float average;
+	float av_speed, av_error = 0;
 	// SERVICE DATA UPDATE
 	if (TIM10->SR && TIM_SR_UIF) {
 		
@@ -158,11 +163,12 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 		display_stats(&M3);
 		display_stats(&M4);	
 		
-		average = (M1.Encoder_Speed + M2.Encoder_Speed + M3.Encoder_Speed + M4.Encoder_Speed) / 4;
-	
-		sprintf(print, "Average speed = % 3.3frpm\n\r", average);
-		
-		USART_Write(USART2, print, 28);
+//		//av_error = ((M1.Error) + (M2.Error) + (M3.Error) + (M4.Error)) / 4;
+//		av_speed = (M1.Encoder_Speed + M2.Encoder_Speed + M3.Encoder_Speed + M4.Encoder_Speed) / 4;
+//		
+//		sprintf(print, "Average speed = % 3.3frpm    Absolute Average Error = % 3.3f\n\r", av_speed, av_error);
+//		
+//		USART_Write(USART2, print, 63);
 	}
 	
 	// RESET INTERRUPT
@@ -217,25 +223,25 @@ void calc_error(void) {
 	test_val = (newencoder - M1.OldEncoder);
 	M1.OldEncoder = newencoder;
 	M1.Encoder_Speed = ((test_val/2.02)/280)*60;
-	M1.Error = 100 * ((M1.Encoder_Speed - M1.Desired_Speed) / M1.Desired_Speed);
+	M1.Error = 100 * ((M1.Encoder_Speed - fabs(M1.Desired_Speed)) / M1.Desired_Speed);
 	
 	newencoder = TIM2->CNT;
 	test_val = (newencoder - M2.OldEncoder);
 	M2.OldEncoder = newencoder;
 	M2.Encoder_Speed = ((test_val/2.02)/280)*60;
-	M2.Error = 100 * ((M2.Encoder_Speed - M2.Desired_Speed) / M2.Desired_Speed);
+	M2.Error = 100 * ((M2.Encoder_Speed - fabs(M2.Desired_Speed)) / M2.Desired_Speed);
 	
 	newencoder = TIM4->CNT;
 	test_val = (newencoder - M3.OldEncoder);
 	M3.OldEncoder = newencoder;
 	M3.Encoder_Speed = ((test_val/1.02)/280)*60;
-	M3.Error = 100 * ((M3.Encoder_Speed - M3.Desired_Speed) / M3.Desired_Speed);
+	M3.Error = 100 * ((M3.Encoder_Speed - fabs(M3.Desired_Speed)) / M3.Desired_Speed);
 	
 	newencoder = TIM3->CNT;
 	test_val = (newencoder - M4.OldEncoder);
 	M4.OldEncoder = newencoder;
 	M4.Encoder_Speed = ((test_val/1.02)/280)*60;
-	M4.Error = 100 * ((M4.Encoder_Speed - M4.Desired_Speed) / M4.Desired_Speed);
+	M4.Error = 100 * ((M4.Encoder_Speed - fabs(M4.Desired_Speed)) / M4.Desired_Speed);
 	
 	
 	
