@@ -5,10 +5,15 @@ void sysclk_Configure(void);
 void io_Configure(void);
 void pb_Configure(void);
 void timer4_Configure(void);
+void i2c2_configuration(void);
+void i2c2_send_byte(unsigned char byte);
+unsigned char reverse_char(unsigned char byte);
+void delay_uS(int delay);
 
 int main(void)
 {
-
+	int i;
+	
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 		
@@ -21,7 +26,124 @@ int main(void)
 	/* TIMER 4 CONFIGURATION */
 	timer4_Configure();
 	
-	while(1);
+	/* I2C2 CONFIGURATION */
+	i2c2_configuration();
+	
+	// DELAY TO ALLOW DISPLAY TO STABILIZE
+	for (i = 0; i < 1000; i++) delay_uS(64000);
+	
+	while(1){
+	
+		// SEND COMMAND TO TURN ON DISPLAY
+		i2c2_send_byte(0x0C);
+		
+		//for (i = 0; i < 250; i++) delay_uS(64000);
+		
+		// SEND COMMAND TO TURN OFF DISPLAY
+		i2c2_send_byte(0x08);
+		
+		//for (i = 0; i < 250; i++) delay_uS(64000);
+	}
+}
+
+void i2c2_send_byte(unsigned char byte) {
+	
+	uint8_t add = 0x27;
+	
+	// SEND START BIT
+	I2C2->CR1 |= I2C_CR1_START;
+	
+	// WAIT FOR SB AFFIRMATION
+	while((I2C2->SR1 & I2C_SR1_SB) == 0);
+	
+	// WRITE ADDRESS WITH LSB SET TO 0 TO INDICATE WRITE
+	I2C2->DR = (add << 1);
+	
+	// WAIT FOR ADDR
+	while((I2C2->SR1 & I2C_SR1_ADDR) == 0);
+	
+	// READ SR2 TO CLEAR ADDR
+	I2C2->SR2;
+	
+	// WAIT FOR TXE BIT
+	while((I2C2->SR1 & I2C_SR1_TXE) == 0);
+	
+	// WRITE DATA BYTE
+	I2C2->DR = byte;//reverse_char(byte);
+	
+	// WAIT FOR TXE BIT
+	while((I2C2->SR1 & I2C_SR1_TXE) == 0);
+	
+	// WRITE STOP BIT
+	I2C2->CR1 |= I2C_CR1_STOP;
+	
+	// WAIT FOR BUSY CLEAR
+	while((I2C2->SR1 & I2C_SR2_BUSY) == 0);
+	
+}
+
+void i2c2_configuration(void) {
+	
+	// RESET I2C2
+	RCC->APB1RSTR |= RCC_APB1RSTR_I2C2RST;
+	RCC->APB1RSTR &= ~RCC_APB1RSTR_I2C2RST;
+	
+	/* CONFIGURE I2C2 CONTROL REGISTERS */
+	
+	// SET SMBBus MODE TO I2C
+	I2C2->CR1 &= ~I2C_CR1_SMBUS;
+	
+	// CLEAR PERIPHERAL CLOCK FREQUENCY AND SET AS 2 MHz
+	I2C2->CR2 &= ~I2C_CR2_FREQ;
+	I2C2->CR2 |= I2C_CR2_FREQ_1;
+	
+	// EVENT INTERRUPT ENABLE
+	I2C2->CR2 |= I2C_CR2_ITEVTEN;
+	
+	// DISABLE I2C TO CONFIGURE TRISE
+	I2C2->CR1 &= ~I2C_CR1_PE;
+	
+	/* CLEAR MAX RISE TIME, SET FOR MAX
+		RISE TIME OF STANDARD MODE */
+	I2C2->TRISE &= ~I2C_TRISE_TRISE;
+	I2C2->TRISE |= 17;
+	
+	// SET SPEED AS STANDARD MODE
+	I2C2->CCR &= ~I2C_CCR_FS;
+	
+	// SET CLOCK SCALAR
+	I2C2->CCR &= ~I2C_CCR_CCR;
+	I2C2->CCR |= 0x08;
+	
+	// ENABLE I2C2
+	I2C2->CR1 |= I2C_CR1_PE;
+	
+	// ENABLE ACK AFTER BYTE RECEPTION
+	I2C2->CR1 |= I2C_CR1_ACK;
+	
+}
+
+unsigned char reverse_char(unsigned char b) {
+   b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
+   b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
+   b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
+   return b;
+}
+
+void delay_uS(int delay) {
+	
+	// DISABLE TIMER
+	TIM4->CR1 &= ~TIM_CR1_CEN;
+	
+	// CLEAR TIMER 4 COUNTER
+	TIM4->CNT = 0;
+	
+	// ENABLE TIMER
+	TIM4->CR1 |= TIM_CR1_CEN;
+	
+	// WAIT DELAY MINUS OFFSET
+	while(TIM4->CNT < (delay - 0));
+	
 }
 
 void EXTI0_IRQHandler(void) {
@@ -47,12 +169,39 @@ void sysclk_Configure(void){
 	
 	// WAIT FOR HSI TO BE SELECTED
 	while ((RCC->CFGR & RCC_CFGR_SWS) == !RCC_CFGR_SWS_HSI);
+	
+	// ENABLE I2C CLOCK
+	RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
+	
+	// ENABLE GPIOB CLOCK
+	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
 }
 	
 	/* I/O CONFIGURATION */
 void io_Configure(void) {
 	// ENABLE GPIO A CLOCK
 	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+	
+		/* CONFIGURE I2C2 PINS */
+	
+	// ENABLE GPIOB CLOCK
+	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+	
+	// SET GPIOB PINS 10 AND 11 AS ALTERNATE FUNCTION
+	GPIOB->MODER |= ((2 << 10*2) | (2 << 11*2));
+	
+	// SET AS AF 4 FOR I2C2
+	GPIOB->AFR[1] |= ((4 << (10-8)*4) | (4 << (11-8)*4));
+	
+	// SET AS OPEN DRAIN
+	GPIOB->OTYPER |= ((1 << 10) | (1 << 11));
+	
+	// SET AS PULL UP
+	GPIOB->PUPDR &= ~((3 << 10*2) | (3 << 11*2));
+	GPIOB->PUPDR |= ((1 << 10*2) | (1 << 11*2));
+	
+	// SET OUTPUT SPEED AS HIGH SPEED
+	GPIOB->OSPEEDR |= ((3 << 10*2) | (3 << 11*2));
 }
 
 	/* PUSH BUTTON INTERRUPT CONFIGURE */
@@ -66,6 +215,7 @@ void pb_Configure(void) {
 	
 	// SET INTERRUPT PRIORITY
 	NVIC->IP[6] |= (NVIC_IPR0_PRI_0 & 1);
+
 }
 	
 	/* TIMER 4 CONFIGURATION */
@@ -81,28 +231,8 @@ void timer4_Configure(void){
 	TIM4->ARR &= ~TIM_ARR_ARR;
 	TIM4->ARR |= -1;
 	
-	// CONFIGURE PWM MODE TO MODE 1 CHANNEL 1
-	TIM4->CCMR1 &= ~(TIM_CCMR1_OC1M);
-	TIM4->CCMR1 |= (TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1);
-	
-	// CONFIGURE PWM MODE TO MODE 1 CHANNEL 2
-	TIM4->CCMR1 &= ~(TIM_CCMR1_OC2M);
-	TIM4->CCMR1 |= (TIM_CCMR1_OC2M_2 | TIM_CCMR1_OC2M_1);
-	
 	// ENABLE AUTO RELAOD
 	TIM4->CR1 |= TIM_CR1_ARPE;
-	
-	// ENABLE CHANNEL 1 OUTPUT
-	TIM4->CCER |= TIM_CCER_CC1E;
-	
-	// ENABLE CHANNEL 2 OUTPUT
-	TIM4->CCER |= TIM_CCER_CC2E;
-	
-	// PRELOAD CAPTURE COMPARE VALUE FOR CHANNEL 1
-	TIM4->CCR1 |= 0;
-	
-	// PRELOAD CAPTURE COMPARE VALUE FOR CHANNEL 2
-	TIM4->CCR2 |= 0;
 	
 	//ENABLE TIMER
 	TIM4->CR1 |= TIM_CR1_CEN;
