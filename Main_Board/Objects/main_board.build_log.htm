@@ -27,21 +27,7 @@ Project File Date:  11/18/2015
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-compiling tim_10.c...
-tim_10.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_10.c: 1 warning, 0 errors
-compiling tim_13.c...
-tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
-  	
-IM13->ARR |= 0-320;
-tim_13.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_13.c: 2 warnings, 0 errors
-compiling tim_1.c...
-tim_1.h(9): warning:  #1-D: last line of file ends without a newline
-  #endif // TIM_1_H_
-tim_1.c: 1 warning, 0 errors
+compiling tim_9.c...
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -65,8 +51,10 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 7 warnings, 0 errors
-compiling tim_5.c...
-compiling tim_9.c...
+compiling tim_1.c...
+tim_1.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_1_H_
+tim_1.c: 1 warning, 0 errors
 compiling main.c...
 Motor.h(83): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
@@ -86,39 +74,50 @@ main.c(22): warning:  #47-D: incompatible redefinition of macro "BufferSize" (de
   #define BufferSize 4
 main.c(39): warning:  #177-D: variable "transmit" was declared but never referenced
   	int transmit;
-main.c(155): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+main.c(157): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
   		USART_Write(
 SART2, print, 10);		
-main.c(149): warning:  #177-D: variable "av_speed" was declared but never referenced
+main.c(151): warning:  #177-D: variable "av_speed" was declared but never referenced
   	float av_speed, av_error = 0;
-main.c(149): warning:  #177-D: variable "av_error" was declared but never referenced
+main.c(151): warning:  #177-D: variable "av_error" was declared but never referenced
   	float av_speed, av_error = 0;
-main.c(190): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *restrict"
+main.c(192): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *restrict"
   		strncpy(instruction, buffer, 4);
-main.c(278): warning:  #1-D: last line of file ends without a newline
+main.c(280): warning:  #1-D: last line of file ends without a newline
   }
 main.c: 14 warnings, 0 errors
-compiling adc_1.c...
-compiling tim_4.c...
-tim_4.h(9): warning:  #1-D: last line of file ends without a newline
-  #endif // TIM_4_H_
-tim_4.c: 1 warning, 0 errors
-compiling adc_3.c...
+compiling tim_10.c...
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_10.c: 1 warning, 0 errors
+compiling tim_5.c...
+compiling tim_13.c...
+tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
+  	
+IM13->ARR |= 0-320;
+tim_13.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_13.c: 2 warnings, 0 errors
 compiling tim_2.c...
 tim_2.h(9): warning:  #1-D: last line of file ends without a newline
   #endif // TIM_2_H_
 tim_2.c: 1 warning, 0 errors
-compiling adc_2.c...
 compiling tim_3.c...
 tim_3.h(9): warning:  #1-D: last line of file ends without a newline
   #endif // TIM_3_H_
 tim_3.c: 1 warning, 0 errors
+compiling tim_4.c...
+tim_4.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_4_H_
+tim_4.c: 1 warning, 0 errors
+compiling adc_1.c...
+compiling adc_2.c...
 compiling adc_gpio.c...
 adc_gpio.h(8): warning:  #1-D: last line of file ends without a newline
   #endif // ADC_GPIO_H
 adc_gpio.c: 1 warning, 0 errors
+compiling adc_3.c...
 assembling startup_stm32f407xx.s...
-compiling system_stm32f4xx.c...
 compiling Motor.c...
 Motor.h(83): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
@@ -132,14 +131,15 @@ motor.h(83): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
 uart.h(21): warning:  #1-D: last line of file ends without a newline
   #endif // UART_H_
-uart.c(101): warning:  #223-D: function "sprintf" declared implicitly
+uart.c(104): warning:  #223-D: function "sprintf" declared implicitly
   	sprintf(print, "M%1d BEMF = % 3.3frpm   ENC = % 3.3frpm   TARG = % 3.3frpm   ERR = % 3.3f\n\r", M->wheel, M->BEMF_Speed, M->Encoder_Speed, M->Current, M->Error);
-uart.c(103): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+uart.c(106): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
   	USART_Write(
 SART2, print, 78);
 uart.c: 4 warnings, 0 errors
+compiling system_stm32f4xx.c...
 linking...
-Program Size: Code=20924 RO-data=696 RW-data=2008 ZI-data=10720  
+Program Size: Code=20928 RO-data=696 RW-data=2008 ZI-data=10720  
 ".\Objects\main_board.axf" - 0 Error(s), 36 Warning(s).
 
 <h2>Software Packages used:</h2>

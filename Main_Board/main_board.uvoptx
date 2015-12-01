@@ -196,9 +196,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>380</LineNumber>
+          <LineNumber>68</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134226056</Address>
+          <Address>134226584</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -207,23 +207,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\Motor.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\main_board\Motor.c\380</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>382</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\Motor.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\main_board\Motor.c\68</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

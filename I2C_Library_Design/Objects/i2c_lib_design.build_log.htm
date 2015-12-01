@@ -30,13 +30,17 @@ Rebuild target 'Target 1'
 assembling startup_stm32l1xx_mdp.s...
 compiling system_stm32l1xx.c...
 compiling main.c...
-main.c(232): warning:  #68-D: integer conversion resulted in a change of sign
+main.c(56): warning:  #550-D: variable "dump" was set but never used
+  	int dump;
+main.c(101): warning:  #550-D: variable "dump" was set but never used
+  	int dump;
+main.c(369): warning:  #68-D: integer conversion resulted in a change of sign
   	
 IM4->ARR |= -1;
-main.c: 1 warning, 0 errors
+main.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=1488 RO-data=308 RW-data=0 ZI-data=1632  
-".\Objects\i2c_lib_design.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=1636 RO-data=308 RW-data=0 ZI-data=1632  
+".\Objects\i2c_lib_design.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -66,7 +70,7 @@ Package Vendor: Keil
       Include file:  Device\Include\stm32l1xx.h
       Source file:   Device\Source\ARM\startup_stm32l1xx_mdp.s
       Source file:   Device\Source\system_stm32l1xx.c
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
