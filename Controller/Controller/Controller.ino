@@ -12,19 +12,36 @@ void setup()
   lcd.setBacklight(HIGH);
    lcd.home (); // set cursor to 0,0
   lcd.print("Joystick 1 X: ");
-  lcd.setCursor(1,0);
+  lcd.setCursor(0,1);
   lcd.print("Joystick 1 Y: ");
-  lcd.setCursor(2,0);
+  lcd.setCursor(0,2);
   lcd.print("Joystick 2 X: ");
-  lcd.setCursor(3,0);
+  lcd.setCursor(0,3);
   lcd.print("Joystick 2 Y: "); // 16
 }
  
 void loop()
 {
  int j1x, j1y, j2x, j2y;
-  j1x = analogRead();
-  j1y = analogRead();
-  j2x = analogRead();
-  j2y = analogRead();
+  j1x = analogRead(3);
+  j1y = analogRead(2);
+  j2x = analogRead(0);
+  j2y = analogRead(1);
+
+  lcd.setCursor(14,0);
+  lcd.print("    ");
+  lcd.setCursor(14,0);
+  lcd.print(j1x);
+  lcd.setCursor(14,1);
+  lcd.print("    ");
+  lcd.setCursor(14,1);
+  lcd.print(j1y);
+  lcd.setCursor(14,2);
+  lcd.print("    ");
+  lcd.setCursor(14,2);
+  lcd.print(j2x);
+  lcd.setCursor(14,3);
+  lcd.print("    ");
+  lcd.setCursor(14,3);
+  lcd.print(j2y);  
 }
