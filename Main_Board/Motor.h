@@ -11,8 +11,8 @@
 #define dGain .000000000005f
 #define epsilon .01f
 #define delta_t .000020f // update period
-#define MAX 12.0f
-#define MIN -12.0f
+#define MAX 11.5f
+#define MIN -11.5f
 
 
 #define ARR 800

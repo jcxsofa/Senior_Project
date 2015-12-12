@@ -44,7 +44,7 @@ int main(void)
 	Motor_init(&M1, .26, 151, 11.4, 1.3, 12.8, 1, 1);
 	Motor_init(&M2, .25, 145, 11.4, 1.923, 12.31, 2, 1);
 	Motor_init(&M3, .24, 144, 11.4, 1.6, 12.7, 3, 1);
-	Motor_init(&M4, .3, 152, 11.4, 1.231, 13.52, 4, 1);
+	Motor_init(&M4, .25, 145, 11.4, 1.923, 12.31, 4, 1);
 	
 	adc_gpio_init();
 	adc_1_config();
@@ -78,7 +78,7 @@ int main(void)
 	
 	M1.Desired_Speed = 0;
 	M2.Desired_Speed = 0;
-	M3.Desired_Speed = 84;
+	M3.Desired_Speed = 0;
 	M4.Desired_Speed = 0;
 
 		
