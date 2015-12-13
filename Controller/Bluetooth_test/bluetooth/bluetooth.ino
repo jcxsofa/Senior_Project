@@ -46,8 +46,10 @@ LiquidCrystal_I2C  lcd(0x27,2,1,0,4,5,6,7); // 0x27 is the I2C bus address for a
 byte data_buffer[88];
 
 void fill_data(void);
+void display_speed(void);
 
 struct Remote_Data data;
+int j1x, j1y, j2x, j2y;
 int stat = 0;
 
 void setup() {
@@ -63,57 +65,45 @@ void setup() {
 
 void loop() {
 
-    // wait for data to be available
-  if(1){
- fill_data();
-//    // read in first byte
-//    data_buffer[0] = BTSerial.read();
-//
-//    // for the rest of the expected bytes
-//    for (int i = 1; i < 4; i++) {
-//
-//    // wait for serial data to be available
-//    while(!BTSerial.available());
-//
-//    // read new data in
-//    data_buffer[i] = BTSerial.read();
-//    }
-
-//  // recieve words in normal order
-//    for (int j = 0; j < 4; j = j + 4) {
-//      // fill words in reverse order of bytes transmitted
-//      for (int i = j; i < j+4; i++){
-//        // read in current byte and wait for next one
-//        while(!BTSerial.available());
-//        data_buffer[i] = BTSerial.read();
-//        //Serial.println(data_buffer[i]);
-//      }
-//    }
-
+    // get joystik values 
+    j1x = analogRead(2); // thresholds 20,440,650,1010
+    j1y = analogRead(3); // 20,421,623,1010
+    j2x = analogRead(1);// 20,400,600,1010
+    j2y = analogRead(0); // mode switch
     
-    lcd.setCursor(6, 0);
-    lcd.print("    ");
-    lcd.setCursor(6, 0);
-    // print speed
-    lcd.print(data.M4_Current, 2);
-//    //print error
-//    lcd.setCursor(16, 0);
-//    lcd.print("    ");
-//    lcd.setCursor(16, 0);
-//    lcd.print(data.M1_Current, 2);
-    //BTSerial.write(rx_byte);
-    
+    // get new data
+    fill_data();
+    // updated stuff
+    display_speed();  
   }
 }
 
 // write nested for loop to place bytes correctly, along list, but reverse bytes in variable
 
-void dispay_speed(void) {
-if (stat = 0) {
+void display_speed(void) {
+if (stat == 0) {
   // motor 1 display
-  lcd.home (); // set cursor to 0,0
+  lcd.setCursor(0,0);
   lcd.print("1 SPD "); // 6 characters
   lcd.setCursor(12,0);
+  lcd.print("ER "); // 4
+
+  // motor 2 display
+  lcd.setCursor(0,1);
+  lcd.print("2 SPD "); // 6 characters
+  lcd.setCursor(12,1);
+  lcd.print("ER "); // 4
+
+  // motor 3 display
+  lcd.setCursor(0,2);
+  lcd.print("3 SPD "); // 6 characters
+  lcd.setCursor(12,2);
+  lcd.print("ER "); // 4
+
+  // motor 4 display
+  lcd.setCursor(0,3);
+  lcd.print("4 SPD "); // 6 characters
+  lcd.setCursor(12,3);
   lcd.print("ER "); // 4
   stat = 1;
 }
@@ -123,10 +113,45 @@ if (stat = 0) {
     lcd.setCursor(6, 0);
     lcd.print(data.M1_Desired_Speed, 2);
     //print error
-    lcd.setCursor(16, 0);
+    lcd.setCursor(15, 0);
     lcd.print("    ");
-    lcd.setCursor(16, 0);
+    lcd.setCursor(15, 0);
     lcd.print(data.M1_Current, 2);
+
+    // display motor 2 speed
+    lcd.setCursor(6, 1);
+    lcd.print("    ");
+    lcd.setCursor(6, 1);
+    lcd.print(data.M2_Desired_Speed, 2);
+    //print error
+    lcd.setCursor(15, 1);
+    lcd.print("    ");
+    lcd.setCursor(15, 1);
+    lcd.print(data.M2_Current, 2);
+
+    // display motor 3 speed
+    lcd.setCursor(6, 2);
+    lcd.print("    ");
+    lcd.setCursor(6, 2);
+    lcd.print(data.M3_Desired_Speed, 2);
+    //print error
+    lcd.setCursor(15, 2);
+    lcd.print("    ");
+    lcd.setCursor(15, 2);
+    lcd.print(data.M3_Current, 2);
+
+    // display motor 4 speed
+    lcd.setCursor(6, 3);
+    lcd.print("    ");
+    lcd.setCursor(6, 3);
+    lcd.print(data.M4_Desired_Speed, 2);
+    //print error
+    lcd.setCursor(15, 3);
+    lcd.print("    ");
+    lcd.setCursor(15, 3);
+    lcd.print(data.M4_Current, 2);
+
+    
 
 
   
