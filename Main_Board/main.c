@@ -24,6 +24,7 @@
 void sysclk_Configure(void);
 void decode(uint8_t * buffer);
 void calc_error(void);
+void send_remote_data(void);
 
 uint8_t USART2_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
 uint8_t Rx2_Counter = 0;
@@ -76,10 +77,10 @@ int main(void)
 	tim_4_gpio_init();
 	tim_4_config();
 	
-	M1.Desired_Speed = 0;
-	M2.Desired_Speed = 0;
-	M3.Desired_Speed = 0;
-	M4.Desired_Speed = 0;
+	M1.Desired_Speed = 55.55;
+	M2.Desired_Speed = 20.5;
+	M3.Desired_Speed = 30.8;
+	M4.Desired_Speed = 40.7;
 
 		
 	
@@ -173,9 +174,10 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 		//display_stats(&M3);
 		//display_stats(&M4);
 
-
+		send_remote_data();
 		// testing sending data byte by byte;
-		USART_Write(USART2, (uint8_t*)&M2.Current, 4);
+		//USART_Write(USART2, (uint8_t*)&M1.Desired_Speed, 4);
+		
 		
 		
 //		//av_error = ((M1.Error) + (M2.Error) + (M3.Error) + (M4.Error)) / 4;
@@ -267,6 +269,45 @@ void calc_error(void) {
 void USART2_IRQHandler(void) {
 	USART_IRQHandler(USART2, USART2_Buffer_Rx, &Rx2_Counter);
 	decode(USART2_Buffer_Rx);
+}
+
+
+void send_remote_data(void) {
+	
+	float data[25];
+	
+	// motor 1 data to transmit
+	data[0] = M1.Current;
+	data[1] = M1.BEMF_Speed;
+	data[2] = M1.Encoder_Speed;
+	data[3] = M1.Error;
+	data[4] = M1.Desired_Speed;
+	
+	// motor 2 data to transmit
+	data[5] = M2.Current;
+	data[6] = M2.BEMF_Speed;
+	data[7] = M2.Encoder_Speed;
+	data[8] = M2.Error;
+	data[9] = M2.Desired_Speed;
+	
+	// motor 3 data to transmit
+	data[10] = M3.Current;
+	data[11] = M3.BEMF_Speed;
+	data[12] = M3.Encoder_Speed;
+	data[13] = M3.Error;
+	data[14] = M3.Desired_Speed;
+	
+	// motor 4 data to transmit
+	data[15] = M4.Current;
+	data[16] = M4.BEMF_Speed;
+	data[17] = M4.Encoder_Speed;
+	data[18] = M4.Error;
+	data[19] = M4.Desired_Speed;
+	
+	// transmitt data
+	USART_Write(USART2, (uint8_t*)&data[0], 80);
+	
+	
 }
 
 

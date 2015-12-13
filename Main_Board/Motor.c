@@ -145,9 +145,9 @@ void Motor_1_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM5->CCR1 = 0;
 			TIM5->CCR2 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOE->ODR |= (1 << 7);
-			GPIOE->ODR |= (1 << 8);
+			// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOE->ODR &= ~(1 << 7);
+			GPIOE->ODR &= ~(1 << 8);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -176,9 +176,9 @@ void Motor_1_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM5->CCR1 = 0;
 			TIM5->CCR2 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOE->ODR |= (1 << 7);
-			GPIOE->ODR |= (1 << 8);
+			// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOE->ODR &= ~(1 << 7);
+			GPIOE->ODR &= ~(1 << 8);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -202,9 +202,9 @@ void Motor_1_Change_DCYC(struct Motor *M, float DCYC) {
 		TIM5->CCR1 = 0;
 		TIM5->CCR2 = 0;
 		
-		// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-		GPIOE->ODR |= (1 << 7);
-		GPIOE->ODR |= (1 << 8);
+		// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+		GPIOE->ODR &= ~(1 << 7);
+		GPIOE->ODR &= ~(1 << 8);
 	}
 	
 	// UPDATE DUTY CYCLE
@@ -227,9 +227,9 @@ void Motor_3_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM5->CCR3 = 0;
 			TIM5->CCR4 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOE->ODR |= (1 << 9);
-			GPIOE->ODR |= (1 << 10);
+			// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOE->ODR &= ~(1 << 9);
+			GPIOE->ODR &= ~(1 << 10);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -258,9 +258,9 @@ void Motor_3_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM5->CCR3 = 0;
 			TIM5->CCR4 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOE->ODR |= (1 << 9);
-			GPIOE->ODR |= (1 << 10);
+			// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOE->ODR &= ~(1 << 9);
+			GPIOE->ODR &= ~(1 << 10);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -284,9 +284,9 @@ void Motor_3_Change_DCYC(struct Motor *M, float DCYC) {
 		TIM5->CCR3 = 0;
 		TIM5->CCR4 = 0;
 		
-		// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-		GPIOE->ODR |= (1 << 9);
-		GPIOE->ODR |= (1 << 10);
+		// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+		GPIOE->ODR &= ~(1 << 9);
+		GPIOE->ODR &= ~(1 << 10);
 	}
 	
 	// UPDATE DUTY CYCLE
@@ -309,9 +309,9 @@ void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM9->CCR1 = 0;
 			TIM9->CCR2 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOE->ODR |= (1 << 3);
-			GPIOE->ODR |= (1 << 4);
+			// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOE->ODR &= ~(1 << 3);
+			GPIOE->ODR &= ~(1 << 4);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -340,9 +340,9 @@ void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM9->CCR1 = 0;
 			TIM9->CCR2 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOE->ODR |= (1 << 3);
-			GPIOE->ODR |= (1 << 4);
+			// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOE->ODR &= ~(1 << 3);
+			GPIOE->ODR &= ~(1 << 4);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -366,9 +366,9 @@ void Motor_2_Change_DCYC(struct Motor *M, float DCYC) {
 		TIM9->CCR1 = 0;
 		TIM9->CCR2 = 0;
 		
-		// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-		GPIOE->ODR |= (1 << 3);
-		GPIOE->ODR |= (1 << 4);
+		// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+		GPIOE->ODR &= ~(1 << 3);
+		GPIOE->ODR &= ~(1 << 4);
 	}
 	
 	// UPDATE DUTY CYCLE
@@ -391,9 +391,9 @@ void Motor_4_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM12->CCR1 = 0;
 			TIM12->CCR2 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOA->ODR |= (1 << 8);
-			GPIOC->ODR |= (1 << 8);
+			// DIABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOA->ODR &= ~(1 << 8);
+			GPIOC->ODR &= ~(1 << 8);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -422,9 +422,9 @@ void Motor_4_Change_DCYC(struct Motor *M, float DCYC) {
 			TIM12->CCR1 = 0;
 			TIM12->CCR2 = 0;
 			
-			// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-			GPIOA->ODR |= (1 << 8);
-			GPIOC->ODR |= (1 << 8);
+			// DISABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
+			GPIOA->ODR &= ~(1 << 8);
+			GPIOC->ODR &= ~(1 << 8);
 			
 			// DEAD TIME TO PREVENT SHOOT THROUGH
 			for (i=0; i<SHOOT; i++);
@@ -449,8 +449,8 @@ void Motor_4_Change_DCYC(struct Motor *M, float DCYC) {
 		TIM12->CCR2 = 0;
 		
 		// ENABLE BOTH LOW SIDE GATES TO DRAIN CURRENT
-		GPIOA->ODR |= (1 << 8);
-		GPIOC->ODR |= (1 << 8);
+		GPIOA->ODR &= ~(1 << 8);
+		GPIOC->ODR &= ~(1 << 8);
 	}
 	
 	// UPDATE DUTY CYCLE
