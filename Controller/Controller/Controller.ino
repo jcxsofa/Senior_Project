@@ -23,10 +23,10 @@ void setup()
 void loop()
 {
  int j1x, j1y, j2x, j2y;
-  j1x = analogRead(3);
-  j1y = analogRead(2);
-  j2x = analogRead(0);
-  j2y = analogRead(1);
+  j1x = analogRead(2);
+  j1y = analogRead(3);
+  j2x = analogRead(1);
+  j2y = analogRead(0);
 
   lcd.setCursor(14,0);
   lcd.print("    ");
