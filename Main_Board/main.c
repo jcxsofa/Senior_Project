@@ -160,9 +160,9 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 		
 		// DISPLAY STUFF
 		display_stats(&M1);
-		display_stats(&M2);
-		display_stats(&M3);
-		display_stats(&M4);	
+		//display_stats(&M2);
+		//display_stats(&M3);
+		//display_stats(&M4);	
 		
 //		//av_error = ((M1.Error) + (M2.Error) + (M3.Error) + (M4.Error)) / 4;
 //		av_speed = (M1.Encoder_Speed + M2.Encoder_Speed + M3.Encoder_Speed + M4.Encoder_Speed) / 4;

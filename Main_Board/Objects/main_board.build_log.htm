@@ -28,6 +28,15 @@ Project File Date:  11/18/2015
 *** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
 compiling tim_9.c...
+compiling tim_5.c...
+compiling tim_1.c...
+tim_1.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_1_H_
+tim_1.c: 1 warning, 0 errors
+compiling tim_10.c...
+tim_10.c(29): warning:  #1-D: last line of file ends without a newline
+  }
+tim_10.c: 1 warning, 0 errors
 compiling tim_12.c...
 tim_12.c(34): warning:  #61-D: integer operation result is out of range
   	
@@ -51,15 +60,6 @@ tim_12.c(53): warning:  #61-D: integer operation result is out of range
   	
 PIOB->PUPDR &= ~(3 << 15*2);
 tim_12.c: 7 warnings, 0 errors
-compiling tim_1.c...
-tim_1.h(9): warning:  #1-D: last line of file ends without a newline
-  #endif // TIM_1_H_
-tim_1.c: 1 warning, 0 errors
-compiling tim_5.c...
-compiling tim_10.c...
-tim_10.c(29): warning:  #1-D: last line of file ends without a newline
-  }
-tim_10.c: 1 warning, 0 errors
 compiling tim_13.c...
 tim_13.c(14): warning:  #68-D: integer conversion resulted in a change of sign
   	
@@ -98,34 +98,27 @@ main.c(191): warning:  #167-D: argument of type "uint8_t *" is incompatible with
 main.c(279): warning:  #1-D: last line of file ends without a newline
   }
 main.c: 14 warnings, 0 errors
+compiling adc_3.c...
+compiling adc_2.c...
 compiling tim_2.c...
 tim_2.h(9): warning:  #1-D: last line of file ends without a newline
   #endif // TIM_2_H_
 tim_2.c: 1 warning, 0 errors
-compiling tim_4.c...
-tim_4.h(9): warning:  #1-D: last line of file ends without a newline
-  #endif // TIM_4_H_
-tim_4.c: 1 warning, 0 errors
-compiling tim_3.c...
-tim_3.h(9): warning:  #1-D: last line of file ends without a newline
-  #endif // TIM_3_H_
-tim_3.c: 1 warning, 0 errors
-compiling adc_2.c...
-compiling adc_1.c...
-assembling startup_stm32f407xx.s...
-compiling adc_3.c...
 compiling adc_gpio.c...
 adc_gpio.h(8): warning:  #1-D: last line of file ends without a newline
   #endif // ADC_GPIO_H
 adc_gpio.c: 1 warning, 0 errors
-compiling Motor.c...
-Motor.h(83): warning:  #1-D: last line of file ends without a newline
-  #endif // MOTOR_H
-Motor.c(76): warning:  #550-D: variable "derivative" was set but never used
-  	float derivative;
-Motor.c(466): warning:  #177-D: variable "d_cyc" was declared but never referenced
-  	float d_cyc;
-Motor.c: 3 warnings, 0 errors
+compiling tim_4.c...
+tim_4.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_4_H_
+tim_4.c: 1 warning, 0 errors
+compiling adc_1.c...
+compiling tim_3.c...
+tim_3.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif // TIM_3_H_
+tim_3.c: 1 warning, 0 errors
+assembling startup_stm32f407xx.s...
+compiling system_stm32f4xx.c...
 compiling uart.c...
 motor.h(83): warning:  #1-D: last line of file ends without a newline
   #endif // MOTOR_H
@@ -137,9 +130,16 @@ uart.c(106): warning:  #167-D: argument of type "char *" is incompatible with pa
   	USART_Write(
 SART2, print, 78);
 uart.c: 4 warnings, 0 errors
-compiling system_stm32f4xx.c...
+compiling Motor.c...
+Motor.h(83): warning:  #1-D: last line of file ends without a newline
+  #endif // MOTOR_H
+Motor.c(76): warning:  #550-D: variable "derivative" was set but never used
+  	float derivative;
+Motor.c(466): warning:  #177-D: variable "d_cyc" was declared but never referenced
+  	float d_cyc;
+Motor.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=20924 RO-data=696 RW-data=2008 ZI-data=10720  
+Program Size: Code=20892 RO-data=696 RW-data=2008 ZI-data=10720  
 ".\Objects\main_board.axf" - 0 Error(s), 36 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -176,7 +176,7 @@ Package Vendor: Keil
       Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
       Source file:   MDK\Device\Source\ARM\system_stm32f4xx.c
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

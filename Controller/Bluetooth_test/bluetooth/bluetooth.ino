@@ -13,12 +13,13 @@ void setup() {
   lcd.setBacklightPin(3,POSITIVE);
   lcd.setBacklight(HIGH);
   lcd.home (); // set cursor to 0,0
-  BTSerial.begin(9600);  // HC-05 default speed
+  BTSerial.begin(115200);  // HC-05 default speed
   
 }
 
 void loop() {
   char rx_byte;
+  lcd.clear();
   if(BTSerial.available()){
 
     rx_byte = BTSerial.read();
