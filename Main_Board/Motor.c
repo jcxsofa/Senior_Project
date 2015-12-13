@@ -116,15 +116,15 @@ void Motor_Update_PID(struct Motor *M){
 			break;
 		
 		case 2:
-			Motor_2_Change_DCYC(M, dcyc);
+			//Motor_2_Change_DCYC(M, dcyc);
 			break;
 		
 		case 3:
-			Motor_3_Change_DCYC(M, dcyc);
+			//Motor_3_Change_DCYC(M, dcyc);
 			break;
 		
 		case 4:
-			Motor_4_Change_DCYC(M, dcyc);
+			//Motor_4_Change_DCYC(M, dcyc);
 			break;
 	}
 }		

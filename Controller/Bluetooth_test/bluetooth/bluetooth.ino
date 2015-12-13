@@ -19,7 +19,6 @@ void setup() {
 
 void loop() {
   char rx_byte;
-  lcd.clear();
   if(BTSerial.available()){
 
     rx_byte = BTSerial.read();

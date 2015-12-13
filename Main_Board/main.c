@@ -41,7 +41,7 @@ int main(void)
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 	
-	Motor_init(&M1, .26, 151, 11.4, 1.3, 12.8, 1, 1);
+	Motor_init(&M1, .26, 151, 11.4, 1.3, 13.4, 1, 1);
 	Motor_init(&M2, .25, 145, 11.4, 1.923, 12.31, 2, 1);
 	Motor_init(&M3, .24, 144, 11.4, 1.6, 12.7, 3, 1);
 	Motor_init(&M4, .25, 145, 11.4, 1.923, 12.31, 4, 1);
@@ -137,8 +137,12 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 	if (TIM13->SR && TIM_SR_UIF) {
 		Motor_ISR(&M1);
 		Motor_ISR(&M2);
+		Motor_2_Change_DCYC(&M2, M1.duty_cycle);
 		Motor_ISR(&M3);
+		Motor_3_Change_DCYC(&M3, M1.duty_cycle);
 		Motor_ISR(&M4);
+		Motor_4_Change_DCYC(&M4, M1.duty_cycle);
+		
 	}
 	
 	// RESET INTERRUPT
@@ -159,10 +163,11 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 		calc_error();
 		
 		// DISPLAY STUFF
+		//USART_Write(USART2, "123456", 6);
 		display_stats(&M1);
-		//display_stats(&M2);
-		//display_stats(&M3);
-		//display_stats(&M4);	
+		display_stats(&M2);
+		display_stats(&M3);
+		display_stats(&M4);	
 		
 //		//av_error = ((M1.Error) + (M2.Error) + (M3.Error) + (M4.Error)) / 4;
 //		av_speed = (M1.Encoder_Speed + M2.Encoder_Speed + M3.Encoder_Speed + M4.Encoder_Speed) / 4;
