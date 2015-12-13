@@ -153,7 +153,9 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 	char print[15];
 	float av_speed, av_error = 0;
 	uint8_t test = 0;
-	short int tester = 500;
+	//short int tester = 500;
+	
+	float tester = 15.8923;
 	// SERVICE DATA UPDATE
 	if (TIM10->SR && TIM_SR_UIF) {
 		
@@ -173,7 +175,7 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 
 
 		// testing sending data byte by byte;
-		USART_Write(USART2, (uint8_t*)&tester, 2);
+		USART_Write(USART2, (uint8_t*)&M2.Current, 4);
 		
 		
 //		//av_error = ((M1.Error) + (M2.Error) + (M3.Error) + (M4.Error)) / 4;
