@@ -152,22 +152,29 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 void TIM1_UP_TIM10_IRQHandler (void) {
 	char print[15];
 	float av_speed, av_error = 0;
+	uint8_t test = 0;
+	short int tester = 500;
 	// SERVICE DATA UPDATE
 	if (TIM10->SR && TIM_SR_UIF) {
 		
 		// CLEAR TERMINAL
-		strcpy(print, "\033[2J\033[1;1H");
-		USART_Write(USART2, print, 10);		
+		//strcpy(print, "\033[2J\033[1;1H");
+		//USART_Write(USART2, print, 10);		
 		
 		// CALCULATE ERROR
 		calc_error();
 		
 		// DISPLAY STUFF
 		//USART_Write(USART2, "123456", 6);
-		display_stats(&M1);
-		display_stats(&M2);
-		display_stats(&M3);
-		display_stats(&M4);	
+		//display_stats(&M1);
+		//display_stats(&M2);
+		//display_stats(&M3);
+		//display_stats(&M4);
+
+
+		// testing sending data byte by byte;
+		USART_Write(USART2, (uint8_t*)&tester, 2);
+		
 		
 //		//av_error = ((M1.Error) + (M2.Error) + (M3.Error) + (M4.Error)) / 4;
 //		av_speed = (M1.Encoder_Speed + M2.Encoder_Speed + M3.Encoder_Speed + M4.Encoder_Speed) / 4;
