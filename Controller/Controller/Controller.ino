@@ -102,45 +102,45 @@ void display_speed(void) {
 
     // display motor 1 speed
     lcd.setCursor(6, 0);
-    lcd.print("    ");
+    lcd.print("      ");
     lcd.setCursor(6, 0);
     lcd.print(data.M1_Desired_Speed, 2);
     //print error
     lcd.setCursor(15, 0);
-    lcd.print("    ");
+    lcd.print("     ");
     lcd.setCursor(15, 0);
     lcd.print(data.M1_Error, 2);
 
     // display motor 2 speed
     lcd.setCursor(6, 1);
-    lcd.print("    ");
+    lcd.print("      ");
     lcd.setCursor(6, 1);
     lcd.print(data.M2_Desired_Speed, 2);
     //print error
     lcd.setCursor(15, 1);
-    lcd.print("    ");
+    lcd.print("     ");
     lcd.setCursor(15, 1);
     lcd.print(data.M2_Error, 2);
 
     // display motor 3 speed
     lcd.setCursor(6, 2);
-    lcd.print("    ");
+    lcd.print("      ");
     lcd.setCursor(6, 2);
     lcd.print(data.M3_Desired_Speed, 2);
     //print error
     lcd.setCursor(15, 2);
-    lcd.print("    ");
+    lcd.print("     ");
     lcd.setCursor(15, 2);
     lcd.print(data.M3_Error, 2);
 
     // display motor 4 speed
     lcd.setCursor(6, 3);
-    lcd.print("    ");
+    lcd.print("      ");
     lcd.setCursor(6, 3);
     lcd.print(data.M4_Desired_Speed, 2);
     //print error
     lcd.setCursor(15, 3);
-    lcd.print("    ");
+    lcd.print("     ");
     lcd.setCursor(15, 3);
     lcd.print(data.M4_Error, 2);
 
@@ -218,6 +218,9 @@ void update_controls(void){
     j1y *= -8400;
   }
   else j1y = 0;
+
+  if (j1y > 8400) j1y = 8400;
+  if (j1y < -8400) j1y = -8400;
 
   speeds[0] = j1y;
   speeds[1] = j1y;
