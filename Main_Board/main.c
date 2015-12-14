@@ -19,7 +19,7 @@
 #include "tim_13.h"
 #include "uart.h"
 
-#define BufferSize 4
+#define BufferSize 30
 
 void sysclk_Configure(void);
 void decode(uint8_t * buffer);
@@ -77,10 +77,10 @@ int main(void)
 	tim_4_gpio_init();
 	tim_4_config();
 	
-	M1.Desired_Speed = 55.55;
-	M2.Desired_Speed = 20.5;
-	M3.Desired_Speed = 30.8;
-	M4.Desired_Speed = 40.7;
+	M1.Desired_Speed = 0;
+	M2.Desired_Speed = 0;
+	M3.Desired_Speed = 0;
+	M4.Desired_Speed = 0;
 
 		
 	
@@ -194,39 +194,26 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 
 
 void decode(uint8_t * buffer) {
-	int i = 0;
-	char instruction[10];
-	char stop[10];
-	char move[10];
-	char back[10];
-	strcpy(stop, "stop");
-	strcpy(move, "move");
-	strcpy(back, "back");
-	if( Rx2_Counter == 4 ) {
-		
-		strncpy(instruction, buffer, 4);
-		i = strcmp(instruction, stop);
-		if( i == 0) {
-			M1.Desired_Speed = 0;
-			M2.Desired_Speed = 0;
-			M3.Desired_Speed = 0;
-			M4.Desired_Speed = 0;
-		}
-		i = strcmp(instruction, move);
-		if( i == 0) {
-			M1.Desired_Speed = 84;
-			M2.Desired_Speed = 84;
-			M3.Desired_Speed = 84;
-			M4.Desired_Speed = 84;
-		}
-		
-		i = strcmp(instruction, back);
-		if( i == 0) {
-			M1.Desired_Speed = -84;
-			M2.Desired_Speed = -84;
-			M3.Desired_Speed = -84;
-			M4.Desired_Speed = -84;
-		}
+	
+	int i, x;
+	int *numbers;
+	
+	
+	if( Rx2_Counter == 20 ) {
+	
+	// reverse byte order
+	numbers = (int*)buffer;
+	
+	//for (i = 0; i < 4; i++) {
+	//	x = numbers[i];
+	//	x = (x & 0x0000FFFF) << 16 | (x & 0xFFFF0000) >> 16;
+	//	x = (x & 0x00FF00FF) << 8 | (x & 0xFF00FF00) >> 8; 
+	//	numbers[i] = x;
+	//}
+	M1.Desired_Speed = numbers[0] / 100.0;
+	M2.Desired_Speed = numbers[1] / 100.0;
+	M3.Desired_Speed = numbers[2] / 100.0;
+	M4.Desired_Speed = numbers[3] / 100.0;	
 	}
 	
 }

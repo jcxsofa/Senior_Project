@@ -84,12 +84,10 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 											uint8_t * pRx_counter) {
 	
 	if(USARTx->SR & USART_SR_RXNE) {
-		// going to try resetting counter to always begin at beginning of buffer
-		//(*pRx_counter) = 0;
-		
+
 		// READING USART_DR WILL ALSO CLEAR THE RXNE FLAG
 		buffer[*pRx_counter] = USARTx->DR;
-		if(buffer[*pRx_counter] == 'i') *pRx_counter = 0;
+		if((buffer[*pRx_counter] == 'i') && (*pRx_counter > 16)) *pRx_counter = 0;
 		else	(*pRx_counter)++;
 		
 		if((*pRx_counter) >= BufferSize)

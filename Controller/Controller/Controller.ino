@@ -2,6 +2,8 @@
 #include <LCD.h>
 #include <LiquidCrystal_I2C.h>
 #include <SoftwareSerial.h>
+#include <SimpleTimer.h>
+
 
 struct Remote_Data {
   
@@ -40,16 +42,14 @@ struct Remote_Data {
 };
 
 SoftwareSerial BTSerial(2,3);
- 
 LiquidCrystal_I2C  lcd(0x27,2,1,0,4,5,6,7); // 0x27 is the I2C bus address for an unmodified backpack
-
-byte data_buffer[88];
 
 void fill_data(void);
 void display_speed(void);
 
+SimpleTimer timer;
 struct Remote_Data data;
-int j1x, j1y, j2x, j2y;
+byte data_buffer[88];
 int stat = 0;
 
 void setup() {
@@ -60,28 +60,21 @@ void setup() {
   BTSerial.begin(115200);  // HC-05 default speed
   // empty serial buffer in case in the middle of a transmission
   //while(BTSerial.available()) BTSerial.read();
-  
+  timer.setInterval(1, update_controls);
 }
 
 void loop() {
-
-    // get joystik values 
-    j1x = analogRead(2); // thresholds 20,440,650,1010
-    j1y = analogRead(3); // 20,421,623,1010
-    j2x = analogRead(1);// 20,400,600,1010
-    j2y = analogRead(0); // mode switch
-    
+    timer.run();
     // get new data
     fill_data();
     // updated stuff
     display_speed();  
-  }
 }
 
 // write nested for loop to place bytes correctly, along list, but reverse bytes in variable
 
 void display_speed(void) {
-if (stat == 0) {
+
   // motor 1 display
   lcd.setCursor(0,0);
   lcd.print("1 SPD "); // 6 characters
@@ -106,7 +99,7 @@ if (stat == 0) {
   lcd.setCursor(12,3);
   lcd.print("ER "); // 4
   stat = 1;
-}
+
     // display motor 1 speed
     lcd.setCursor(6, 0);
     lcd.print("    ");
@@ -116,7 +109,7 @@ if (stat == 0) {
     lcd.setCursor(15, 0);
     lcd.print("    ");
     lcd.setCursor(15, 0);
-    lcd.print(data.M1_Current, 2);
+    lcd.print(data.M1_Error, 2);
 
     // display motor 2 speed
     lcd.setCursor(6, 1);
@@ -127,7 +120,7 @@ if (stat == 0) {
     lcd.setCursor(15, 1);
     lcd.print("    ");
     lcd.setCursor(15, 1);
-    lcd.print(data.M2_Current, 2);
+    lcd.print(data.M2_Error, 2);
 
     // display motor 3 speed
     lcd.setCursor(6, 2);
@@ -138,7 +131,7 @@ if (stat == 0) {
     lcd.setCursor(15, 2);
     lcd.print("    ");
     lcd.setCursor(15, 2);
-    lcd.print(data.M3_Current, 2);
+    lcd.print(data.M3_Error, 2);
 
     // display motor 4 speed
     lcd.setCursor(6, 3);
@@ -149,7 +142,7 @@ if (stat == 0) {
     lcd.setCursor(15, 3);
     lcd.print("    ");
     lcd.setCursor(15, 3);
-    lcd.print(data.M4_Current, 2);
+    lcd.print(data.M4_Error, 2);
 
     
 
@@ -202,7 +195,61 @@ void fill_data(void) {
     data.M4_Encoder_Speed = *((float*)&data_buffer[68]);
     data.M4_Error = *((float*)&data_buffer[72]);
     data.M4_Desired_Speed = *((float*)&data_buffer[76]);
+}
+
+void update_controls(void){
+
+  float j1x, j1y, j2x, j2y;
+  long int speeds[4];
+  char* trans;
+  char trigger = 'i';
+  // get joystik values 
+  j1x = analogRead(2); // thresholds 20,440,650,1010
+  j1y = analogRead(3); // 20,421,623,1010
+  j2x = analogRead(1);// 20,400,600,1010
+  j2y = analogRead(0); // mode switch
+
+  if(j1y > 623) {
+    j1y = (j1y - 623) / 387;
+    j1y *= 8400;
+  }
+  else if(j1y < 421) {
+    j1y = (421 - (j1y - 20)) / 400;
+    j1y *= -8400;
+  }
+  else j1y = 0;
+
+  speeds[0] = j1y;
+  speeds[1] = j1y;
+  speeds[2] = j1y;
+  speeds[3] = j1y;
+
+  trans = (char*)&speeds[0];
+  
+  BTSerial.write(trigger);
+  for(int i = 0; i < 16; i++)
+  BTSerial.write(trans[i]);
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
+
+
+
 
