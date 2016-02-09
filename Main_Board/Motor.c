@@ -135,6 +135,8 @@ void Motor_1_Change_DCYC(struct Motor *M, float DCYC) {
 	int CCR, OR, AND, XOR;
 	int i = 0;
 	
+	DCYC = DCYC * M->helpless;
+	
 	if (DCYC > 0.0f) {
 		
 		// CHECK TO SEE IF CHANGING DIRECTION
@@ -519,6 +521,14 @@ void Motor_ISR(struct Motor *M) {
 	average = 0;
 	for(i=0; i<blocksize; i++) {
 		average += output[i];
+		if((channel == 11) || (channel == 13)) {
+			// COPY DATA TO DAC OUTPUT
+			DAC->DHR12R1 &= 0xFFFFF000;
+			DAC->DHR12R1 |= (int)output[i];
+		
+		// BEGIN DAC CONVERSION
+		DAC->SWTRIGR |= DAC_SWTRIGR_SWTRIG1;
+		}
 	}
 	average /= blocksize;
 	

@@ -27,8 +27,8 @@ void uart_gpio_init(void) {
 
 void USART_Init(USART_TypeDef * USARTx) {
 	
-	// CONFIGURE HC-05 DEFAULTS
-	// 8 DATA BITS, 9600 BAUD, 1 STOP BIT, NO PARITY
+	// CONFIGURE HC-05 
+	// 8 DATA BITS, 115200 BAUD, 1 STOP BIT, NO PARITY
 	
 	// CONFIGURE 8 BIT WORD LENGTH
 	USARTx->CR1 &= ~USART_CR1_M;
@@ -84,6 +84,25 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 											uint8_t * pRx_counter) {
 	
 	if(USARTx->SR & USART_SR_RXNE) {
+		// going to try resetting counter to always begin at beginning of buffer
+		//(*pRx_counter) = 0;
+		
+		// READING USART_DR WILL ALSO CLEAR THE RXNE FLAG
+		buffer[*pRx_counter] = USARTx->DR;
+		if(buffer[*pRx_counter] == 'i') *pRx_counter = 0;
+		else	(*pRx_counter)++;
+		
+		if((*pRx_counter) >= BufferSize)
+			(*pRx_counter) = 0;
+	}
+}
+
+/*
+void USART_IRQHandler(USART_TypeDef * USARTx,
+											uint8_t * buffer,
+											uint8_t * pRx_counter) {
+	
+	if(USARTx->SR & USART_SR_RXNE) {
 
 		// READING USART_DR WILL ALSO CLEAR THE RXNE FLAG
 		buffer[*pRx_counter] = USARTx->DR;
@@ -93,7 +112,7 @@ void USART_IRQHandler(USART_TypeDef * USARTx,
 		if((*pRx_counter) >= BufferSize)
 			(*pRx_counter) = 0;
 	}
-}
+}*/
 											
 void display_stats(struct Motor *M){
 	

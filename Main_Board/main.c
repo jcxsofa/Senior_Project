@@ -25,6 +25,7 @@ void sysclk_Configure(void);
 void decode(uint8_t * buffer);
 void calc_error(void);
 void send_remote_data(void);
+void kill(void);
 
 uint8_t USART2_Buffer_Rx[BufferSize];// = {0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67};
 uint8_t Rx2_Counter = 0;
@@ -34,6 +35,8 @@ void dac_Configure(void);
 
 struct Motor M1, M2, M3, M4;
 
+int check;
+
 int main(void)
 {
 		
@@ -42,7 +45,7 @@ int main(void)
 	/* SYSTEM CLOCK CONFIGURE */
 	sysclk_Configure();
 	
-	Motor_init(&M1, .26, 151, 11.4, 1.3, 13.4, 1, 1);
+	Motor_init(&M1, .26, 151, 11.4, 1.3, 14.7, 1, 1);
 	Motor_init(&M2, .25, 145, 11.4, 1.923, 12.31, 2, 1);
 	Motor_init(&M3, .24, 144, 11.4, 1.6, 12.7, 3, 1);
 	Motor_init(&M4, .25, 145, 11.4, 1.923, 12.31, 4, 1);
@@ -76,6 +79,8 @@ int main(void)
 	
 	tim_4_gpio_init();
 	tim_4_config();
+	
+	dac_Configure();
 	
 	M1.Desired_Speed = 0;
 	M2.Desired_Speed = 0;
@@ -139,10 +144,10 @@ void TIM8_UP_TIM13_IRQHandler (void) {
 		Motor_ISR(&M1);
 		Motor_ISR(&M2);
 		Motor_2_Change_DCYC(&M2, M1.duty_cycle);
-		Motor_ISR(&M3);
-		Motor_3_Change_DCYC(&M3, M1.duty_cycle);
-		Motor_ISR(&M4);
-		Motor_4_Change_DCYC(&M4, M1.duty_cycle);
+		//Motor_ISR(&M3);
+		//Motor_3_Change_DCYC(&M3, M1.duty_cycle);
+		//Motor_ISR(&M4);
+		//Motor_4_Change_DCYC(&M4, M1.duty_cycle);
 		
 	}
 	
@@ -161,20 +166,40 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 	if (TIM10->SR && TIM_SR_UIF) {
 		
 		// CLEAR TERMINAL
-		//strcpy(print, "\033[2J\033[1;1H");
-		//USART_Write(USART2, print, 10);		
+		strcpy(print, "\033[2J\033[1;1H");
+		USART_Write(USART2, print, 10);		
 		
 		// CALCULATE ERROR
 		calc_error();
 		
-		// DISPLAY STUFF
-		//USART_Write(USART2, "123456", 6);
-		//display_stats(&M1);
-		//display_stats(&M2);
-		//display_stats(&M3);
-		//display_stats(&M4);
+		av_speed = M1.Current;
+		
+		// SHUT DOWN THINGS
+//		if( (check++ >= 3) && (M1.Error < -20) && (M1.Error > -50) && (M1.Desired_Speed > 0 )) {
+//			kill();
+//		}
+//		
+//		if ((M1.Error - M2.Error) > 30) {
 
-		send_remote_data();
+//			kill();
+//		}
+//		
+//		if ((M1.Error - M3.Error) > 30) {
+
+//			kill();
+//		}
+//		if ((M1.Error - M4.Error) > 30) {
+
+//			kill();
+//		}
+			// DISPLAY STUFF
+		//USART_Write(USART2, "123456", 6);
+		display_stats(&M1);
+		display_stats(&M2);
+		display_stats(&M3);
+		display_stats(&M4);
+
+		//send_remote_data();
 		// testing sending data byte by byte;
 		//USART_Write(USART2, (uint8_t*)&M1.Desired_Speed, 4);
 		
@@ -194,6 +219,44 @@ void TIM1_UP_TIM10_IRQHandler (void) {
 
 
 void decode(uint8_t * buffer) {
+	int i = 0;
+	char instruction[10];
+	char stop[10];
+	char move[10];
+	char back[10];
+	strcpy(stop, "stop");
+	strcpy(move, "move");
+	strcpy(back, "back");
+	if( Rx2_Counter == 4 ) {
+		
+		strncpy(instruction, buffer, 4);
+		i = strcmp(instruction, stop);
+		if( i == 0) {
+			M1.Desired_Speed = 0;
+			M2.Desired_Speed = 0;
+			M3.Desired_Speed = 0;
+			M4.Desired_Speed = 0;
+		}
+		i = strcmp(instruction, move);
+		if( i == 0) {
+			M1.Desired_Speed = 84;
+			M2.Desired_Speed = 84;
+			M3.Desired_Speed = 84;
+			M4.Desired_Speed = 84;
+		}
+		
+		i = strcmp(instruction, back);
+		if( i == 0) {
+			M1.Desired_Speed = -84;
+			M2.Desired_Speed = -84;
+			M3.Desired_Speed = -84;
+			M4.Desired_Speed = -84;
+		}
+	}
+	
+}
+
+/*void decode(uint8_t * buffer) {
 	
 	int i, x;
 	int *numbers;
@@ -215,6 +278,27 @@ void decode(uint8_t * buffer) {
 	M3.Desired_Speed = numbers[2] / 100.0;
 	M4.Desired_Speed = numbers[3] / 100.0;	
 	}
+	
+}*/
+
+void kill(void) {
+	
+	TIM5 -> CCR1 = 0;
+	TIM5 -> CCR2 = 0;
+	TIM5 -> CCR3 = 0;
+	TIM5 -> CCR4 = 0;
+	TIM12 -> CCR1 = 0;
+	TIM12 -> CCR2 = 0;
+	TIM9 -> CCR1 = 0;
+	TIM9 -> CCR2 = 0;
+	
+	TIM5->CR1 &= ~TIM_CR1_CEN;
+	TIM9->CR1 &= ~TIM_CR1_CEN;
+	TIM12->CR1 &= ~TIM_CR1_CEN;
+	
+	
+	RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOCEN;
+	RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOEEN;
 	
 }
 
